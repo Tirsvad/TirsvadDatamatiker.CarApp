@@ -4,10 +4,22 @@
     {
         static void Main(string[] args)
         {
-            string brand = "Toyota";
-            string model = "Corolla";
-            int year = 2020;
-            char gearType = 'A';
+            string brand;
+            string model;
+            int year;
+            char gearType;
+
+            Console.Write("Indtast bilmærke: ");
+            brand = Console.ReadLine();
+
+            Console.Write("Indtast bilmodel: ");
+            model = Console.ReadLine();
+
+            Console.Write("Indtast årgang: ");
+            year = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Indtast geartype: ");
+            gearType = Convert.ToChar(Console.Read());
 
             Console.WriteLine($"Bilmærke: {brand}");
             Console.WriteLine($"Bilmodel: {model}");
