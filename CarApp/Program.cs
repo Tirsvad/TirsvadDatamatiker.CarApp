@@ -25,6 +25,8 @@
             Console.WriteLine($"Bilmodel: {model}");
             Console.WriteLine($"Årgang: {year}");
             Console.WriteLine($"Gear: {gearType}");
+
+            Console.WriteLine($"Bil: {brand} {model} fra {year} med {gearType} gear");
         }
     }
 }
