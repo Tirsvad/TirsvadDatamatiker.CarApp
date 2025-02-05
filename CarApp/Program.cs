@@ -19,7 +19,7 @@
             year = Convert.ToInt32(Console.ReadLine());
 
             Console.Write("Indtast geartype: ");
-            gearType = Convert.ToChar(Console.Read());
+            gearType = char.ToUpper(Convert.ToChar(Console.Read()));
 
             Console.WriteLine($"Bilmærke: {brand}");
             Console.WriteLine($"Bilmodel: {model}");
