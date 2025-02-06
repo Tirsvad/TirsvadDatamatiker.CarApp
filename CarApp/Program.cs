@@ -10,16 +10,21 @@
             char gearType;
 
             Console.Write("Indtast bilmærke: ");
-            brand = Console.ReadLine();
+            brand = Console.ReadLine() ?? String.Empty;
 
             Console.Write("Indtast bilmodel: ");
-            model = Console.ReadLine();
+            model = Console.ReadLine() ?? String.Empty;
 
             Console.Write("Indtast årgang: ");
             year = Convert.ToInt32(Console.ReadLine());
 
-            Console.Write("Indtast geartype: ");
-            gearType = char.ToUpper(Convert.ToChar(Console.Read()));
+            do
+            {
+                Console.Write("Indtast geartype: ");
+                // Console.Write("Indtast geartype (A/M): ");
+                gearType = char.ToUpper(Convert.ToChar(Console.Read()));
+                Console.ReadLine(); // To consume the newline character
+            } while (gearType != 'A' && gearType != 'M');
 
             Console.WriteLine($"Bilmærke: {brand}");
             Console.WriteLine($"Bilmodel: {model}");
