@@ -12,7 +12,7 @@
     </a>
     <h3 align="center">CarApp</h3>
     <p align="center">
-    A car application as assignment for the course "Datamatiker" at ULC
+    A car application as assignment for the course "Datamatiker" at UCL
     <br />
     <br />
     <!-- PROJECT SCREENSHOTS -->
@@ -29,7 +29,9 @@
     </p>
 </div>
 
-# CarApp - A car application as assignment for the course "Datamatiker" at ULC
+# CarApp
+
+A car application as assignment for the course "Datamatiker" at UCL
 
 [contributors-shield]: https://img.shields.io/github/contributors/TirsvadDatamatiker/CarApp?style=for-the-badge
 [contributors-url]: https://github.com/TirsvadDatamatiker/CarApp/graphs/contributors
