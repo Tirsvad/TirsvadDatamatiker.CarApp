@@ -12,7 +12,7 @@ namespace CarApp
             /// <summary>
             /// Gets or sets the name of the fuel type.
             /// </summary>
-            public string Name { get; set; } = string.Empty;
+            public string Name { get; set; } = String.Empty;
 
             /// <summary>
             /// Gets or sets the price of the fuel type.
@@ -75,12 +75,12 @@ namespace CarApp
             /// <summary>
             /// Gets or sets the brand of the car.
             /// </summary>
-            public string Brand { get; set; } = string.Empty;
+            public string Brand { get; set; } = String.Empty;
 
             /// <summary>
             /// Gets or sets the model of the car.
             /// </summary>
-            public string Model { get; set; } = string.Empty;
+            public string Model { get; set; } = String.Empty;
 
             /// <summary>
             /// Gets or sets the year of the car.
@@ -110,7 +110,7 @@ namespace CarApp
             /// <summary>
             /// Gets or sets the description of the car.
             /// </summary>
-            public string Description { get; set; } = string.Empty;
+            public string Description { get; set; } = String.Empty;
 
             /// <summary>
             /// Adds a tour distance to the car's mileage.
