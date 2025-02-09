@@ -127,8 +127,9 @@ namespace CarApp
         /// </summary>
         /// <param name="car">The car object to populate with input data.</param>
         /// <returns>The populated car object.</returns>
-        static Car InputCar(Car car)
+        static Car InputCar()
         {
+            Car car = new();
             char gearType; // Gear type as a character
 
             Console.Clear(); // Clear the console window
@@ -175,6 +176,74 @@ namespace CarApp
         }
 
         /// <summary>
+        /// Displays a list of cars and allows the user to choose one.
+        /// </summary>
+        /// <param name="cars">The list of cars to choose from.</param>
+        /// <returns>The chosen car object.</returns>
+        static Car? SelectCar(List<Car> cars)
+        {
+            Console.Clear();
+            Console.WriteLine("Vælg bil");
+            Console.WriteLine("========");
+            Console.WriteLine();
+
+            // Create Table for console
+            //Console.WriteLine(string.Format("{0,-20} {1,-20}", "Mærke", "Model"));
+            Console.WriteLine(
+                "+" + "".PadRight(4, '-') +
+                "+" + "".PadRight(20, '-') +
+                "+" + "".PadRight(20, '-') +
+                "+" + "".PadRight(20, '-') + "+");
+            Console.WriteLine(
+                "|" + "#".PadLeft(4) +
+                "|" + " Mærke".PadRight(20) +
+                "|" + " Model".PadRight(20) +
+                "|" + " Kilemetertal".PadRight(20) +
+                "|");
+            Console.WriteLine(
+                "+" + "".PadRight(4, '-') +
+                "+" + "".PadRight(20, '-') +
+                "+" + "".PadRight(20, '-') +
+                "+" + "".PadRight(20, '-') +
+                "+");
+
+            // 
+            for (int i = 1; i < cars.Count + 1; i++)
+            {
+                int ii = i - 1;
+                Console.WriteLine(
+                    "|" + $"{i} ".PadLeft(4) +
+                    "|" + $" {cars[ii].Brand}".PadRight(20) +
+                    "|" + $" {cars[ii].Model}".PadRight(20) +
+                    "|" + $"{cars[ii].Mileage} ".PadLeft(20) +
+                    "|");
+            }
+            Console.WriteLine();
+            Console.WriteLine("0. Afslut");
+            Console.WriteLine();
+            Console.Write("Vælg: ");
+            int choice;
+            do
+            {
+                Console.Write("Vælg: ");
+                string? input = Console.ReadLine();
+                if (int.TryParse(input, out choice) && choice > 0 && choice <= cars.Count)
+                {
+                    break;
+                }
+                else if (int.TryParse(input, out choice) && choice == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    Console.WriteLine("Ugyldigt valg, prøv igen.");
+                }
+            } while (true);
+            return cars[choice - 1];
+        }
+
+        /// <summary>
         /// Adds a tour to the car and calculates the fuel needed and trip cost.
         /// </summary>
         /// <param name="car">The car object to add the tour to.</param>
@@ -203,7 +272,6 @@ namespace CarApp
                 $"Årgang: {car.Year}\n" +
                 $"Gear: {car.GearType}\n" +
                 $"Brændstof: {car.FuelType.Name}\n" +
-                //$"Pris pr. liter: {car.FuelType.Price}\n" +
                 $"Forbrug: {car.FuelEfficiency}\n" +
                 $"Kilometerstand: {car.Mileage}\n" +
                 $"Beskrivelse: {car.Description}"
@@ -237,7 +305,7 @@ namespace CarApp
             Console.Clear();
             Console.WriteLine("Bilrapport");
             Console.WriteLine("==========");
-
+            Console.WriteLine();
             Console.WriteLine("Biler");
             Console.WriteLine("=====");
             Console.WriteLine(
@@ -246,12 +314,12 @@ namespace CarApp
                 $"Årgang: {car.Year}\n" +
                 $"Gear: {car.GearType}\n" +
                 $"Brændstof: {car.FuelType.Name}\n" +
-                $"Pris pr. liter: {car.FuelType.Price}\n" +
                 $"Forbrug: {car.FuelEfficiency}\n" +
                 $"Kilometerstand: {car.Mileage}\n" +
                 $"Beskrivelse: {car.Description}"
             );
 
+            Console.WriteLine();
             Console.WriteLine("\nTryk på en tast for at fortsætte...");
             Console.ReadLine();
         }
@@ -261,7 +329,37 @@ namespace CarApp
         /// </summary>
         static public void Menu()
         {
-            Car car = new();
+            Car? car = null; // Create a car object
+            List<Car> cars = []; // Create a list of cars
+
+            Car car1;
+
+            car1 = new()
+            {
+                Brand = "Toyota",
+                Model = "Corolla",
+                Year = 2010,
+                GearType = 'M',
+                FuelType = FuelTypeCollection.Instance.FuelTypes[0],
+                FuelEfficiency = 15.0f,
+                Mileage = 100000,
+                Description = "Fin bil"
+            };
+            cars.Add(car1);
+
+            car1 = new()
+            {
+                Brand = "Volkswagen",
+                Model = "Golf",
+                Year = 2015,
+                GearType = 'A',
+                FuelType = FuelTypeCollection.Instance.FuelTypes[1],
+                FuelEfficiency = 18.0f,
+                Mileage = 80000,
+                Description = "Pæn bil"
+            };
+            cars.Add(car1);
+
             int choice;
             do
             {
@@ -269,21 +367,43 @@ namespace CarApp
                 Console.WriteLine("Menu");
                 Console.WriteLine("====");
                 Console.WriteLine("1. Tilføj bil");
-                Console.WriteLine("2. Tilføj tur");
-                Console.WriteLine("3. Rapport");
+                Console.WriteLine("2. Vælg bil");
+                Console.WriteLine("3. Tilføj tur");
+                Console.WriteLine("4. Rapport");
                 Console.WriteLine("0. Afslut");
+                Console.WriteLine();
                 Console.Write("Vælg: ");
                 choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
                 {
                     case 1:
-                        car = InputCar(car);
+                        car = InputCar(); // Pass a new Car object to InputCar
+                        cars.Add(car);
                         break;
                     case 2:
-                        car = AddTour(car);
+                        car = SelectCar(cars);
                         break;
                     case 3:
-                        Rapport(car);
+                        if (car != null)
+                        {
+                            car = AddTour(car);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ingen bil valgt. Tilføj eller vælg en bil først.");
+                            Console.ReadLine();
+                        }
+                        break;
+                    case 4:
+                        if (car != null)
+                        {
+                            Rapport(car);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ingen bil valgt. Tilføj eller vælg en bil først.");
+                            Console.ReadLine();
+                        }
                         break;
                     case 0:
                         break;
