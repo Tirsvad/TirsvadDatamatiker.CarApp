@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CarApp
 {
@@ -95,7 +97,7 @@ namespace CarApp
             /// <summary>
             /// Gets or sets the fuel type of the car.
             /// </summary>
-            public FuelType FuelType { get; set; } = FuelTypeCollection.Instance.FuelTypes[0];
+            public int FuelType { get; set; }
 
             /// <summary>
             /// Gets or sets the fuel efficiency of the car.
@@ -123,9 +125,161 @@ namespace CarApp
         }
 
         /// <summary>
+        /// Interface for car collection.
+        /// </summary>
+        public class ICarCollection
+        {
+            /// <summary>
+            /// Gets or sets the list of carCollection.
+            /// </summary>
+            public List<Car> Cars { get; set; } = new List<Car>();
+        }
+
+        /// <summary>
+        /// Singleton collection of cars.
+        /// </summary>
+        public class CarCollection : ICarCollection
+        {
+            private static CarCollection? instance = null;
+            private static readonly object padlock = new();
+            private CarCollection() { }
+
+            /// <summary>
+            /// Gets the singleton instance of the CarCollection.
+            /// </summary>
+            public static CarCollection Instance
+            {
+                get
+                {
+                    lock (padlock)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new CarCollection();
+                        }
+                        return instance;
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Adds a car to the collection.
+            /// </summary>
+            /// <param name="car">The car to add.</param>
+            public void Add(Car car)
+            {
+                Cars.Add(car);
+            }
+        }
+
+        /// <summary>
+        /// Represents file data with a version.
+        /// </summary>
+        public class FileData
+        {
+            /// <summary>
+            /// Gets or sets the file version.
+            /// </summary>
+            public int FileVersion { get; set; } = 1;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="FileData"/> class.
+            /// </summary>
+            public FileData() { }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="FileData"/> class with a specified version.
+            /// </summary>
+            /// <param name="fileVersion">The file version.</param>
+            [JsonConstructor]
+            public FileData(int fileVersion)
+            {
+                FileVersion = fileVersion;
+            }
+        }
+
+        /// <summary>
+        /// Handles file operations for saving and loading data.
+        /// </summary>
+        static class FileHandler
+        {
+            /// <summary>
+            /// Saves the car collection data to a file.
+            /// </summary>
+            /// <param name="fileName">The name of the file to save the data to.</param>
+            public static void SaveData(string fileName)
+            {
+                CarCollection carCollection = CarCollection.Instance;
+
+                if (carCollection.Cars == null || carCollection.Cars.Count == 0)
+                {
+                    Console.WriteLine("Cars list is empty. Adding default cars before saving.");
+                    return;
+                }
+
+                DataContainer dataContainer = new DataContainer
+                {
+                    FileData = new FileData(),
+                    Cars = carCollection.Cars
+                };
+
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                string jsonString = JsonSerializer.Serialize(dataContainer, options);
+                File.WriteAllText(fileName, jsonString);
+            }
+
+            /// <summary>
+            /// Loads the car collection data from a file.
+            /// </summary>
+            /// <param name="fileName">The name of the file to load the data from.</param>
+            public static void LoadData(string fileName)
+            {
+                try
+                {
+                    if (File.Exists(fileName))
+                    {
+                        string jsonString = File.ReadAllText(fileName);
+                        var data = JsonSerializer.Deserialize<DataContainer>(jsonString);
+
+                        if (data != null)
+                        {
+                            // Load CarCollection
+                            CarCollection.Instance.Cars = data.Cars ?? new List<Car>();
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data file found. Starting with default data.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error loading data: {ex.Message}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Helper class to encapsulate both FileData and CarCollection for JSON serialization/deserialization.
+        /// </summary>
+        public class DataContainer
+        {
+            /// <summary>
+            /// Gets or sets the file data.
+            /// </summary>
+            [JsonPropertyName("FileData")]
+            public FileData? FileData { get; set; }
+
+            /// <summary>
+            /// Gets or sets the list of cars.
+            /// </summary>
+            [JsonPropertyName("Cars")]
+            public List<Car>? Cars { get; set; }
+        }
+
+        /// <summary>
         /// Prompts the user to input car information and returns the car object.
         /// </summary>
-        /// <param name="car">The car object to populate with input data.</param>
         /// <returns>The populated car object.</returns>
         static Car InputCar()
         {
@@ -165,7 +319,7 @@ namespace CarApp
                 Console.Write("Vælg brændstoftype: ");
                 fuelTypeIndex = Convert.ToInt32(Console.ReadLine()) - 1;
             } while (fuelTypeIndex < 0 || fuelTypeIndex >= fuelTypeCollection.FuelTypes.Count);
-            car.FuelType = fuelTypeCollection.FuelTypes[fuelTypeIndex];
+            car.FuelType = fuelTypeIndex;
 
             Console.Write("Indtast forbrug: ");
             car.FuelEfficiency = Convert.ToSingle(Console.ReadLine());
@@ -176,11 +330,11 @@ namespace CarApp
         }
 
         /// <summary>
-        /// Displays a list of cars and allows the user to choose one.
+        /// Displays a list of carCollection and allows the user to choose one.
         /// </summary>
-        /// <param name="cars">The list of cars to choose from.</param>
+        /// <param name="carCollection">The list of carCollection to choose from.</param>
         /// <returns>The chosen car object.</returns>
-        static Car? SelectCar(List<Car> cars)
+        static Car? SelectCar(CarCollection carCollection)
         {
             Console.Clear();
             Console.WriteLine("Vælg bil");
@@ -208,26 +362,25 @@ namespace CarApp
                 "+");
 
             // 
-            for (int i = 1; i < cars.Count + 1; i++)
+            for (int i = 1; i < carCollection.Cars.Count + 1; i++)
             {
                 int ii = i - 1;
                 Console.WriteLine(
                     "|" + $"{i} ".PadLeft(4) +
-                    "|" + $" {cars[ii].Brand}".PadRight(20) +
-                    "|" + $" {cars[ii].Model}".PadRight(20) +
-                    "|" + $"{cars[ii].Mileage} ".PadLeft(20) +
+                    "|" + $" {carCollection.Cars[ii].Brand}".PadRight(20) +
+                    "|" + $" {carCollection.Cars[ii].Model}".PadRight(20) +
+                    "|" + $"{carCollection.Cars[ii].Mileage} ".PadLeft(20) +
                     "|");
             }
             Console.WriteLine();
             Console.WriteLine("0. Afslut");
             Console.WriteLine();
-            Console.Write("Vælg: ");
             int choice;
             do
             {
                 Console.Write("Vælg: ");
                 string? input = Console.ReadLine();
-                if (int.TryParse(input, out choice) && choice > 0 && choice <= cars.Count)
+                if (int.TryParse(input, out choice) && choice > 0 && choice <= carCollection.Cars.Count)
                 {
                     break;
                 }
@@ -240,7 +393,7 @@ namespace CarApp
                     Console.WriteLine("Ugyldigt valg, prøv igen.");
                 }
             } while (true);
-            return cars[choice - 1];
+            return carCollection.Cars[choice - 1];
         }
 
         /// <summary>
@@ -252,14 +405,15 @@ namespace CarApp
         {
             Console.Clear(); // Clear the console window
 
+            FuelTypeCollection fuelTypeCollection = FuelTypeCollection.Instance; // Get the singleton instance of the FuelTypeCollection
+
             Console.WriteLine("Tilføj tur");
             Console.WriteLine("==========");
             Console.Write("Indtast antal kilometer: ");
             int distance = Convert.ToInt32(Console.ReadLine());
 
             double FuelNeeded = distance / car.FuelEfficiency;
-            double TripCost = FuelNeeded * (double)car.FuelType.Price;
-
+            double TripCost = FuelNeeded * (double)fuelTypeCollection.FuelTypes[car.FuelType].Price;
             car.AddTour(distance);
 
             Console.WriteLine();
@@ -271,7 +425,7 @@ namespace CarApp
                 $"Bilmodel: {car.Model}\n" +
                 $"Årgang: {car.Year}\n" +
                 $"Gear: {car.GearType}\n" +
-                $"Brændstof: {car.FuelType.Name}\n" +
+                $"Brændstof: {fuelTypeCollection.FuelTypes[car.FuelType].Name}\n" +
                 $"Forbrug: {car.FuelEfficiency}\n" +
                 $"Kilometerstand: {car.Mileage}\n" +
                 $"Beskrivelse: {car.Description}"
@@ -302,6 +456,7 @@ namespace CarApp
         /// <param name="car">The car object to display the report for.</param>
         public static void Rapport(Car car)
         {
+            FuelTypeCollection fuelTypeCollection = FuelTypeCollection.Instance;
             Console.Clear();
             Console.WriteLine("Bilrapport");
             Console.WriteLine("==========");
@@ -313,8 +468,8 @@ namespace CarApp
                 $"Bilmodel: {car.Model}\n" +
                 $"Årgang: {car.Year}\n" +
                 $"Gear: {car.GearType}\n" +
-                $"Brændstof: {car.FuelType.Name}\n" +
-                $"Forbrug: {car.FuelEfficiency}\n" +
+                $"Brændstof: {fuelTypeCollection.FuelTypes[car.FuelType].Name}\n" +
+                $"Forbrug: {car.FuelEfficiency}" + " km/l\n" +
                 $"Kilometerstand: {car.Mileage}\n" +
                 $"Beskrivelse: {car.Description}"
             );
@@ -330,35 +485,7 @@ namespace CarApp
         static public void Menu()
         {
             Car? car = null; // Create a car object
-            List<Car> cars = []; // Create a list of cars
-
-            Car car1;
-
-            car1 = new()
-            {
-                Brand = "Toyota",
-                Model = "Corolla",
-                Year = 2010,
-                GearType = 'M',
-                FuelType = FuelTypeCollection.Instance.FuelTypes[0],
-                FuelEfficiency = 15.0f,
-                Mileage = 100000,
-                Description = "Fin bil"
-            };
-            cars.Add(car1);
-
-            car1 = new()
-            {
-                Brand = "Volkswagen",
-                Model = "Golf",
-                Year = 2015,
-                GearType = 'A',
-                FuelType = FuelTypeCollection.Instance.FuelTypes[1],
-                FuelEfficiency = 18.0f,
-                Mileage = 80000,
-                Description = "Pæn bil"
-            };
-            cars.Add(car1);
+            CarCollection carCollection = CarCollection.Instance; // Get the singleton instance of the CarCollection
 
             int choice;
             do
@@ -378,10 +505,10 @@ namespace CarApp
                 {
                     case 1:
                         car = InputCar(); // Pass a new Car object to InputCar
-                        cars.Add(car);
+                        carCollection.Cars.Add(car); // Add the car to the list of carCollection
                         break;
                     case 2:
-                        car = SelectCar(cars);
+                        car = SelectCar(carCollection);
                         break;
                     case 3:
                         if (car != null)
@@ -422,7 +549,9 @@ namespace CarApp
             // Set the console output encoding to UTF-8 so æøå are displayed correctly
             Console.OutputEncoding = Encoding.UTF8;
 
+            FileHandler.LoadData(Constants.FileName);
             Menu();
+            FileHandler.SaveData(Constants.FileName);
         }
     }
 }
