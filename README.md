@@ -16,7 +16,7 @@
     <br />
     <br />
     <!-- PROJECT SCREENSHOTS -->
-    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/main/images/screenshot01.png">
+    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/screenshot01.png">
         <img src="images/screenshot01.png" alt="screenshot" height="120">
     </a>
     <br />
