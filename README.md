@@ -38,9 +38,9 @@ A car application as assignment for the course "Datamatiker" at UCL
 
 ## Preparing the project
 
-## Prepare MS SQL Server
+## Prepare Sqlite
 
-Install MS SQL Server and create a database called "CarApp"
+Install Sqlite and Dapper
 
 ```
 dotnet nuget add source https://api.nuget.org/v3/index.json
