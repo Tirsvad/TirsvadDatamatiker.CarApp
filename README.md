@@ -33,6 +33,21 @@
 
 A car application as assignment for the course "Datamatiker" at UCL
 
+## Table of Contents
+
+
+## Preparing the project
+
+## Prepare MS SQL Server
+
+Install MS SQL Server and create a database called "CarApp"
+
+```
+dotnet nuget add source https://api.nuget.org/v3/index.json
+dotnet add package Dapper
+dotnet add package Microsoft.Data.Sqlite
+```
+
 [contributors-shield]: https://img.shields.io/github/contributors/TirsvadDatamatiker/CarApp?style=for-the-badge
 [contributors-url]: https://github.com/TirsvadDatamatiker/CarApp/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/TirsvadDatamatiker/CarApp?style=for-the-badge
