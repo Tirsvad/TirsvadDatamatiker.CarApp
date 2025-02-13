@@ -261,12 +261,12 @@ namespace CarApp
         /// Creates a horizontal table frame for the console output.
         /// </summary>
         /// <param name="columns">A list of integers representing the width of each column.</param>
-        static void CreateTableFrameH(List<int> coloumns)
+        static void CreateTableFrameH(List<int> columns)
         {
             Console.Write("+");
-            foreach (int coloumn in coloumns)
+            foreach (int column in columns)
             {
-                Console.Write(new string('-', coloumn + 2));
+                Console.Write(new string('-', column + 2));
                 Console.Write("+");
             }
             Console.WriteLine();
