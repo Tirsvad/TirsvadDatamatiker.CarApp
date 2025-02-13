@@ -16,9 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "logo", "logo", "{94E17EAB-D
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{6CDB135D-FC65-4096-96E6-6F1C7997FADF}"
-	ProjectSection(SolutionItems) = preProject
-		images\screenshot01.png = images\screenshot01.png
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

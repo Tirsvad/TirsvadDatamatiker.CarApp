@@ -16,8 +16,11 @@
     <br />
     <br />
     <!-- PROJECT SCREENSHOTS -->
-    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/screenshot01.png">
-        <img src="images/screenshot01.png" alt="screenshot" height="120">
+    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/screenshot_mainMenu01.png">
+        <img src="images/screenshot_mainMenu01.png" alt="Main Menu" height="120">
+    </a>
+    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/screenshot_selectCar01.png">
+        <img src="images/screenshot_selectCar01.png" alt="Select Car Menu" height="120">
     </a>
     <br />
     <a href="https://github.com/TirsvadDatamatiker/CarApp"><strong>Explore the docs »</strong></a>
@@ -35,8 +38,22 @@ A car application as assignment for the course "Datamatiker" at UCL
 
 ## Table of Contents
 
+- [CarApp](#carapp)
+  - [Features](#features)
+  - [Todo](#todo)
+  - [Prepare Sqlite](#prepare-sqlite)
 
-## Preparing the project
+
+## Features
+
+- [x] Add car
+- [x] Load / Save car to database
+- [x] Calculate trip fuel price
+- [x] Print rapport of car
+
+## Todo
+
+- [ ] Export data to json 
 
 ## Prepare Sqlite
 
