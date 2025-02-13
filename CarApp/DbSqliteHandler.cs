@@ -14,8 +14,8 @@ namespace CarApp
         /// <param name="dbPath">The path to the SQLite database file.</param>
         public DbSqliteHandler(string dbPath)
         {
-            _connectionString = $"Data Source={dbPath}";
-            InitializeDatabase(dbPath);
+            _connectionString = $"Data Source={dbPath}"; // Connection string for SQLite
+            InitializeDatabase(dbPath); // Initialize the database
         }
 
         /// <summary>
@@ -27,31 +27,31 @@ namespace CarApp
             // Create database if it doesn't exist
             if (!File.Exists(dbPath))
             {
-                using (var connection = new SqliteConnection(_connectionString))
+                using (var connection = new SqliteConnection(_connectionString)) // Create a new connection
                 {
-                    connection.Open();
-                    CreateDb(connection);
-                }
+                    connection.Open(); // Open the connection
+                    CreateDb(connection); // Create the database
+                } // Close the connection
             }
 
             // Apply migrations
-            using (var connection = new SqliteConnection(_connectionString))
+            using (var connection = new SqliteConnection(_connectionString)) // Create a new connection
             {
-                connection.Open();
-                CreateMigrationVersionTable(connection);
-                ApplyMigrations(connection);
-            }
+                connection.Open(); // Open the connection
+                CreateMigrationVersionTable(connection); // Create the MigrationVersion table
+                ApplyMigrations(connection); // Apply migrations
+            } // Close the connection
         }
 
         /// <summary>
         /// Creates the database using the SQL script specified in the Globals.
         /// </summary>
         /// <param name="connection">The database connection.</param>
-        private static void CreateDb(IDbConnection connection)
+        private static void CreateDb(IDbConnection connection) // IDbConnection is used to support multiple database providers
         {
-            var sql = File.ReadAllText(Globals.DbSqliteCreateDbFileName);
-            connection.Execute(sql);
-        }
+            var sql = File.ReadAllText(Globals.DbSqliteCreateDbFileName); // Read the SQL script from the file
+            connection.Execute(sql); // Execute the SQL script
+        } // Close the connection
 
         /// <summary>
         /// Creates the MigrationVersion table if it doesn't exist.
@@ -67,8 +67,8 @@ namespace CarApp
                 INSERT INTO MigrationVersion (Id, Version)
                 SELECT 1, 0
                 WHERE NOT EXISTS (SELECT 1 FROM MigrationVersion WHERE Id = 1);
-            ";
-            connection.Execute(sql);
+            "; // SQL script to create the MigrationVersion table
+            connection.Execute(sql); // Execute the SQL script
         }
 
         /// <summary>

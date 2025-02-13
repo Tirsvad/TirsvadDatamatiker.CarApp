@@ -70,13 +70,20 @@
         /// </summary>
         public string Description { get; set; } = String.Empty;
 
+        // Non database properties
+
+        public bool isEngineRunning = false;
+
         /// <summary>
         /// Adds a tour distance to the car's mileage.
         /// </summary>
         /// <param name="km">The distance of the tour in kilometers.</param>
         public void AddTour(int km)
         {
-            Mileage += km;
+            if (isEngineRunning)
+            {
+                Mileage += km;
+            }
         }
     }
 

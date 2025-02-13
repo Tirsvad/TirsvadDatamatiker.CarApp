@@ -72,35 +72,30 @@ namespace CarApp
 
             List<Car> cars = Globals.DbSqlHandler.GetCars().ToList();
 
+            // number of columns
+            List<int> columns = new() { 2, 20, 20, 20 };
+
             // Create Table for console
+            CreateTableFrameH(columns);
             Console.WriteLine(
-                "+" + "".PadRight(4, '-') +
-                "+" + "".PadRight(20, '-') +
-                "+" + "".PadRight(20, '-') +
-                "+" + "".PadRight(20, '-') + "+");
-            Console.WriteLine(
-                "|" + "#".PadLeft(4) +
-                "|" + " Mærke".PadRight(20) +
-                "|" + " Model".PadRight(20) +
-                "|" + " Kilemetertal".PadRight(20) +
-                "|");
-            Console.WriteLine(
-                "+" + "".PadRight(4, '-') +
-                "+" + "".PadRight(20, '-') +
-                "+" + "".PadRight(20, '-') +
-                "+" + "".PadRight(20, '-') +
-                "+");
+                "| " + "#".PadLeft(columns[0]) +
+                " | " + CenterString("Mærke", columns[1]) +
+                " | " + CenterString("Model", columns[2]) +
+                " | " + CenterString("Kilemetertal", columns[3]) +
+                " |");
+            CreateTableFrameH(columns);
 
             for (int i = 1; i < cars.Count + 1; i++)
             {
                 int ii = i - 1;
                 Console.WriteLine(
-                    "|" + $"{i} ".PadLeft(4) +
-                    "|" + $" {cars[ii].Brand}".PadRight(20) +
-                    "|" + $" {cars[ii].Model}".PadRight(20) +
-                    "|" + $"{cars[ii].Mileage} ".PadLeft(20) +
-                    "|");
+                    "| " + $"{i.ToString().PadLeft(columns[0])}" +
+                    " | " + $"{cars[ii].Brand}".PadRight(columns[1]) +
+                    " | " + $"{cars[ii].Model}".PadRight(columns[2]) +
+                    " | " + $"{cars[ii].Mileage}".PadLeft(columns[3]) +
+                    " |");
             }
+            CreateTableFrameH(columns);
             Console.WriteLine();
             Console.WriteLine("0. Afslut");
             Console.WriteLine();
@@ -133,16 +128,27 @@ namespace CarApp
         static Car AddTour(Car car)
         {
             Console.Clear(); // Clear the console window
-
             IEnumerable<FuelType> fuelTypes = Globals.DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
 
-            Console.WriteLine("Tilføj tur");
+            Console.WriteLine("Beregn turens pris");
             Console.WriteLine("==========");
+            Console.Write("Simuleret tur? (j/n): ");
+            char response = char.ToUpper(Console.ReadKey().KeyChar);
+            Console.WriteLine();
+            if (response == 'N')
+            {
+                car.isEngineRunning = true;
+            }
+            else
+            {
+                car.isEngineRunning = false;
+            }
+
             Console.Write("Indtast antal kilometer: ");
             int distance = Convert.ToInt32(Console.ReadLine());
 
-            double FuelNeeded = distance / car.FuelEfficiency;
-            double TripCost = FuelNeeded * (double)fuelTypes.First(ft => ft.Id == car.FuelTypeId).Price;
+            double fuelNeeded = CalculateFuelNeeded(car, distance);
+            decimal tripCost = CalculateTripCost(car, fuelNeeded);
             car.AddTour(distance);
 
             Console.WriteLine();
@@ -164,12 +170,12 @@ namespace CarApp
                 string.Format(
                     "Tur\n" +
                     "===\n" +
-                    "Antal kilometer: {0}\n" +
-                    "Brændstofforbrug: {1:F2} liter\n" +
-                    "Pris: {2:F2} kr.",
+                    "Antal kilometer {0} vil bruge " +
+                    "{1:F2} liter brændstofforbrug" +
+                    " hvilket vil kost {2:F2} kr.",
                     distance,
-                    FuelNeeded,
-                    TripCost
+                    fuelNeeded,
+                    tripCost
                 )
             );
             Console.WriteLine();
@@ -183,7 +189,7 @@ namespace CarApp
         /// Displays a report of the car's information.
         /// </summary>
         /// <param name="car">The car object to display the report for.</param>
-        public static void Rapport(Car car)
+        static void PrintCarDetails(Car car)
         {
             IEnumerable<FuelType> fuelTypes = Globals.DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
 
@@ -210,6 +216,83 @@ namespace CarApp
         }
 
         /// <summary>
+        /// Checks if a car's mileage is a palindrome.
+        /// </summary>
+        /// <param name="car">The car object containing the mileage information.</param>
+        /// <returns>True if the mileage is a palindrome, otherwise false.</returns>
+        static bool IsPalindrome(Car car)
+        {
+            string odometer = car.Mileage.ToString();
+
+            for (int i = 0; i < odometer.Length / 2; i++)
+            {
+                if (odometer[i] != odometer[odometer.Length - i - 1])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Calculates the amount of fuel needed for a given distance.
+        /// </summary>
+        /// <param name="car">The car object containing fuel efficiency information.</param>
+        /// <param name="distance">The distance to be traveled in kilometers.</param>
+        /// <returns>The amount of fuel needed for the given distance.</returns>
+        static double CalculateFuelNeeded(Car car, int distance)
+        {
+            return (double)(distance / car.FuelEfficiency);
+        }
+
+        /// <summary>
+        /// Calculates the trip cost based on the fuel needed and the fuel price.
+        /// </summary>
+        /// <param name="car">The car object containing the fuel type information.</param>
+        /// <param name="fuelNeeded">The amount of fuel needed for the trip.</param>
+        /// <returns>The cost of the trip.</returns>
+        static decimal CalculateTripCost(Car car, double fuelNeeded)
+        {
+            IEnumerable<FuelType> fuelTypes = Globals.DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
+            return (decimal)(fuelNeeded * (float)fuelTypes.First(ft => ft.Id == car.FuelTypeId).Price);
+        }
+
+        /// <summary>
+        /// Creates a horizontal table frame for the console output.
+        /// </summary>
+        /// <param name="columns">A list of integers representing the width of each column.</param>
+        static void CreateTableFrameH(List<int> coloumns)
+        {
+            Console.Write("+");
+            foreach (int coloumn in coloumns)
+            {
+                Console.Write(new string('-', coloumn + 2));
+                Console.Write("+");
+            }
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Centers the given text within a specified width.
+        /// </summary>
+        /// <param name="text">The text to center.</param>
+        /// <param name="width">The width within which to center the text.</param>
+        /// <returns>The centered text with padding.</returns>
+        static string CenterString(string text, int width)
+        {
+            if (width <= text.Length)
+            {
+                return text; // Or throw an exception, or truncate the string
+            }
+
+            int padding = width - text.Length;
+            int leftPadding = padding / 2;
+            int rightPadding = padding - leftPadding;
+
+            return new string(' ', leftPadding) + text + new string(' ', rightPadding);
+        }
+
+        /// <summary>
         /// Displays the menu and handles user input.
         /// </summary>
         static public void Menu()
@@ -227,7 +310,8 @@ namespace CarApp
                 Console.WriteLine("1. Tilføj bil");
                 Console.WriteLine("2. Vælg bil");
                 Console.WriteLine("3. Tilføj tur");
-                Console.WriteLine("4. Rapport");
+                Console.WriteLine("4. Vis bilen detajler");
+                Console.WriteLine("5. Tjek om kilometerstanden er et palindrom");
                 Console.WriteLine("0. Afslut");
                 Console.WriteLine();
                 Console.Write("Vælg: ");
@@ -245,7 +329,10 @@ namespace CarApp
                         if (car != null)
                         {
                             car = AddTour(car);
-                            Globals.DbSqlHandler.UpdateCar(car); // Update the car in the database
+                            if (car.isEngineRunning)
+                            {
+                                Globals.DbSqlHandler.UpdateCar(car); // Update the car in the database
+                            }
                         }
                         else
                         {
@@ -256,7 +343,19 @@ namespace CarApp
                     case 4:
                         if (car != null)
                         {
-                            Rapport(car);
+                            PrintCarDetails(car);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ingen bil valgt. Tilføj eller vælg en bil først.");
+                            Console.ReadLine();
+                        }
+                        break;
+                    case 5:
+                        if (car != null)
+                        {
+                            Console.WriteLine(IsPalindrome(car) ? "Kilometertallet er et palindrom." : "Kilometertallet er ikke et palindrom.");
+                            Console.ReadLine();
                         }
                         else
                         {
