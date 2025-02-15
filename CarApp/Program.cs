@@ -298,34 +298,37 @@ namespace CarApp
         static public void Menu()
         {
             Car? car = null; // Create a car object
+            System.ConsoleKeyInfo choice; // The user's choice
+            bool succes = false; // Succes of the operation
 
             IEnumerable<FuelType> fuelTypes = Globals.DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
 
-            int choice; // The user's choice
             do
             {
                 Console.Clear(); // Clear the console window
                 Console.WriteLine("Menu");
                 Console.WriteLine("====");
-                Console.WriteLine("1. Tilføj bil");
-                Console.WriteLine("2. Vælg bil");
-                Console.WriteLine("3. Tilføj tur");
-                Console.WriteLine("4. Vis bilen detajler");
-                Console.WriteLine("5. Tjek om kilometerstanden er et palindrom");
-                Console.WriteLine("0. Afslut");
+                Console.WriteLine("F1: Tilføj bil");
+                Console.WriteLine("F2: Vælg bil");
+                Console.WriteLine("F3: Tilføj tur");
+                Console.WriteLine("F4: Vis bilen detajler");
+                Console.WriteLine("F5: Tjek om kilometerstanden er et palindrom");
+                Console.WriteLine("ESC: Afslut");
                 Console.WriteLine();
-                Console.Write("Vælg: ");
-                choice = Convert.ToInt32(Console.ReadLine());
-                switch (choice)
+                Console.Write("Vælg:");
+
+                choice = Console.ReadKey(); // Wait for a key press
+
+                switch (choice.Key)
                 {
-                    case 1:
+                    case ConsoleKey.F1:
                         car = InputCar(); // Pass a new Car object to InputCar
                         Globals.DbSqlHandler.AddCar(car); // Add the car to the database
                         break;
-                    case 2:
+                    case ConsoleKey.F2:
                         car = SelectCar();
                         break;
-                    case 3:
+                    case ConsoleKey.F3:
                         if (car != null)
                         {
                             car = AddTour(car);
@@ -340,7 +343,7 @@ namespace CarApp
                             Console.ReadLine();
                         }
                         break;
-                    case 4:
+                    case ConsoleKey.F4:
                         if (car != null)
                         {
                             PrintCarDetails(car);
@@ -351,7 +354,7 @@ namespace CarApp
                             Console.ReadLine();
                         }
                         break;
-                    case 5:
+                    case ConsoleKey.F5:
                         if (car != null)
                         {
                             Console.WriteLine(IsPalindrome(car) ? "Kilometertallet er et palindrom." : "Kilometertallet er ikke et palindrom.");
@@ -363,14 +366,18 @@ namespace CarApp
                             Console.ReadLine();
                         }
                         break;
-                    case 0:
+                    case ConsoleKey.Escape:
+                        succes = true;
                         break;
                     default:
-                        Console.WriteLine("Ugyldigt valg");
+                        Console.WriteLine("Ugyldigt valg.");
+                        Console.WriteLine("Tast for at forsætte.");
+                        Console.ReadKey();
                         break;
                 }
-            } while (choice != 0);
+            } while (!succes);
         }
+
 
         /// <summary>
         /// The main entry point for the application.
