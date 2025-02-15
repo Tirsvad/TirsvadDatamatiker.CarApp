@@ -74,7 +74,7 @@ dotnet add package Microsoft.Data.Sqlite
 
 ## Known issues
 
-- [ ] When returned from database menu, then main menu title missing first letter. Tepmorary fix wrtting a char to console before clear.
+- [ ] When returned from database menu, then main menu title missing first letter. Temporary fix wrtting a char to console before clear.
 - [ ] When import and export json give user info about the process
 
 
