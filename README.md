@@ -16,11 +16,17 @@
     <br />
     <br />
     <!-- PROJECT SCREENSHOTS -->
-    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/screenshot_mainMenu01.png">
-        <img src="images/screenshot_mainMenu01.png" alt="Main Menu" height="120">
+    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_mainMenu.png">
+        <img src="images/Screenshot_mainMenu.png" alt="Main Menu" height="120">
     </a>
-    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/screenshot_selectCar01.png">
-        <img src="images/screenshot_selectCar01.png" alt="Select Car Menu" height="120">
+    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_databaseMenu.png.png">
+        <img src="images/Screenshot_databaseMenu.png" alt="Database Menu" height="120">
+    </a>
+    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_selectCar.png">
+        <img src="images/Screenshot_selectCar.png" alt="Select Car" height="120">
+    </a>
+    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_carRapport.png">
+        <img src="images/Screenshot_carRapport.png" alt="Car Rapport" height="120">
     </a>
     <br />
     <a href="https://github.com/TirsvadDatamatiker/CarApp"><strong>Explore the docs »</strong></a>
@@ -39,21 +45,10 @@ A car application as assignment for the course "Datamatiker" at UCL
 ## Table of Contents
 
 - [CarApp](#carapp)
+  - [Prepare Sqlite](#prepare-sqlite)
   - [Features](#features)
   - [Todo](#todo)
-  - [Prepare Sqlite](#prepare-sqlite)
-
-
-## Features
-
-- [x] Add car
-- [x] Load / Save car to database
-- [x] Calculate trip fuel price
-- [x] Print rapport of car
-
-## Todo
-
-- [ ] Export data to json 
+  - [Known issues](#known-issues)
 
 ## Prepare Sqlite
 
@@ -64,6 +59,24 @@ dotnet nuget add source https://api.nuget.org/v3/index.json
 dotnet add package Dapper
 dotnet add package Microsoft.Data.Sqlite
 ```
+
+## Features
+
+- [x] Add car
+- [x] Load / Save car to database
+- [x] Calculate trip fuel price
+- [x] Print rapport of car
+- [x] Export / Import data to json
+
+## Todo
+
+- [ ] Clear Database
+
+## Known issues
+
+- [ ] When returned from database menu, then main menu title missing first letter. Tepmorary fix wrtting a char to console before clear.
+- [ ] When import and export json give user info about the process
+
 
 [contributors-shield]: https://img.shields.io/github/contributors/TirsvadDatamatiker/CarApp?style=for-the-badge
 [contributors-url]: https://github.com/TirsvadDatamatiker/CarApp/graphs/contributors

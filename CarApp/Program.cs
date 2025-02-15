@@ -299,7 +299,6 @@ namespace CarApp
         {
             Car? car = null; // Create a car object
             System.ConsoleKeyInfo choice; // The user's choice
-            bool succes = false; // Succes of the operation
 
             IEnumerable<FuelType> fuelTypes = Globals.DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
 
@@ -313,6 +312,7 @@ namespace CarApp
                 Console.WriteLine("F3: Tilføj tur");
                 Console.WriteLine("F4: Vis bilen detajler");
                 Console.WriteLine("F5: Tjek om kilometerstanden er et palindrom");
+                Console.WriteLine("F6: Database Menu");
                 Console.WriteLine("ESC: Afslut");
                 Console.WriteLine();
                 Console.Write("Vælg:");
@@ -366,16 +366,53 @@ namespace CarApp
                             Console.ReadLine();
                         }
                         break;
-                    case ConsoleKey.Escape:
-                        succes = true;
+                    case ConsoleKey.F6:
+                        MenuDatabase();
                         break;
+                    case ConsoleKey.Escape:
+                        return; // Exit the method
                     default:
                         Console.WriteLine("Ugyldigt valg.");
                         Console.WriteLine("Tast for at forsætte.");
                         Console.ReadKey();
                         break;
                 }
-            } while (!succes);
+            } while (true);
+        }
+
+        static void MenuDatabase()
+        {
+            do
+            {
+                Console.Clear(); // Clear the console window
+                Console.WriteLine("Database Menu");
+                Console.WriteLine("=============");
+                Console.WriteLine("F1: Import json to database (It will clear all existing data in db");
+                Console.WriteLine("F2: Export database to json");
+                //Console.WriteLine("F3: Clear database");
+                Console.WriteLine("ESC: Exit");
+                ConsoleKeyInfo choice = Console.ReadKey(); // Wait for a key press
+                switch (choice.Key)
+                {
+                    case ConsoleKey.F1:
+                        Globals.DbSqlHandler.ImportFromJson();
+                        break;
+                    case ConsoleKey.F2:
+                        Globals.DbSqlHandler.ExportToJson();
+                        break;
+                    //case ConsoleKey.F3:
+                    //Globals.DbSqlHandler.ClearDatabase();
+                    //break;
+                    case ConsoleKey.Escape:
+                        Console.WriteLine("a"); //BUG: If we don not write anything in the case, it will loose first character in Menu 
+                        return; // Exit the method
+                    default:
+                        Console.WriteLine("Ugyldigt valg.");
+                        Console.WriteLine("Tast for at forsætte.");
+                        Console.ReadKey();
+                        break;
+                }
+            } while (true);
         }
 
 

@@ -205,9 +205,65 @@ namespace CarApp
         {
             using (var connection = Connection)
             {
-                var sql = "INSERT INTO FuelTypes (Name, Price) VALUES (@Name, @Price)";
+                var sql = "INSERT INTO FuelTypes (Id, Name, Price) VALUES (@Id, @Name, @Price)";
+                Console.WriteLine(sql);
                 connection.Execute(sql, fuelType);
             }
+        }
+
+        /// <summary>
+        /// Imports data from a JSON file into the database.
+        /// </summary>
+        public void ImportFromJson()
+        {
+            using (var connection = Connection)
+            {
+                var sql = "DELETE FROM Cars";
+                connection.Execute(sql);
+                Console.WriteLine("Cars table cleared.");
+
+                sql = "DELETE FROM FuelTypes";
+                connection.Execute(sql);
+                Console.WriteLine("FuelTypes table cleared.");
+            }
+
+            JsonFileHandler jsonFileHandler = new JsonFileHandler();
+            JsonFileHandler.DataContainer? data = jsonFileHandler.ImportData(Globals.JsonFileName);
+
+            if (data != null)
+            {
+                // FuelTypes must come before Cars because of foreign keys in db
+                foreach (var fuelType in data.FuelTypes)
+                {
+                    AddFuelType(fuelType);
+                }
+                Console.WriteLine("Fuel types imported.");
+                foreach (var car in data.Cars)
+                {
+                    AddCar(car);
+                }
+                Console.WriteLine("Cars imported.");
+            }
+            else
+            {
+                Console.WriteLine("No data imported.");
+                Console.WriteLine("Tryk på en tast for at fortsætte...");
+                Console.ReadKey();
+            }
+        }
+
+        public void ExportToJson()
+        {
+            JsonFileHandler jsonFileHandler = new JsonFileHandler();
+            var cars = Globals.DbSqlHandler.GetCars().ToList();
+            var fuelTypes = Globals.DbSqlHandler.GetFuelTypes().ToList();
+            JsonFileHandler.DataContainer dataContainer = new JsonFileHandler.DataContainer
+            {
+                Cars = cars,
+                FuelTypes = fuelTypes
+            };
+
+            jsonFileHandler.ExportData(Globals.JsonFileName, dataContainer);
         }
     }
 }
