@@ -19,7 +19,7 @@
     <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_mainMenu.png">
         <img src="images/Screenshot_mainMenu.png" alt="Main Menu" height="120">
     </a>
-    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_databaseMenu.png.png">
+    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_databaseMenu.png">
         <img src="images/Screenshot_databaseMenu.png" alt="Database Menu" height="120">
     </a>
     <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_selectCar.png">
