@@ -6,7 +6,7 @@ namespace CarApp
 {
     public class DbSqliteHandler
     {
-        private readonly string _connectionString;
+        private readonly string _connectionString; // Connection string for SQLite
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DbSqliteHandler"/> class.
@@ -183,6 +183,19 @@ namespace CarApp
         }
 
         /// <summary>
+        /// Deletes a car from the database.
+        /// </summary>
+        /// <param name="car">The car to delete.</param>
+        public void DeleteCar(Car car)
+        {
+            using (var connection = Connection)
+            {
+                var sql = "DELETE FROM Cars WHERE Id = @Id";
+                connection.Execute(sql, new { Id = car.Id });
+            }
+        }
+
+        /// <summary>
         /// Updates the details of an existing car in the database.
         /// </summary>
         /// <param name="car">The car object containing updated details.</param>
@@ -252,6 +265,9 @@ namespace CarApp
             }
         }
 
+        /// <summary>
+        /// Exports the data from the database to a JSON file.
+        /// </summary>
         public void ExportToJson()
         {
             JsonFileHandler jsonFileHandler = new JsonFileHandler();

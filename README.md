@@ -60,13 +60,20 @@ dotnet add package Dapper
 dotnet add package Microsoft.Data.Sqlite
 ```
 
+## Usage
+```bash
+dotnet run
+```
+
+You may need to remove / change key bindings ´F11´ in the terminal to use the application properly.
+
 ## Features
 
 - [x] Add car
 - [x] Load / Save car to database
 - [x] Calculate trip fuel price
 - [x] Print rapport of car
-- [x] Export / Import data to json
+- [x] Export / Import json data
 
 ## Todo
 

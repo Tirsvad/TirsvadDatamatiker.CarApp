@@ -65,59 +65,139 @@ namespace CarApp
         /// <returns>The chosen car object.</returns>
         static Car? SelectCar()
         {
-            Console.Clear();
-            Console.WriteLine("Vælg bil");
-            Console.WriteLine("========");
-            Console.WriteLine();
+            List<Car> cars = Globals.DbSqlHandler.GetCars().ToList(); // Get the cars from the database
+            List<int> columns = new() { 3, 20, 20, 20 }; // number of columns and their width
+            System.ConsoleKeyInfo choice; // The user's choice
+            int elementCounter = 0;
+            int i;
 
-            List<Car> cars = Globals.DbSqlHandler.GetCars().ToList();
-
-            // number of columns
-            List<int> columns = new() { 2, 20, 20, 20 };
-
-            // Create Table for console
-            CreateTableFrameH(columns);
-            Console.WriteLine(
-                "| " + "#".PadLeft(columns[0]) +
-                " | " + CenterString("Mærke", columns[1]) +
-                " | " + CenterString("Model", columns[2]) +
-                " | " + CenterString("Kilemetertal", columns[3]) +
-                " |");
-            CreateTableFrameH(columns);
-
-            for (int i = 1; i < cars.Count + 1; i++)
-            {
-                int ii = i - 1;
-                Console.WriteLine(
-                    "| " + $"{i.ToString().PadLeft(columns[0])}" +
-                    " | " + $"{cars[ii].Brand}".PadRight(columns[1]) +
-                    " | " + $"{cars[ii].Model}".PadRight(columns[2]) +
-                    " | " + $"{cars[ii].Mileage}".PadLeft(columns[3]) +
-                    " |");
-            }
-            CreateTableFrameH(columns);
-            Console.WriteLine();
-            Console.WriteLine("0. Afslut");
-            Console.WriteLine();
-            int choice;
             do
             {
-                Console.Write("Vælg: ");
-                string? input = Console.ReadLine();
-                if (int.TryParse(input, out choice) && choice > 0 && choice <= cars.Count)
+                Console.Clear();
+                Console.WriteLine("Vælg bil");
+                Console.WriteLine("========");
+                Console.WriteLine();
+
+                // Create Table for console
+                CreateTableFrameH(columns); // Create a horizontal table frame
+                Console.WriteLine(
+                    "| " + "#".PadLeft(columns[0]) +
+                    " | " + CenterString("Mærke", columns[1]) +
+                    " | " + CenterString("Model", columns[2]) +
+                    " | " + CenterString("Kilemetertal", columns[3]) +
+                    " |");
+                CreateTableFrameH(columns); // Create a horizontal table frame
+
+                for (i = 1 + elementCounter; i < cars.Count + 1; i++)
                 {
-                    break;
+                    if (i > elementCounter + 10)
+                    {
+                        break;
+                    }
+                    int ii = i - 1;
+
+                    string option = $"F{(i - elementCounter)}";
+                    Console.WriteLine(
+                        "| " + $"{option.PadLeft(columns[0])}" +
+                        " | " + $"{cars[ii].Brand}".PadRight(columns[1]) +
+                        " | " + $"{cars[ii].Model}".PadRight(columns[2]) +
+                        " | " + $"{cars[ii].Mileage}".PadLeft(columns[3]) +
+                        " |");
                 }
-                else if (int.TryParse(input, out choice) && choice == 0)
+
+
+                CreateTableFrameH(columns); // Create a horizontal table frame
+                Console.WriteLine();
+                if (elementCounter > 0)
                 {
-                    return null;
+                    Console.WriteLine("F11: Forrige side ");
                 }
-                else
+                if (elementCounter + 10 < cars.Count - 1)
                 {
-                    Console.WriteLine("Ugyldigt valg, prøv igen.");
+                    Console.WriteLine("F12: Næste side ");
+                }
+                Console.WriteLine("ESC: Afslut");
+                choice = Console.ReadKey();
+
+                switch (choice.Key)
+                {
+                    case ConsoleKey.F1:
+                        return cars[elementCounter];
+                    case ConsoleKey.F2:
+                        if (elementCounter + 1 < cars.Count)
+                        {
+                            return cars[elementCounter + 1];
+                        }
+                        break;
+                    case ConsoleKey.F3:
+                        if (elementCounter + 2 < cars.Count)
+                        {
+                            return cars[elementCounter + 2];
+                        }
+                        break;
+                    case ConsoleKey.F4:
+                        if (elementCounter + 3 < cars.Count)
+                        {
+                            return cars[elementCounter + 3];
+                        }
+                        break;
+                    case ConsoleKey.F5:
+                        if (elementCounter + 4 < cars.Count)
+                        {
+                            return cars[elementCounter + 4];
+                        }
+                        break;
+                    case ConsoleKey.F6:
+                        if (elementCounter + 5 < cars.Count)
+                        {
+                            return cars[elementCounter + 5];
+                        }
+                        break;
+                    case ConsoleKey.F7:
+                        if (elementCounter + 6 < cars.Count)
+                        {
+                            return cars[elementCounter + 6];
+                        }
+                        break;
+                    case ConsoleKey.F8:
+                        if (elementCounter + 7 < cars.Count)
+                        {
+                            return cars[elementCounter + 7];
+                        }
+                        break;
+                    case ConsoleKey.F9:
+                        if (elementCounter + 8 < cars.Count)
+                        {
+                            return cars[elementCounter + 8];
+                        }
+                        break;
+                    case ConsoleKey.F10:
+                        if (elementCounter + 9 < cars.Count)
+                        {
+                            return cars[elementCounter + 9];
+                        }
+                        break;
+                    case ConsoleKey.F11:
+                        if (elementCounter > 0)
+                        {
+                            elementCounter -= 10;
+                        }
+                        break;
+                    case ConsoleKey.F12:
+                        if (elementCounter + 10 < cars.Count)
+                        {
+                            elementCounter += 10;
+                        }
+                        break;
+                    case ConsoleKey.Escape:
+                        return null;
+                    default:
+                        Console.WriteLine("Ugyldigt valg.");
+                        Console.WriteLine("Tast for at forsætte.");
+                        Console.ReadKey();
+                        break;
                 }
             } while (true);
-            return cars[choice - 1];
         }
 
         /// <summary>
@@ -307,15 +387,18 @@ namespace CarApp
                 Console.Clear(); // Clear the console window
                 Console.WriteLine("Menu");
                 Console.WriteLine("====");
-                Console.WriteLine("F1: Tilføj bil");
-                Console.WriteLine("F2: Vælg bil");
-                Console.WriteLine("F3: Tilføj tur");
-                Console.WriteLine("F4: Vis bilen detajler");
-                Console.WriteLine("F5: Tjek om kilometerstanden er et palindrom");
-                Console.WriteLine("F6: Database Menu");
+                Console.WriteLine("F1: Tilføj en bil...");
+                Console.WriteLine("F2: Slet en bil...");
+                Console.WriteLine("F3: Vælg bil...");
+                if (car != null)
+                {
+                    Console.WriteLine("F4: Tilføj tur...");
+                    Console.WriteLine($"F5: Vis {car.Brand} {car.Model} detajler");
+                    Console.WriteLine($"F6: Tjek om {car.Brand} {car.Model} kilometerstanden er et palindrom");
+                }
+                Console.WriteLine("F7: Database Menu...");
                 Console.WriteLine("ESC: Afslut");
                 Console.WriteLine();
-                Console.Write("Vælg:");
 
                 choice = Console.ReadKey(); // Wait for a key press
 
@@ -327,8 +410,15 @@ namespace CarApp
                         break;
                     case ConsoleKey.F2:
                         car = SelectCar();
+                        if (car != null)
+                        {
+                            Globals.DbSqlHandler.DeleteCar(car); // Delete the car from the database
+                        }
                         break;
                     case ConsoleKey.F3:
+                        car = SelectCar();
+                        break;
+                    case ConsoleKey.F4:
                         if (car != null)
                         {
                             car = AddTour(car);
@@ -340,10 +430,10 @@ namespace CarApp
                         else
                         {
                             Console.WriteLine("Ingen bil valgt. Tilføj eller vælg en bil først.");
-                            Console.ReadLine();
+                            Console.ReadKey();
                         }
                         break;
-                    case ConsoleKey.F4:
+                    case ConsoleKey.F5:
                         if (car != null)
                         {
                             PrintCarDetails(car);
@@ -351,35 +441,45 @@ namespace CarApp
                         else
                         {
                             Console.WriteLine("Ingen bil valgt. Tilføj eller vælg en bil først.");
-                            Console.ReadLine();
+                            Console.WriteLine("\nTryk på en tast for at fortsætte...");
+                            Console.ReadKey(); // Wait for a key press
+
                         }
                         break;
-                    case ConsoleKey.F5:
+                    case ConsoleKey.F6:
                         if (car != null)
                         {
                             Console.WriteLine(IsPalindrome(car) ? "Kilometertallet er et palindrom." : "Kilometertallet er ikke et palindrom.");
-                            Console.ReadLine();
+                            Console.WriteLine("\nTryk på en tast for at fortsætte...");
+                            Console.ReadKey(); // Wait for a key press
+
                         }
                         else
                         {
                             Console.WriteLine("Ingen bil valgt. Tilføj eller vælg en bil først.");
-                            Console.ReadLine();
+                            Console.WriteLine("\nTryk på en tast for at fortsætte...");
+                            Console.ReadKey(); // Wait for a key press
+
                         }
                         break;
-                    case ConsoleKey.F6:
+                    case ConsoleKey.F7:
                         MenuDatabase();
                         break;
                     case ConsoleKey.Escape:
                         return; // Exit the method
                     default:
                         Console.WriteLine("Ugyldigt valg.");
-                        Console.WriteLine("Tast for at forsætte.");
-                        Console.ReadKey();
+                        Console.WriteLine("\nTryk på en tast for at fortsætte...");
+                        Console.ReadKey(); // Wait for a key press
+
                         break;
                 }
             } while (true);
         }
 
+        /// <summary>
+        /// Displays the database menu and handles user input.
+        /// </summary>
         static void MenuDatabase()
         {
             do
@@ -389,8 +489,8 @@ namespace CarApp
                 Console.WriteLine("=============");
                 Console.WriteLine("F1: Import json to database (It will clear all existing data in db");
                 Console.WriteLine("F2: Export database to json");
-                //Console.WriteLine("F3: Clear database");
-                Console.WriteLine("ESC: Exit");
+                // TODO Console.WriteLine("F3: Clear database");
+                Console.WriteLine("ESC: Afslut");
                 ConsoleKeyInfo choice = Console.ReadKey(); // Wait for a key press
                 switch (choice.Key)
                 {
@@ -400,9 +500,11 @@ namespace CarApp
                     case ConsoleKey.F2:
                         Globals.DbSqlHandler.ExportToJson();
                         break;
-                    //case ConsoleKey.F3:
-                    //Globals.DbSqlHandler.ClearDatabase();
-                    //break;
+                    /* TODO
+                case ConsoleKey.F3:
+                Globals.DbSqlHandler.ClearDatabase();
+                break;
+                    */
                     case ConsoleKey.Escape:
                         Console.WriteLine("a"); //BUG: If we don not write anything in the case, it will loose first character in Menu 
                         return; // Exit the method
@@ -414,7 +516,6 @@ namespace CarApp
                 }
             } while (true);
         }
-
 
         /// <summary>
         /// The main entry point for the application.
