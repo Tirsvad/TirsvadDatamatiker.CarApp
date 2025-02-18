@@ -50,22 +50,54 @@ A car application as assignment for the course "Datamatiker" at UCL
   - [Todo](#todo)
   - [Known issues](#known-issues)
 
-## Prepare Sqlite
+## About The Project
 
-Install Sqlite and Dapper
+This project is a car registration app that allows users to register their cars and view the cars that are already registered. The app is built using .NET for Console. The app is built as a part of the course DMOoF25 at UCL.
 
-```
-dotnet nuget add source https://api.nuget.org/v3/index.json
-dotnet add package Dapper
-dotnet add package Microsoft.Data.Sqlite
-```
+## Getting Started
 
-## Usage
-```bash
-dotnet run
-```
+To get a local copy up and running follow these simple steps.
 
-You may need to remove / change key bindings ´F11´ in the terminal to use the application properly.
+### Prerequisites
+
+This is an example of how to list things you need to use the software and how to install them.
+
+- .NET 9.0
+    ```
+    https://dotnet.microsoft.com/download/dotnet/9.0
+    ```
+
+- Visual Studio 2022
+    ```
+    https://visualstudio.microsoft.com/
+    ```
+
+- Install Sqlite and Dapper
+
+    Go to the project folder and run the following commands
+
+    ```
+    dotnet nuget add source https://api.nuget.org/v3/index.json
+    dotnet add package Dapper
+    dotnet add package Microsoft.Data.Sqlite
+    ```
+
+### Build and Run
+
+1. Clone the repo
+    ```sh
+    git clone git@github.com:TirsvadDatamatiker/CarApp.git
+    ```
+
+2. Open the project in Visual Studio 2022
+
+3. Build the project
+
+4. Run the project
+
+5. Optionally, you can import sample data by pressing 'F7' in menu and then 'F1' in database menu
+
+You may need to remove / change key bindings ´F11´ in the VS buildin terminal to use the application properly.
 
 ## Features
 
@@ -81,10 +113,19 @@ You may need to remove / change key bindings ´F11´ in the terminal to use the 
 
 ## Known issues
 
-- [ ] When returned from database menu, then main menu title missing first letter. Temporary fix wrtting a char to console before clear.
+- [X] When returned from database menu, then main menu title missing first letter. Temporary fix wrtting a char to console before clear.
 - [ ] When import and export json give user info about the process
 
+## Folder Structure
 
+```sh
+./logo/             #Contains the logo of the project.
+./documentation/    #Contains the documentation for the project.
+./images/           #Contains images used in the documentation.
+./CarApp/           #Contains the source code for the project.
+```
+
+<!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/github/contributors/TirsvadDatamatiker/CarApp?style=for-the-badge
 [contributors-url]: https://github.com/TirsvadDatamatiker/CarApp/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/TirsvadDatamatiker/CarApp?style=for-the-badge

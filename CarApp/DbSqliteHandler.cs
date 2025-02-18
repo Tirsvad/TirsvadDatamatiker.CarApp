@@ -4,6 +4,9 @@ using System.Data;
 
 namespace CarApp
 {
+    /// <summary>
+    /// Handles the SQLite database.
+    /// </summary>
     public class DbSqliteHandler
     {
         private readonly string _connectionString; // Connection string for SQLite
@@ -44,14 +47,15 @@ namespace CarApp
         }
 
         /// <summary>
-        /// Creates the database using the SQL script specified in the Globals.
+        /// Creates the database using the SQL script specified in the Constants.
         /// </summary>
         /// <param name="connection">The database connection.</param>
         private static void CreateDb(IDbConnection connection) // IDbConnection is used to support multiple database providers
         {
-            var sql = File.ReadAllText(Globals.DbSqliteCreateDbFileName); // Read the SQL script from the file
+            var sql = File.ReadAllText(Constants.dbSqliteCreateDbFileName); // Read the SQL script from the file
             connection.Execute(sql); // Execute the SQL script
         } // Close the connection
+
 
         /// <summary>
         /// Creates the MigrationVersion table if it doesn't exist.
@@ -241,7 +245,7 @@ namespace CarApp
             }
 
             JsonFileHandler jsonFileHandler = new JsonFileHandler();
-            JsonFileHandler.DataContainer? data = jsonFileHandler.ImportData(Globals.JsonFileName);
+            JsonFileHandler.DataContainer? data = jsonFileHandler.ImportData(Constants.jsonFileName);
 
             if (data != null)
             {
@@ -271,15 +275,15 @@ namespace CarApp
         public void ExportToJson()
         {
             JsonFileHandler jsonFileHandler = new JsonFileHandler();
-            var cars = Globals.DbSqlHandler.GetCars().ToList();
-            var fuelTypes = Globals.DbSqlHandler.GetFuelTypes().ToList();
+            var cars = Program.DbSqlHandler.GetCars().ToList();
+            var fuelTypes = Program.DbSqlHandler.GetFuelTypes().ToList();
             JsonFileHandler.DataContainer dataContainer = new JsonFileHandler.DataContainer
             {
                 Cars = cars,
                 FuelTypes = fuelTypes
             };
 
-            jsonFileHandler.ExportData(Globals.JsonFileName, dataContainer);
+            jsonFileHandler.ExportData(Constants.jsonFileName, dataContainer);
         }
     }
 }

@@ -4,6 +4,11 @@ namespace CarApp
 {
     internal class Program
     {
+        public static DbSqliteHandler DbSqlHandler = new DbSqliteHandler(Constants.dbSqliteFileName);
+
+
+        // Car methods
+
         /// <summary>
         /// Prompts the user to input car information and returns the car object.
         /// </summary>
@@ -12,7 +17,7 @@ namespace CarApp
         {
             Car car = new(); // Create a new car object
 
-            IEnumerable<FuelType> fuelTypes = Globals.DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
+            IEnumerable<FuelType> fuelTypes = Program.DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
 
             char gearType; // Gear type as a character
 
@@ -65,7 +70,7 @@ namespace CarApp
         /// <returns>The chosen car object.</returns>
         static Car? SelectCar()
         {
-            List<Car> cars = Globals.DbSqlHandler.GetCars().ToList(); // Get the cars from the database
+            List<Car> cars = Program.DbSqlHandler.GetCars().ToList(); // Get the cars from the database
             List<int> columns = new() { 3, 20, 20, 20 }; // number of columns and their width
             System.ConsoleKeyInfo choice; // The user's choice
             int elementCounter = 0;
@@ -190,6 +195,7 @@ namespace CarApp
                         }
                         break;
                     case ConsoleKey.Escape:
+                        Console.Write(choice.KeyChar);
                         return null;
                     default:
                         Console.WriteLine("Ugyldigt valg.");
@@ -201,77 +207,12 @@ namespace CarApp
         }
 
         /// <summary>
-        /// Adds a tour to the car and calculates the fuel needed and trip cost.
-        /// </summary>
-        /// <param name="car">The car object to add the tour to.</param>
-        /// <returns>The updated car object.</returns>
-        static Car AddTour(Car car)
-        {
-            Console.Clear(); // Clear the console window
-            IEnumerable<FuelType> fuelTypes = Globals.DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
-
-            Console.WriteLine("Beregn turens pris");
-            Console.WriteLine("==========");
-            Console.Write("Simuleret tur? (j/n): ");
-            char response = char.ToUpper(Console.ReadKey().KeyChar);
-            Console.WriteLine();
-            if (response == 'N')
-            {
-                car.isEngineRunning = true;
-            }
-            else
-            {
-                car.isEngineRunning = false;
-            }
-
-            Console.Write("Indtast antal kilometer: ");
-            int distance = Convert.ToInt32(Console.ReadLine());
-
-            double fuelNeeded = CalculateFuelNeeded(car, distance);
-            decimal tripCost = CalculateTripCost(car, fuelNeeded);
-            car.AddTour(distance);
-
-            Console.WriteLine();
-            Console.WriteLine("Tur rapport");
-            Console.WriteLine("===========");
-
-            Console.WriteLine(
-                $"Bilmærke: {car.Brand}\n" +
-                $"Bilmodel: {car.Model}\n" +
-                $"Årgang: {car.Year}\n" +
-                $"Gear: {car.GearType}\n" +
-                $"Brændstof: {fuelTypes.First(ft => ft.Id == car.FuelTypeId).Name}\n" +
-                $"Forbrug: {car.FuelEfficiency}\n" +
-                $"Kilometerstand: {car.Mileage}\n" +
-                $"Beskrivelse: {car.Description}"
-            );
-            Console.WriteLine();
-            Console.WriteLine(
-                string.Format(
-                    "Tur\n" +
-                    "===\n" +
-                    "Antal kilometer {0} vil bruge " +
-                    "{1:F2} liter brændstofforbrug" +
-                    " hvilket vil kost {2:F2} kr.",
-                    distance,
-                    fuelNeeded,
-                    tripCost
-                )
-            );
-            Console.WriteLine();
-            Console.WriteLine("\nTryk på en tast for at fortsætte...");
-            Console.ReadKey(); // Wait for a key press
-
-            return car;
-        }
-
-        /// <summary>
         /// Displays a report of the car's information.
         /// </summary>
         /// <param name="car">The car object to display the report for.</param>
         static void PrintCarDetails(Car car)
         {
-            IEnumerable<FuelType> fuelTypes = Globals.DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
+            IEnumerable<FuelType> fuelTypes = DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
 
             Console.Clear();
             Console.WriteLine("Bilrapport");
@@ -280,14 +221,16 @@ namespace CarApp
             Console.WriteLine("Biler");
             Console.WriteLine("=====");
             Console.WriteLine(
-                $"Bilmærke: {car.Brand}\n" +
-                $"Bilmodel: {car.Model}\n" +
-                $"Årgang: {car.Year}\n" +
-                $"Gear: {car.GearType}\n" +
-                $"Brændstof: {fuelTypes.First(ft => ft.Id == car.FuelTypeId).Name}\n" +
-                $"Forbrug: {car.FuelEfficiency}" + " km/l\n" +
-                $"Kilometerstand: {car.Mileage}\n" +
-                $"Beskrivelse: {car.Description}"
+                $"Bilmærke: {car.Brand}" + "\n" +
+                $"Bilmodel: {car.Model}" + "\n" +
+                $"Årgang: {car.Year}" + "\n" +
+                $"Gear: {car.GearType}" + "\n" +
+                $"Brændstof: {fuelTypes.First(ft => ft.Id == car.FuelTypeId).Name}" + "\n" +
+                $"Forbrug: {car.FuelEfficiency} km/l" + "\n" +
+                $"Kilometerstand: {car.Mileage}" +
+                (Car.IsPalindrome(car) ? " ** Palindrome nummer **" : "") + "\n" + // Check if the mileage is a palindrome
+                $"Beskrivelse: {car.Description}" + "\n" +
+                (car.IsEngineRunning ? "Bilen er tændt" : "Bilen er slukket") + "\n"
             );
 
             Console.WriteLine();
@@ -295,47 +238,33 @@ namespace CarApp
             Console.ReadKey(); // Wait for a key press
         }
 
-        /// <summary>
-        /// Checks if a car's mileage is a palindrome.
-        /// </summary>
-        /// <param name="car">The car object containing the mileage information.</param>
-        /// <returns>True if the mileage is a palindrome, otherwise false.</returns>
-        static bool IsPalindrome(Car car)
+        static void TripCost(Car car)
         {
-            string odometer = car.Mileage.ToString();
-
-            for (int i = 0; i < odometer.Length / 2; i++)
+            Console.Clear();
+            Console.WriteLine("Beregn tur omkostning");
+            Console.WriteLine("=====================" + "\n");
+            Console.Write("Indtast turen længde? ");
+            if (int.TryParse(Console.ReadLine(), out int km))
             {
-                if (odometer[i] != odometer[odometer.Length - i - 1])
+                if (car.IsEngineRunning)
                 {
-                    return false;
+                    car.UpdateMileAge(km); // Update the car's mileage
                 }
+                double fuelNeeded = Car.CalculateFuelNeeded(car, km);
+                Console.WriteLine("\n" + $"Turens omkostning bliver {Car.CalculateTripCost(car, fuelNeeded):F2} kr og der skal bruges {fuelNeeded:F2} liter brændstof" + "\n");
+                Console.WriteLine("\nTryk på en tast for at fortsætte...");
+                Console.ReadKey(); // Wait for a key press
+
             }
-            return true;
+            else
+            {
+                Console.WriteLine("Ugyldigt input. Indtast et gyldigt tal.");
+                Console.WriteLine("\nTryk på en tast for at fortsætte...");
+                Console.ReadKey();
+            }
         }
 
-        /// <summary>
-        /// Calculates the amount of fuel needed for a given distance.
-        /// </summary>
-        /// <param name="car">The car object containing fuel efficiency information.</param>
-        /// <param name="distance">The distance to be traveled in kilometers.</param>
-        /// <returns>The amount of fuel needed for the given distance.</returns>
-        static double CalculateFuelNeeded(Car car, int distance)
-        {
-            return (double)(distance / car.FuelEfficiency);
-        }
-
-        /// <summary>
-        /// Calculates the trip cost based on the fuel needed and the fuel price.
-        /// </summary>
-        /// <param name="car">The car object containing the fuel type information.</param>
-        /// <param name="fuelNeeded">The amount of fuel needed for the trip.</param>
-        /// <returns>The cost of the trip.</returns>
-        static decimal CalculateTripCost(Car car, double fuelNeeded)
-        {
-            IEnumerable<FuelType> fuelTypes = Globals.DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
-            return (decimal)(fuelNeeded * (float)fuelTypes.First(ft => ft.Id == car.FuelTypeId).Price);
-        }
+        // Table methods
 
         /// <summary>
         /// Creates a horizontal table frame for the console output.
@@ -351,6 +280,8 @@ namespace CarApp
             }
             Console.WriteLine();
         }
+
+        // String methods
 
         /// <summary>
         /// Centers the given text within a specified width.
@@ -372,16 +303,19 @@ namespace CarApp
             return new string(' ', leftPadding) + text + new string(' ', rightPadding);
         }
 
+        // Menu methods
+
         /// <summary>
         /// Displays the menu and handles user input.
         /// </summary>
-        static public void Menu()
+        private static void Menu()
         {
+            // Declare variables
             Car? car = null; // Create a car object
             System.ConsoleKeyInfo choice; // The user's choice
+            IEnumerable<FuelType> fuelTypes = DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
 
-            IEnumerable<FuelType> fuelTypes = Globals.DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
-
+            // Loop until the user exits the program
             do
             {
                 Console.Clear(); // Clear the console window
@@ -390,29 +324,30 @@ namespace CarApp
                 Console.WriteLine("F1: Tilføj en bil...");
                 Console.WriteLine("F2: Slet en bil...");
                 Console.WriteLine("F3: Vælg bil...");
-                if (car != null)
+                if (car != null) // If a car is selected
                 {
-                    Console.WriteLine("F4: Tilføj tur...");
+                    Console.WriteLine("F4: Beregn tur omkostning...");
                     Console.WriteLine($"F5: Vis {car.Brand} {car.Model} detajler");
                     Console.WriteLine($"F6: Tjek om {car.Brand} {car.Model} kilometerstanden er et palindrom");
-                }
-                Console.WriteLine("F7: Database Menu...");
+                    Console.WriteLine($"F7: {(car.IsEngineRunning ? "Sluk" : "Tænd")} motoren");
+                } // End if a car is selected
+                Console.WriteLine("F8: Database Menu...");
                 Console.WriteLine("ESC: Afslut");
                 Console.WriteLine();
 
                 choice = Console.ReadKey(); // Wait for a key press
 
-                switch (choice.Key)
+                switch (choice.Key) // Switch on the user's choice
                 {
-                    case ConsoleKey.F1:
+                    case ConsoleKey.F1: // If the user pressed F1
                         car = InputCar(); // Pass a new Car object to InputCar
-                        Globals.DbSqlHandler.AddCar(car); // Add the car to the database
+                        DbSqlHandler.AddCar(car); // Add the car to the database
                         break;
                     case ConsoleKey.F2:
                         car = SelectCar();
                         if (car != null)
                         {
-                            Globals.DbSqlHandler.DeleteCar(car); // Delete the car from the database
+                            DbSqlHandler.DeleteCar(car); // Delete the car from the database
                         }
                         break;
                     case ConsoleKey.F3:
@@ -421,11 +356,7 @@ namespace CarApp
                     case ConsoleKey.F4:
                         if (car != null)
                         {
-                            car = AddTour(car);
-                            if (car.isEngineRunning)
-                            {
-                                Globals.DbSqlHandler.UpdateCar(car); // Update the car in the database
-                            }
+                            TripCost(car);
                         }
                         else
                         {
@@ -443,38 +374,54 @@ namespace CarApp
                             Console.WriteLine("Ingen bil valgt. Tilføj eller vælg en bil først.");
                             Console.WriteLine("\nTryk på en tast for at fortsætte...");
                             Console.ReadKey(); // Wait for a key press
-
                         }
                         break;
                     case ConsoleKey.F6:
                         if (car != null)
                         {
-                            Console.WriteLine(IsPalindrome(car) ? "Kilometertallet er et palindrom." : "Kilometertallet er ikke et palindrom.");
+                            Console.WriteLine(Car.IsPalindrome(car) ? "Kilometertallet er et palindrom." : "Kilometertallet er ikke et palindrom.");
                             Console.WriteLine("\nTryk på en tast for at fortsætte...");
                             Console.ReadKey(); // Wait for a key press
-
                         }
                         else
                         {
                             Console.WriteLine("Ingen bil valgt. Tilføj eller vælg en bil først.");
                             Console.WriteLine("\nTryk på en tast for at fortsætte...");
                             Console.ReadKey(); // Wait for a key press
-
                         }
                         break;
                     case ConsoleKey.F7:
+                        if (car != null)
+                        {
+                            if (car.IsEngineRunning)
+                            {
+                                car.StopEngine();
+                            }
+                            else
+                            {
+                                car.StartEngine();
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ingen bil valgt. Tilføj eller vælg en bil først.");
+                            Console.WriteLine("\nTryk på en tast for at fortsætte...");
+                            Console.ReadKey(); // Wait for a key press
+                        }
+                        break;
+                    case ConsoleKey.F8:
                         MenuDatabase();
                         break;
-                    case ConsoleKey.Escape:
-                        return; // Exit the method
+                    case ConsoleKey.Escape: // If the user pressed ESC
+                        Console.Write(choice.KeyChar);
+                        return; // Exit the method (and the program)
                     default:
                         Console.WriteLine("Ugyldigt valg.");
                         Console.WriteLine("\nTryk på en tast for at fortsætte...");
                         Console.ReadKey(); // Wait for a key press
-
                         break;
                 }
-            } while (true);
+            } while (true); // End loop
         }
 
         /// <summary>
@@ -482,7 +429,7 @@ namespace CarApp
         /// </summary>
         static void MenuDatabase()
         {
-            do
+            do // Loop until the user exits the database menu
             {
                 Console.Clear(); // Clear the console window
                 Console.WriteLine("Database Menu");
@@ -495,18 +442,18 @@ namespace CarApp
                 switch (choice.Key)
                 {
                     case ConsoleKey.F1:
-                        Globals.DbSqlHandler.ImportFromJson();
+                        DbSqlHandler.ImportFromJson();
                         break;
                     case ConsoleKey.F2:
-                        Globals.DbSqlHandler.ExportToJson();
+                        DbSqlHandler.ExportToJson();
                         break;
                     /* TODO
                 case ConsoleKey.F3:
-                Globals.DbSqlHandler.ClearDatabase();
+                    DbSqlHandler.ClearDatabase();
                 break;
                     */
                     case ConsoleKey.Escape:
-                        Console.WriteLine("a"); //BUG: If we don not write anything in the case, it will loose first character in Menu 
+                        Console.Write(choice.KeyChar);
                         return; // Exit the method
                     default:
                         Console.WriteLine("Ugyldigt valg.");
@@ -520,7 +467,7 @@ namespace CarApp
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main()
+        static void Main(/* string[] args */)
         {
             // Set the console output encoding to UTF-8 so æøå are displayed correctly
             Console.OutputEncoding = Encoding.UTF8;
