@@ -23,8 +23,7 @@ namespace CarApp
 
             Console.Clear(); // Clear the console window
 
-            Console.WriteLine("Tilføj bil");
-            Console.WriteLine("==========");
+            Header("Tilføj bil"); // Display the header
             Console.Write("Indtast bilmærke: ");
             car.Brand = Console.ReadLine() ?? string.Empty;
             Console.Write("Indtast bilmodel: ");
@@ -40,8 +39,7 @@ namespace CarApp
             car.GearType = gearType;
 
             Console.WriteLine();
-            Console.WriteLine("Brændstoftyper");
-            Console.WriteLine("==============");
+            Header("Brændstoftyper"); // Display the header
 
             for (int i = 0; i < fuelTypes.Count(); i++) // Loop through the fuel types and display them
             {
@@ -79,9 +77,7 @@ namespace CarApp
             do
             {
                 Console.Clear();
-                Console.WriteLine("Vælg bil");
-                Console.WriteLine("========");
-                Console.WriteLine();
+                Header("Vælg bil");
 
                 // Create Table for console
                 CreateTableFrameH(columns); // Create a horizontal table frame
@@ -215,11 +211,7 @@ namespace CarApp
             IEnumerable<FuelType> fuelTypes = DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
 
             Console.Clear();
-            Console.WriteLine("Bilrapport");
-            Console.WriteLine("==========");
-            Console.WriteLine();
-            Console.WriteLine("Biler");
-            Console.WriteLine("=====");
+            Header("Bilrapport"); // Display the header
             Console.WriteLine(
                 $"Bilmærke: {car.Brand}" + "\n" +
                 $"Bilmodel: {car.Model}" + "\n" +
@@ -241,9 +233,8 @@ namespace CarApp
         static void TripCost(Car car)
         {
             Console.Clear();
-            Console.WriteLine("Beregn tur omkostning");
-            Console.WriteLine("=====================" + "\n");
-            Console.Write("Indtast turen længde? ");
+            Header("Beregn tur omkostning"); // Display the header
+            Console.Write($"Indtast {(car.IsEngineRunning ? "en simuleret tur" : "turens")} længde? ");
             if (int.TryParse(Console.ReadLine(), out int km))
             {
                 if (car.IsEngineRunning)
@@ -284,6 +275,18 @@ namespace CarApp
         // String methods
 
         /// <summary>
+        /// Displays a header with the specified text.
+        /// </summary>
+        /// <param name="text">The text to display in the header.</param>
+        static void Header(string text)
+        {
+            Console.Clear();
+            Console.WriteLine(text);
+            Console.WriteLine(new string('=', text.Length));
+            Console.WriteLine();
+        }
+
+        /// <summary>
         /// Centers the given text within a specified width.
         /// </summary>
         /// <param name="text">The text to center.</param>
@@ -319,8 +322,7 @@ namespace CarApp
             do
             {
                 Console.Clear(); // Clear the console window
-                Console.WriteLine("Menu");
-                Console.WriteLine("====");
+                Header("Menu"); // Display the header
                 Console.WriteLine("F1: Tilføj en bil...");
                 Console.WriteLine("F2: Slet en bil...");
                 Console.WriteLine("F3: Vælg bil...");
@@ -432,8 +434,7 @@ namespace CarApp
             do // Loop until the user exits the database menu
             {
                 Console.Clear(); // Clear the console window
-                Console.WriteLine("Database Menu");
-                Console.WriteLine("=============");
+                Header("Database Menu"); // Display the header
                 Console.WriteLine("F1: Import json to database (It will clear all existing data in db");
                 Console.WriteLine("F2: Export database to json");
                 // TODO Console.WriteLine("F3: Clear database");
