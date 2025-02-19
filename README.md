@@ -27,7 +27,7 @@
     </a>
     <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_carRapport.png">
         <img src="images/Screenshot_carRapport.png" alt="Car Rapport" height="120">
-    </a>
+    </a>    
     <br />
     <a href="https://github.com/TirsvadDatamatiker/CarApp"><strong>Explore the docs »</strong></a>
     <br />
@@ -49,6 +49,9 @@ A car application as assignment for the course "Datamatiker" at UCL
   - [Features](#features)
   - [Todo](#todo)
   - [Known issues](#known-issues)
+  - [Folder Structure](#folder-structure)
+  - [Testing](#testing)
+    - [Result](#result)
 
 ## About The Project
 
@@ -85,7 +88,7 @@ This is an example of how to list things you need to use the software and how to
 ### Build and Run
 
 1. Clone the repo
-    ```sh
+    ```
     git clone git@github.com:TirsvadDatamatiker/CarApp.git
     ```
 
@@ -123,7 +126,16 @@ You may need to remove / change key bindings ´F11´ in the VS buildin terminal 
 ./documentation/    #Contains the documentation for the project.
 ./images/           #Contains images used in the documentation.
 ./CarApp/           #Contains the source code for the project.
+./Tests/            #Contains the test code for the project.
 ```
+
+## Testing
+
+### Result
+
+<a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_testResult.png">
+    <img src="images/Screenshot_testResult.png" alt="Test Result" height="120">
+</a>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/github/contributors/TirsvadDatamatiker/CarApp?style=for-the-badge
