@@ -2,7 +2,11 @@
 
 namespace CarApp
 {
+#if DEBUG // Unit tests only included in debug build 
+    public class Program
+#else
     internal class Program
+#endif
     {
         public static DbSqliteHandler DbSqlHandler = new DbSqliteHandler(Constants.dbSqliteFileName);
 
@@ -278,9 +282,16 @@ namespace CarApp
         /// Displays a header with the specified text.
         /// </summary>
         /// <param name="text">The text to display in the header.</param>
-        static void Header(string text)
+        public static void Header(string text)
         {
+#if DEBUG
+            if (Console.IsOutputRedirected == false)
+            {
+                Console.Clear();
+            }
+#else
             Console.Clear();
+#endif
             Console.WriteLine(text);
             Console.WriteLine(new string('=', text.Length));
             Console.WriteLine();
