@@ -210,24 +210,29 @@ namespace CarApp
         /// Displays a report of the car's information.
         /// </summary>
         /// <param name="car">The car object to display the report for.</param>
-        static void PrintCarDetails(Car car)
+        static void PrintCarDetails(IEnumerable<Car> cars)
         {
             IEnumerable<FuelType> fuelTypes = DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
 
             Console.Clear();
             Header("Bilrapport"); // Display the header
-            Console.WriteLine(
-                $"Bilmærke: {car.Brand}" + "\n" +
-                $"Bilmodel: {car.Model}" + "\n" +
-                $"Årgang: {car.Year}" + "\n" +
-                $"Gear: {car.GearType}" + "\n" +
-                $"Brændstof: {fuelTypes.First(ft => ft.Id == car.FuelTypeId).Name}" + "\n" +
-                $"Forbrug: {car.FuelEfficiency} km/l" + "\n" +
-                $"Kilometerstand: {car.Mileage}" +
-                (Car.IsPalindrome(car) ? " ** Palindrome nummer **" : "") + "\n" + // Check if the mileage is a palindrome
-                $"Beskrivelse: {car.Description}" + "\n" +
-                (car.IsEngineRunning ? "Bilen er tændt" : "Bilen er slukket") + "\n"
-            );
+            Console.WriteLine();
+            foreach (Car car in cars)
+            {
+                Console.WriteLine(
+                    $"Bilmærke: {car.Brand}" + "\n" +
+                    $"Bilmodel: {car.Model}" + "\n" +
+                    $"Årgang: {car.Year}" + "\n" +
+                    $"Gear: {car.GearType}" + "\n" +
+                    $"Brændstof: {fuelTypes.First(ft => ft.Id == car.FuelTypeId).Name}" + "\n" +
+                    $"Forbrug: {car.FuelEfficiency} km/l" + "\n" +
+                    $"Kilometerstand: {car.Mileage}" +
+                    (Car.IsPalindrome(car) ? " ** Palindrome nummer **" : "") + "\n" + // Check if the mileage is a palindrome
+                    $"Beskrivelse: {car.Description}" + "\n" +
+                    (car.IsEngineRunning ? "Bilen er tændt" : "Bilen er slukket") + "\n"
+                );
+                Console.WriteLine();
+            }
 
             Console.WriteLine();
             Console.WriteLine("\nTryk på en tast for at fortsætte...");
@@ -345,6 +350,7 @@ namespace CarApp
                     Console.WriteLine($"F7: {(car.IsEngineRunning ? "Sluk" : "Tænd")} motoren");
                 } // End if a car is selected
                 Console.WriteLine("F8: Database Menu...");
+                Console.WriteLine("F9: Print alle bilers rapporter");
                 Console.WriteLine("ESC: Afslut");
                 Console.WriteLine();
 
@@ -380,7 +386,8 @@ namespace CarApp
                     case ConsoleKey.F5:
                         if (car != null)
                         {
-                            PrintCarDetails(car);
+                            IEnumerable<Car> SelectedCar = new List<Car> { car };
+                            PrintCarDetails(SelectedCar);
                         }
                         else
                         {
@@ -424,6 +431,10 @@ namespace CarApp
                         break;
                     case ConsoleKey.F8:
                         MenuDatabase();
+                        break;
+                    case ConsoleKey.F9:
+                        IEnumerable<Car> cars = DbSqlHandler.GetCars();
+                        PrintCarDetails(cars);
                         break;
                     case ConsoleKey.Escape: // If the user pressed ESC
                         Console.Write(choice.KeyChar);
