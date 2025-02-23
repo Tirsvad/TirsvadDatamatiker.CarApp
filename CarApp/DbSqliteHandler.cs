@@ -1,4 +1,6 @@
-﻿using Dapper;
+﻿using CarApp.Model;
+
+using Dapper;
 using Microsoft.Data.Sqlite;
 using System.Data;
 

@@ -1,5 +1,7 @@
 ﻿using System.Text;
 
+using CarApp.Model;
+
 namespace CarApp
 {
 #if DEBUG // Unit tests only included in debug build 
@@ -9,7 +11,7 @@ namespace CarApp
 #endif
     {
         public static DbSqliteHandler DbSqlHandler = new DbSqliteHandler(Constants.dbSqliteFileName);
-
+        public static uint worldFirstCarYear = 1886; //!< The year the first car was made
 
         // Car methods
 
@@ -26,14 +28,42 @@ namespace CarApp
             char gearType; // Gear type as a character
 
             Console.Clear(); // Clear the console window
-
             Header("Tilføj bil"); // Display the header
-            Console.Write("Indtast bilmærke: ");
-            car.Brand = Console.ReadLine() ?? string.Empty;
-            Console.Write("Indtast bilmodel: ");
-            car.Model = Console.ReadLine() ?? string.Empty;
-            Console.Write("Indtast årgang: ");
-            car.Year = Convert.ToInt32(Console.ReadLine());
+
+            do
+            { // Loop until a valid input is entered}
+
+                Console.Write("Indtast bilmærke: ");
+                car.Brand = Console.ReadLine() ?? string.Empty;
+                if (string.IsNullOrEmpty(car.Brand))
+                {
+                    PrintError("Mærke må ikke være tomt.");
+                }
+            } while (string.IsNullOrEmpty(car.Brand)); // Repeat until a valid brand is entered
+
+            do
+            { // Loop until a valid input is entered            
+                Console.Write("Indtast bilmodel: ");
+                car.Model = Console.ReadLine() ?? string.Empty;
+                if (string.IsNullOrEmpty(car.Model))
+                {
+                    PrintError("Model må ikke være tomt.");
+                }
+            } while (string.IsNullOrEmpty(car.Model)); // Repeat until a valid model is entered
+
+            // Validate Year input
+            uint year;
+            do
+            {
+                Console.Write("Indtast årgang: ");
+                string? input = Console.ReadLine();
+                if (!uint.TryParse(input, out year) || year < worldFirstCarYear)
+                {
+                    PrintError($"Ugyldigt input. Årgang skal være større end {worldFirstCarYear - 1}.");
+                }
+            } while (year < worldFirstCarYear);
+            car.Year = year;
+
             do
             {
                 Console.Write("Indtast geartype ([A]utomatisk/[M]anuel): ");
@@ -58,10 +88,28 @@ namespace CarApp
             } while (fuelTypeIndex < 0 || fuelTypeIndex >= fuelTypes.Count());
             car.FuelTypeId = fuelTypes.ElementAt(fuelTypeIndex).Id;
 
-            Console.Write("Indtast forbrug: ");
-            car.FuelEfficiency = Convert.ToSingle(Console.ReadLine());
-            Console.Write("Indtast kilometerstand: ");
-            car.Mileage = Convert.ToInt32(Console.ReadLine());
+            do
+            { // Loop until a valid input is entered
+                Console.Write("Indtast forbrug: ");
+                car.FuelEfficiency = Convert.ToSingle(Console.ReadLine());
+                if (car.FuelEfficiency <= 0)
+                {
+                    PrintError("Forbrug skal være større end 0.");
+                }
+            } while (car.FuelEfficiency <= 0); // Repeat until a valid fuel efficiency is entered
+
+            do
+            { // Loop until a valid input is entered
+                Console.Write("Indtast kilometerstand: ");
+                car.Mileage = (uint)Convert.ToInt32(Console.ReadLine());
+                if (car.Mileage < 0)
+                {
+                    PrintError("Kilometerstand skal være større end eller lig med 0.");
+                }
+            } while (car.Mileage < 0); // Repeat until a valid mileage is entered
+
+            Console.Write("Indtast beskrivelse: ");
+            car.Description = Console.ReadLine() ?? string.Empty;
 
             return car; // Return the car object
         }
@@ -320,6 +368,17 @@ namespace CarApp
             int rightPadding = padding - leftPadding;
 
             return new string(' ', leftPadding) + text + new string(' ', rightPadding);
+        }
+
+        /// <summary>
+        /// Prints an error message in red text.
+        /// </summary>
+        /// <param name="message"></param>
+        static void PrintError(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
         }
 
         // Menu methods
