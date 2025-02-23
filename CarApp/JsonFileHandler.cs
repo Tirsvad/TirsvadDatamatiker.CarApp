@@ -1,5 +1,7 @@
 ﻿using System.Text.Json;
 
+using CarApp.Model;
+
 namespace CarApp
 {
     /// <summary>

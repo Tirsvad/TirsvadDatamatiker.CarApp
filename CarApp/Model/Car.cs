@@ -1,26 +1,5 @@
-﻿namespace CarApp
+﻿namespace CarApp.Model
 {
-    /// <summary>
-    /// Represents a type of fuel with a name and price.
-    /// </summary>
-    public class FuelType
-    {
-        /// <summary>
-        /// Gets or sets the ID of the fuel type.
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the fuel type.
-        /// </summary>
-        public string Name { get; set; } = String.Empty;
-
-        /// <summary>
-        /// Gets or sets the price of the fuel type.
-        /// </summary>
-        public decimal Price { get; set; } = 0;
-    }
-
     /// <summary>
     /// Represents a car with various properties.
     /// </summary>
@@ -34,17 +13,17 @@
         /// <summary>
         /// Gets or sets the brand of the car.
         /// </summary>
-        public string Brand { get; set; } = String.Empty;
+        public string Brand { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the model of the car.
         /// </summary>
-        public string Model { get; set; } = String.Empty;
+        public string Model { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the year of the car.
         /// </summary>
-        public int Year { get; set; } = 0;
+        public uint Year { get; set; } = 0;
 
         /// <summary>
         /// Gets or sets the gear type of the car.
@@ -62,12 +41,12 @@
         /// <summary>
         /// Gets or sets the mileage of the car.
         /// </summary>
-        public int Mileage { get; set; } = 0;
+        public uint Mileage { get; set; } = 0;
 
         /// <summary>
         /// Gets or sets the description of the car.
         /// </summary>
-        public string Description { get; set; } = String.Empty;
+        public string Description { get; set; } = string.Empty;
 
         // Non database properties
 
@@ -91,7 +70,7 @@
         {
             if (IsEngineRunning)
             {
-                Mileage += addDistanceInKm;
+                Mileage += (uint)addDistanceInKm;
                 Program.DbSqlHandler.UpdateCar(this);
             }
         }
