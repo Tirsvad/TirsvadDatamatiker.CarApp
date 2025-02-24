@@ -30,7 +30,14 @@
         /// </summary>
         public char GearType { get; set; } = 'M';
 
-        public int? FuelTypeId { get; set; } // Foreign Key
+        /// <summary>
+        /// Gets or sets the fuel type ID of the car.
+        /// </summary>
+        public int? FuelTypeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the fuel type of the car.
+        /// </summary>
         public FuelType? FuelType { get; set; } // Navigation property
 
         /// <summary>
@@ -50,13 +57,44 @@
 
         // Non database properties
 
+        /// <summary>
+        /// Gets or sets the value indicating whether the engine is running.
+        /// </summary>
         public bool IsEngineRunning { get; set; } = false;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Car"/> class.
+        /// </summary>
+        public Car() { }
+
+        private DbSqliteHnd _dbSqliteHndInstance = DbSqliteHnd.Instance;
+
+        /// <summary>
+        /// Toggle the engine on or off.
+        /// </summary>
+        public void ToggleEngine()
+        {
+            if (IsEngineRunning)
+            {
+                StopEngine();
+            }
+            else
+            {
+                StartEngine();
+            }
+        }
+
+        /// <summary>
+        /// Starts the engine.
+        /// </summary>
         public void StartEngine()
         {
             IsEngineRunning = true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void StopEngine()
         {
             IsEngineRunning = false;
@@ -71,7 +109,7 @@
             if (IsEngineRunning)
             {
                 Mileage += (uint)addDistanceInKm;
-                Program.DbSqlHandler.UpdateCar(this);
+                _dbSqliteHndInstance.UpdateCar(this);
             }
         }
 
@@ -92,9 +130,9 @@
         /// <param name="car">The car object containing the fuel type information.</param>
         /// <param name="fuelNeeded">The amount of fuel needed for the trip.</param>
         /// <returns>The cost of the trip.</returns>
-        public static decimal CalculateTripCost(Car car, double fuelNeeded)
+        public decimal CalculateTripCost(Car car, double fuelNeeded)
         {
-            IEnumerable<FuelType> fuelTypes = Program.DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
+            IEnumerable<FuelType> fuelTypes = _dbSqliteHndInstance.GetFuelTypes(); // Get the fuel types from the database
             return (decimal)(fuelNeeded * (float)fuelTypes.First(ft => ft.Id == car.FuelTypeId).Price);
         }
 

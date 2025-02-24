@@ -1,26 +1,50 @@
-﻿using CarApp.Model;
-
+﻿using System.Data;
+using CarApp.Model;
 using Dapper;
 using Microsoft.Data.Sqlite;
-using System.Data;
 
 namespace CarApp
 {
     /// <summary>
     /// Handles the SQLite database.
     /// </summary>
-    public class DbSqliteHandler
+    public class DbSqliteHnd
     {
-        private readonly string _connectionString; // Connection string for SQLite
+        private static DbSqliteHnd? _instance;
+
+        private static readonly object _lock = new object();
+
+        private string _dbConnectionString { get; set; } // Connection string for SQLite
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DbSqliteHandler"/> class.
+        /// Initializes a new instance of the <see cref="DbSqliteHnd"/> class.
         /// </summary>
         /// <param name="dbPath">The path to the SQLite database file.</param>
-        public DbSqliteHandler(string dbPath)
+        private DbSqliteHnd(string dbPath)
         {
-            _connectionString = $"Data Source={dbPath}"; // Connection string for SQLite
+            _dbConnectionString = $"Data Source={dbPath}"; // Connection string for SQLite
             InitializeDatabase(dbPath); // Initialize the database
+        }
+
+        /// <summary>
+        /// Gets the singleton instance of the <see cref="DbSqliteHnd"/> class.
+        /// </summary>
+        public static DbSqliteHnd Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    lock (_lock)
+                    {
+                        if (_instance == null)
+                        {
+                            _instance = new DbSqliteHnd(Constants.dbSqliteFileName);
+                        }
+                    }
+                }
+                return _instance;
+            }
         }
 
         /// <summary>
@@ -32,7 +56,7 @@ namespace CarApp
             // Create database if it doesn't exist
             if (!File.Exists(dbPath))
             {
-                using (var connection = new SqliteConnection(_connectionString)) // Create a new connection
+                using (var connection = new SqliteConnection(_dbConnectionString)) // Create a new connection
                 {
                     connection.Open(); // Open the connection
                     CreateDb(connection); // Create the database
@@ -40,7 +64,7 @@ namespace CarApp
             }
 
             // Apply migrations
-            using (var connection = new SqliteConnection(_connectionString)) // Create a new connection
+            using (var connection = new SqliteConnection(_dbConnectionString)) // Create a new connection
             {
                 connection.Open(); // Open the connection
                 CreateMigrationVersionTable(connection); // Create the MigrationVersion table
@@ -135,7 +159,7 @@ namespace CarApp
         /// <summary>
         /// Gets the database connection.
         /// </summary>
-        public IDbConnection Connection => new SqliteConnection(_connectionString);
+        public IDbConnection Connection => new SqliteConnection(_dbConnectionString);
 
         /// <summary>
         /// Gets the list of cars from the database.
@@ -277,8 +301,8 @@ namespace CarApp
         public void ExportToJson()
         {
             JsonFileHandler jsonFileHandler = new JsonFileHandler();
-            var cars = Program.DbSqlHandler.GetCars().ToList();
-            var fuelTypes = Program.DbSqlHandler.GetFuelTypes().ToList();
+            var cars = GetCars().ToList();
+            var fuelTypes = GetFuelTypes().ToList();
             JsonFileHandler.DataContainer dataContainer = new JsonFileHandler.DataContainer
             {
                 Cars = cars,
