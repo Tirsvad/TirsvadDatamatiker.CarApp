@@ -10,8 +10,15 @@ namespace CarApp
     internal class Program
 #endif
     {
-        public static DbSqliteHandler DbSqlHandler = new DbSqliteHandler(Constants.dbSqliteFileName);
-        public static uint worldFirstCarYear = 1886; //!< The year the first car was made
+        /// <summary>
+        /// The database handler for the application.
+        /// </summary>
+        private static DbSqliteHnd _dbSqliteHndInstance = DbSqliteHnd.Instance;
+
+        /// <summary>
+        /// The year of the first car in the world.
+        /// </summary>
+        private static uint FirstAutomobileYear { get; set; } = 1886;
 
         // Car methods
 
@@ -23,7 +30,7 @@ namespace CarApp
         {
             Car car = new(); // Create a new car object
 
-            IEnumerable<FuelType> fuelTypes = Program.DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
+            IEnumerable<FuelType> fuelTypes = _dbSqliteHndInstance.GetFuelTypes(); // Get the fuel types from the database
 
             char gearType; // Gear type as a character
 
@@ -57,11 +64,11 @@ namespace CarApp
             {
                 Console.Write("Indtast årgang: ");
                 string? input = Console.ReadLine();
-                if (!uint.TryParse(input, out year) || year < worldFirstCarYear)
+                if (!uint.TryParse(input, out year) || year < FirstAutomobileYear)
                 {
-                    PrintError($"Ugyldigt input. Årgang skal være større end {worldFirstCarYear - 1}.");
+                    PrintError($"Ugyldigt input. Årgang skal være større end {FirstAutomobileYear - 1}.");
                 }
-            } while (year < worldFirstCarYear);
+            } while (year < FirstAutomobileYear);
             car.Year = year;
 
             do
@@ -120,7 +127,7 @@ namespace CarApp
         /// <returns>The chosen car object.</returns>
         static Car? SelectCar()
         {
-            List<Car> cars = Program.DbSqlHandler.GetCars().ToList(); // Get the cars from the database
+            List<Car> cars = _dbSqliteHndInstance.GetCars().ToList(); // Get the cars from the database
             List<int> columns = new() { 3, 20, 20, 20 }; // number of columns and their width
             System.ConsoleKeyInfo choice; // The user's choice
             int elementCounter = 0;
@@ -260,7 +267,7 @@ namespace CarApp
         /// <param name="car">The car object to display the report for.</param>
         static void PrintCarDetails(IEnumerable<Car> cars)
         {
-            IEnumerable<FuelType> fuelTypes = DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
+            IEnumerable<FuelType> fuelTypes = _dbSqliteHndInstance.GetFuelTypes(); // Get the fuel types from the database
 
             Console.Clear();
             Header("Bilrapport"); // Display the header
@@ -299,7 +306,7 @@ namespace CarApp
                     car.UpdateMileAge(km); // Update the car's mileage
                 }
                 double fuelNeeded = Car.CalculateFuelNeeded(car, km);
-                Console.WriteLine("\n" + $"Turens omkostning bliver {Car.CalculateTripCost(car, fuelNeeded):F2} kr og der skal bruges {fuelNeeded:F2} liter brændstof" + "\n");
+                Console.WriteLine("\n" + $"Turens omkostning bliver {car.CalculateTripCost(car, fuelNeeded):F2} kr og der skal bruges {fuelNeeded:F2} liter brændstof" + "\n");
                 Console.WriteLine("\nTryk på en tast for at fortsætte...");
                 Console.ReadKey(); // Wait for a key press
 
@@ -391,7 +398,7 @@ namespace CarApp
             // Declare variables
             Car? car = null; // Create a car object
             System.ConsoleKeyInfo choice; // The user's choice
-            IEnumerable<FuelType> fuelTypes = DbSqlHandler.GetFuelTypes(); // Get the fuel types from the database
+            IEnumerable<FuelType> fuelTypes = _dbSqliteHndInstance.GetFuelTypes(); // Get the fuel types from the database
 
             // Loop until the user exits the program
             do
@@ -419,13 +426,13 @@ namespace CarApp
                 {
                     case ConsoleKey.F1: // If the user pressed F1
                         car = InputCar(); // Pass a new Car object to InputCar
-                        DbSqlHandler.AddCar(car); // Add the car to the database
+                        _dbSqliteHndInstance.AddCar(car); // Add the car to the database
                         break;
                     case ConsoleKey.F2:
                         car = SelectCar();
                         if (car != null)
                         {
-                            DbSqlHandler.DeleteCar(car); // Delete the car from the database
+                            _dbSqliteHndInstance.DeleteCar(car); // Delete the car from the database
                         }
                         break;
                     case ConsoleKey.F3:
@@ -472,14 +479,7 @@ namespace CarApp
                     case ConsoleKey.F7:
                         if (car != null)
                         {
-                            if (car.IsEngineRunning)
-                            {
-                                car.StopEngine();
-                            }
-                            else
-                            {
-                                car.StartEngine();
-                            }
+                            car.ToggleEngine();
                         }
                         else
                         {
@@ -492,7 +492,7 @@ namespace CarApp
                         MenuDatabase();
                         break;
                     case ConsoleKey.F9:
-                        IEnumerable<Car> cars = DbSqlHandler.GetCars();
+                        IEnumerable<Car> cars = _dbSqliteHndInstance.GetCars();
                         PrintCarDetails(cars);
                         break;
                     case ConsoleKey.Escape: // If the user pressed ESC
@@ -524,10 +524,10 @@ namespace CarApp
                 switch (choice.Key)
                 {
                     case ConsoleKey.F1:
-                        DbSqlHandler.ImportFromJson();
+                        _dbSqliteHndInstance.ImportFromJson();
                         break;
                     case ConsoleKey.F2:
-                        DbSqlHandler.ExportToJson();
+                        _dbSqliteHndInstance.ExportToJson();
                         break;
                     /* TODO
                 case ConsoleKey.F3:

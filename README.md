@@ -50,6 +50,7 @@ A car application as assignment for the course "Datamatiker" at UCL
   - [Todo](#todo)
   - [Known issues](#known-issues)
   - [Folder Structure](#folder-structure)
+  - [Class Diagram](#class-diagram)
   - [Testing](#testing)
     - [Result](#result)
 
@@ -128,6 +129,14 @@ You may need to remove / change key bindings ´F11´ in the VS buildin terminal 
 ./CarApp/           #Contains the source code for the project.
 ./Tests/            #Contains the test code for the project.
 ```
+
+## Class Diagram
+
+View the class diagram [here](documentation/mermaid-diagram-2025-02-24-133944.png)
+
+<a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/documentation/mermaid-diagram-2025-02-24-133944.png">
+    <img src="documentation/mermaid-diagram-2025-02-24-133944.png" alt="Test Result" height="120">
+</a>
 
 ## Testing
 
