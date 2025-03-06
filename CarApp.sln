@@ -19,6 +19,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{6CDB13
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{89A271D7-84AB-4C84-8AC2-2E9A9FC4DB7D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		documentation\DCD.mmd = documentation\DCD.mmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,5 +45,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{94E17EAB-DF61-405B-A1E0-1178BFDBE9F5} = {C6A141EE-5F84-421C-9D09-34FD1790D426}
 		{6CDB135D-FC65-4096-96E6-6F1C7997FADF} = {C6A141EE-5F84-421C-9D09-34FD1790D426}
+		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {C6A141EE-5F84-421C-9D09-34FD1790D426}
 	EndGlobalSection
 EndGlobal
