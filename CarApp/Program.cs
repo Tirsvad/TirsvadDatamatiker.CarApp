@@ -17,11 +17,11 @@ namespace CarApp
         }
     }
 
+    /// <summary>
+    /// Handles CarApp's main program logic.
+    /// </summary>
     public class Program
     {
-        /// <summary>
-        /// The year of the first car in the world.
-        /// </summary>
         static int _paganize = 10;
         static Car? _selectedCar;
         static string errorMessage = "";
@@ -29,8 +29,39 @@ namespace CarApp
         static readonly FuelTypeList _fuelTypeList = FuelTypeList.Instance;
         static readonly CarList _carList = CarList.Instance;
 
+        /// <summary>
+        /// The year of the first car in the world.
+        /// </summary>
         static int FirstAutomobileYear { get; } = 1886;
 
+        #region Is methods
+
+        // <summary>
+        /// Checks if a car's mileage is a palindrome.
+        /// </summary>
+        /// <param name="car">The car object containing the mileage information.</param>
+        /// <returns>True if the mileage is a palindrome, otherwise false.</returns>
+        static bool IsPalindrome(Car car)
+        {
+            string odometer = car.Mileage.ToString() ?? string.Empty;
+
+            for (int i = 0; i < odometer.Length / 2; i++)
+            {
+                if (odometer[i] != odometer[odometer.Length - i - 1])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        static bool IsFuelTypeIdExists(int id)
+        {
+            return _fuelTypeList.FuelTypeCollection.Exists(f => f.Id == id);
+        }
+
+
+        #endregion Is methods
         #region Car methods
 
         static Car? SelectCar()
@@ -124,13 +155,15 @@ namespace CarApp
                 string? input = Console.ReadLine(); // Read the fuel type from the console
                 if (!int.TryParse(input, out fuelTypeId)) // If the fuel type is not a number
                 {
+                    fuelTypeId = -1; // Set the fuel type to -1 as it will get 0 from parse!
                     PrintError("Brændstoftype skal være et tal."); // Display an error message
                 }
-                else if (!_fuelTypeList.FuelTypeCollection.Exists(f => f.Id == fuelTypeId)) // If the fuel type does not exist
+                else if (!IsFuelTypeIdExists(fuelTypeId)) // If the fuel type does not exist
                 {
                     PrintError("Brændstoftype findes ikke."); // Display an error message
                 }
-            } while (!_fuelTypeList.FuelTypeCollection.Exists(f => f.Id == fuelTypeId)); // Repeat until a valid fuel type is entered
+
+            } while (!IsFuelTypeIdExists(fuelTypeId)); // Repeat until a valid fuel type is entered
 
             do
             {
@@ -156,9 +189,7 @@ namespace CarApp
             {
                 Console.Write("Beskrivelse: ");
                 description = Console.ReadLine() ?? string.Empty; // Read the description from the console
-            } while (string.IsNullOrEmpty(errMsg)); // Repeat until a valid description is entered
-
-            int id = _carList.GenerateId(); // Generate a new ID for the car
+            } while (description == null); // Repeat until a valid description is entered
 
             Car car = new Car(
                 _carList.GenerateId(),
@@ -204,27 +235,6 @@ namespace CarApp
             }
             Console.ReadKey();
         }
-
-
-        // <summary>
-        /// Checks if a car's mileage is a palindrome.
-        /// </summary>
-        /// <param name="car">The car object containing the mileage information.</param>
-        /// <returns>True if the mileage is a palindrome, otherwise false.</returns>
-        static bool IsPalindrome(Car car)
-        {
-            string odometer = car.Mileage.ToString() ?? string.Empty;
-
-            for (int i = 0; i < odometer.Length / 2; i++)
-            {
-                if (odometer[i] != odometer[odometer.Length - i - 1])
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         #endregion Car methods
         #region Table methods
 
@@ -310,10 +320,10 @@ namespace CarApp
                     {
                         menuItems.Add(new MenuItem("Start motor", 4));
                     }
-                    menuItems.Add(new MenuItem("Opdater kilometer", 6));
-                    menuItems.Add(new MenuItem("Beregn brændstof", 7));
-                    menuItems.Add(new MenuItem("Beregn tur pris", 8));
-                    menuItems.Add(new MenuItem("Er kilometer tal et palindrom?", 9));
+                    menuItems.Add(new MenuItem("Opdater kilometer", 5));
+                    menuItems.Add(new MenuItem("Beregn brændstof", 6));
+                    menuItems.Add(new MenuItem("Beregn tur pris", 7));
+                    menuItems.Add(new MenuItem("Er kilometer tal et palindrom?", 22));
                 }
 
                 Console.Clear();
@@ -329,22 +339,13 @@ namespace CarApp
 
                 int CTop = Console.CursorTop;
 
-                if ((_selectedCar == null) && (selectedIndex < -11))
-                {
-                    errorMessage = "Ugyldig valg";
-                }
-                else if ((_selectedCar != null) && (selectedIndex > 9))
-                {
-                    errorMessage = "Ugyldig valg";
-                }
-
                 switch (selectedIndex)
                 {
                     case 0:
                         _selectedCar = SelectCar();
                         break;
                     case 1:
-                        InputAddCar();
+                        _carList.AddCar(InputAddCar());
                         break;
                     case 2:
                         RemoveCar();
@@ -355,16 +356,16 @@ namespace CarApp
                     case 4:
                         _selectedCar?.ToggleEngine();
                         break;
-                    case 6:
+                    case 5:
                         //UpdateMileage();
                         break;
-                    case 7:
+                    case 6:
                         //CalculateFuelNeeded();
                         break;
-                    case 8:
+                    case 7:
                         //CalculateTripCost();
                         break;
-                    case 9:
+                    case 22:
                         PalinDrome();
                         break;
                     case -1:
@@ -466,6 +467,7 @@ namespace CarApp
             Console.OutputEncoding = Encoding.UTF8;
 
             Menu();
+
         }
     }
 }
