@@ -13,8 +13,6 @@
         +void StartEngine()
         +void StopEngine()
         +void UpdateMileAge(int addDistanceInKm)
-        +static double CalculateFuelNeeded(Car car, int distance)
-        +static double CalculateTripCost(Car car, double fuelNeeded, double fuelPrice)
     }
 
     class FuelType {
@@ -24,12 +22,12 @@
     }
 
     class CarList {
-        List~Car~ CarCollection
+        List<Car> Car
         +static CarList Instance
         +void AddCar(Car car)
         +void RemoveCar(Car car)
-        +void RemoveCar(int index)
         +string ToString()
+        +void Seed()
         +uint GenerateId()
     }
 

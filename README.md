@@ -109,11 +109,12 @@ You may need to remove / change key bindings ´F11´ in the VS buildin terminal 
 - [x] Load / Save car to database
 - [x] Calculate trip fuel price
 - [x] Print rapport of car
-- [x] Export / Import json data
 
 ## Todo
 
+- [ ] Export / Import json data
 - [ ] Clear Database
+- [ ] Add user for each car
 
 ## Known issues
 
@@ -132,7 +133,7 @@ You may need to remove / change key bindings ´F11´ in the VS buildin terminal 
 
 ## Class Diagram
 
-View the class diagram [here](documentation/mermaid-diagram-2025-02-24-133944.png)
+View the class diagram [here](documentation/DCD.svg)
 
 <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/documentation/DCD.svg">
     <img src="documentation/DCD.svg" alt="Test Result" height="120">
