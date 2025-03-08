@@ -24,7 +24,6 @@ namespace CarApp
     {
         static int _paganize = 10;
         static Car? _selectedCar;
-        static string errorMessage = "";
 
         static readonly FuelTypeList _fuelTypeList = FuelTypeList.Instance;
         static readonly CarList _carList = CarList.Instance;
@@ -206,26 +205,16 @@ namespace CarApp
             return car; // Return the car object
         }
 
-        static void RemoveCar()
+        static void RemoveCar(Car selectedCar)
         {
-            if (_selectedCar == null)
-            {
-                errorMessage = "Ingen bil valgt";
-                return;
-            }
-            _carList.Remove(_selectedCar);
+            _carList.Remove(selectedCar);
             _selectedCar = null;
         }
 
-        static void PalinDrome()
+        static void PalinDrome(Car selectedCar)
         {
             Console.Clear();
-            if (_selectedCar == null)
-            {
-                errorMessage = "Ingen bil valgt";
-                return;
-            }
-            if (IsPalindrome(_selectedCar))
+            if (IsPalindrome(selectedCar))
             {
                 Console.WriteLine("Kilometer tallet er et palindrom");
             }
@@ -233,8 +222,41 @@ namespace CarApp
             {
                 Console.WriteLine("Kilometer tallet er ikke et palindrom");
             }
+            Console.WriteLine("\nTryk på en tast for at fortsætte...");
+            Console.Write(Console.ReadKey());
+
+        }
+
+        static double CalculateFuelNeeded(Car selectedCar, double distance)
+        {
+            double fuelNeeded = distance / selectedCar.FuelEfficiency;
+            return fuelNeeded;
+        }
+
+        private static void CalculateTripCost(Car selectedCar)
+        {
+            Console.Clear();
+            Console.WriteLine("Indtast kilometer for turen:");
+            string input = Console.ReadLine();
+            if (!double.TryParse(input, out double distance))
+            {
+                PrintError("Kilometer skal være et tal");
+                Console.WriteLine("\nTryk på en tast for at fortsætte...");
+                Console.ReadKey();
+                return;
+            }
+            double fuelNeeded = CalculateFuelNeeded(selectedCar, distance);
+            decimal fuelPrice = _fuelTypeList.GetFuelTypes()[selectedCar.FuelTypeId].Price;
+            decimal tripCost = (decimal)fuelNeeded * fuelPrice;
+            if (selectedCar.IsEngineRunning)
+            {
+                selectedCar.UpdateMileAge((int)distance);
+            }
+            Console.WriteLine($"Pris for turen: {tripCost:F2} kr");
+            Console.WriteLine("\nTryk på en tast for at fortsætte...");
             Console.ReadKey();
         }
+
         #endregion Car methods
         #region Table methods
 
@@ -321,7 +343,7 @@ namespace CarApp
                 $"Beskrivelse: {car.Description}" + "\n" +
                 (car.IsEngineRunning ? "Bilen er tændt" : "Bilen er slukket") + "\n"
                 );
-            Console.WriteLine("\nTast for at forsætte...");
+            Console.WriteLine("\nTryk på en tast for at fortsætte...");
             Console.Write(Console.ReadKey());
         }
 
@@ -418,6 +440,7 @@ namespace CarApp
 
         static void Menu()
         {
+            string errorMessage = "";
             do
             {
                 List<MenuItem> menuItems = new List<MenuItem> { };
@@ -437,7 +460,6 @@ namespace CarApp
                     {
                         menuItems.Add(new MenuItem("Start motor", 4));
                     }
-                    menuItems.Add(new MenuItem("Beregn brændstof", 6));
                     menuItems.Add(new MenuItem("Beregn tur pris", 7));
                     menuItems.Add(new MenuItem("Er kilometer tal et palindrom?", 22));
                 }
@@ -453,56 +475,75 @@ namespace CarApp
 
                 int selectedIndex = PaganizesMenu(menuItems, 10);
 
+                Console.SetCursorPosition(0, Console.CursorTop + 1);
+                PrintError(errorMessage);
+
                 int CTop = Console.CursorTop;
 
-                switch (selectedIndex)
+                if (_selectedCar == null)
                 {
-                    case 0:
-                        _selectedCar = SelectCar();
-                        break;
-                    case 1:
-                        _carList.Add(InputAddCar());
-                        break;
-                    case 2:
-                        RemoveCar();
-                        break;
-                    case 3:
-                        if (_selectedCar != null)
-                        {
-                            PrintCarDetail(_selectedCar);
-                        }
-                        else
-                        {
-                            errorMessage = "Ingen bil valgt";
-                        }
-                        break;
-                    case 4:
-                        _selectedCar?.ToggleEngine();
-                        break;
-                    case 5:
-                        PrintCarList();
-                        break;
-                    case 6:
-                        //CalculateFuelNeeded();
-                        break;
-                    case 7:
-                        //CalculateTripCost();
-                        break;
-                    case 22:
-                        PalinDrome();
-                        break;
-                    case -1:
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        errorMessage = "Ugyldig valg";
-                        break;
+                    switch (selectedIndex)
+                    {
+                        case 0:
+                            _selectedCar = SelectCar();
+                            break;
+                        case 1:
+                            _carList.Add(InputAddCar());
+                            break;
+                        case 5:
+                            PrintCarList();
+                            break;
+                        case -1:
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            errorMessage = "Ugyldig valg";
+                            break;
+                    }
                 }
+                else
+                {
+                    switch (selectedIndex)
+                    {
+                        case 0:
+                            _selectedCar = SelectCar();
+                            break;
+                        case 1:
+                            _carList.Add(InputAddCar());
+                            break;
+                        case 2:
+                            RemoveCar(_selectedCar);
+                            break;
+                        case 3:
+                            PrintCarDetail(_selectedCar);
+                            break;
+                        case 4:
+                            _selectedCar?.ToggleEngine();
+                            break;
+                        case 5:
+                            PrintCarList();
+                            break;
+                        case 7:
+                            CalculateTripCost(_selectedCar);
+                            break;
+                        case 22:
+                            PalinDrome(_selectedCar);
+                            break;
+                        case -1:
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            errorMessage = "Ugyldig valg";
+                            break;
+                    }
+                }
+
             } while (true);
         }
 
         static int PaganizesMenu(List<MenuItem> menuItems, int pageSize, bool sorting = false)
         {
+            string errorMessage = "";
             int pageIndex = 0;
             (int Left, int Top) Position;
             Console.CursorVisible = false;
