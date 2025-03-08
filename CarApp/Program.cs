@@ -24,7 +24,6 @@ namespace CarApp
     {
         static int _paganize = 10;
         static Car? _selectedCar;
-        static string errorMessage = "";
 
         static readonly FuelTypeList _fuelTypeList = FuelTypeList.Instance;
         static readonly CarList _carList = CarList.Instance;
@@ -57,7 +56,7 @@ namespace CarApp
 
         static bool IsFuelTypeIdExists(int id)
         {
-            return _fuelTypeList.FuelTypeCollection.Exists(f => f.Id == id);
+            return _fuelTypeList.Exists(id);
         }
 
 
@@ -69,7 +68,7 @@ namespace CarApp
             List<MenuItem> menuItems = new List<MenuItem>();
 
             int i = 0;
-            foreach (Car car in _carList.CarCollection)
+            foreach (Car car in _carList.GetCars())
             {
                 menuItems.Add(new MenuItem($"{car.Brand} {car.Model} {car.Year}", i));
                 i++;
@@ -79,7 +78,7 @@ namespace CarApp
 
             int selectedIndex = PaganizesMenu(menuItems, 10);
             if (selectedIndex == -1) { return null; }
-            return _carList.CarCollection[selectedIndex];
+            return _carList.GetCars()[selectedIndex];
         }
 
         static Car InputAddCar()
@@ -147,7 +146,7 @@ namespace CarApp
             do
             {
                 Console.WriteLine("Brændstoftyper:"); // Display the fuel types
-                foreach (FuelType fuelType in _fuelTypeList.FuelTypeCollection)
+                foreach (FuelType fuelType in _fuelTypeList.GetFuelTypes())
                 {
                     Console.WriteLine($"{fuelType.Id}: {fuelType.Name} ({fuelType.Price} kr/liter)");
                 }
@@ -206,26 +205,16 @@ namespace CarApp
             return car; // Return the car object
         }
 
-        static void RemoveCar()
+        static void RemoveCar(Car selectedCar)
         {
-            if (_selectedCar == null)
-            {
-                errorMessage = "Ingen bil valgt";
-                return;
-            }
-            _carList.RemoveCar(_selectedCar);
+            _carList.Remove(selectedCar);
             _selectedCar = null;
         }
 
-        static void PalinDrome()
+        static void PalinDrome(Car selectedCar)
         {
             Console.Clear();
-            if (_selectedCar == null)
-            {
-                errorMessage = "Ingen bil valgt";
-                return;
-            }
-            if (IsPalindrome(_selectedCar))
+            if (IsPalindrome(selectedCar))
             {
                 Console.WriteLine("Kilometer tallet er et palindrom");
             }
@@ -233,8 +222,41 @@ namespace CarApp
             {
                 Console.WriteLine("Kilometer tallet er ikke et palindrom");
             }
+            Console.WriteLine("\nTryk på en tast for at fortsætte...");
+            Console.Write(Console.ReadKey());
+
+        }
+
+        static double CalculateFuelNeeded(Car selectedCar, double distance)
+        {
+            double fuelNeeded = distance / selectedCar.FuelEfficiency;
+            return fuelNeeded;
+        }
+
+        private static void CalculateTripCost(Car selectedCar)
+        {
+            Console.Clear();
+            Console.WriteLine("Indtast kilometer for turen:");
+            string input = Console.ReadLine();
+            if (!double.TryParse(input, out double distance))
+            {
+                PrintError("Kilometer skal være et tal");
+                Console.WriteLine("\nTryk på en tast for at fortsætte...");
+                Console.ReadKey();
+                return;
+            }
+            double fuelNeeded = CalculateFuelNeeded(selectedCar, distance);
+            decimal fuelPrice = _fuelTypeList.GetFuelTypes()[selectedCar.FuelTypeId].Price;
+            decimal tripCost = (decimal)fuelNeeded * fuelPrice;
+            if (selectedCar.IsEngineRunning)
+            {
+                selectedCar.UpdateMileAge((int)distance);
+            }
+            Console.WriteLine($"Pris for turen: {tripCost:F2} kr");
+            Console.WriteLine("\nTryk på en tast for at fortsætte...");
             Console.ReadKey();
         }
+
         #endregion Car methods
         #region Table methods
 
@@ -298,20 +320,138 @@ namespace CarApp
         }
 
         #endregion String methods
+        #region Rapport methods
+
+        /// <summary>
+        /// Displays a report of the car's information.
+        /// </summary>
+        /// <param name="car">The car object to display the report for.</param>
+        static void PrintCarDetail(Car car)
+        {
+            Console.Clear();
+            Header("Bilrapport"); // Display the header
+            Console.WriteLine();
+            Console.WriteLine(
+                $"Bilmærke: {car.Brand}" + "\n" +
+                $"Bilmodel: {car.Model}" + "\n" +
+                $"Årgang: {car.Year}" + "\n" +
+                $"Gear: {car.GearType}" + "\n" +
+                $"Brændstof: {_fuelTypeList.GetFuelTypes()[car.FuelTypeId].Name}" + "\n" +
+                $"Forbrug: {car.FuelEfficiency} km/l" + "\n" +
+                $"Kilometerstand: {car.Mileage}" +
+                (IsPalindrome(car) ? " ** Palindrome nummer **" : "") + "\n" + // Check if the mileage is a palindrome
+                $"Beskrivelse: {car.Description}" + "\n" +
+                (car.IsEngineRunning ? "Bilen er tændt" : "Bilen er slukket") + "\n"
+                );
+            Console.WriteLine("\nTryk på en tast for at fortsætte...");
+            Console.Write(Console.ReadKey());
+        }
+
+        /// <summary>
+        /// Displays a list of cars in a table format.
+        /// </summary>
+        static void PrintCarList()
+        {
+            List<int> columns = new() { 3, 20, 20, 8, 20 }; // number of columns and their width
+            int pageIndex = 0;
+            int pageSize = 10;
+            int totalPages = (int)Math.Ceiling(_carList.GetCars().Count / (double)pageSize);
+            string errorMessage = "";
+
+            while (true)
+            {
+                Console.Clear();
+                Header("Biloversigt");
+
+                // Create Table for console
+                CreateTableFrameH(columns); // Create a horizontal table frame
+                Console.WriteLine(
+                    "| " + "#".PadLeft(columns[0]) +
+                    " | " + CenterString("Mærke", columns[1]) +
+                    " | " + CenterString("Model", columns[2]) +
+                    " | " + CenterString("Årgang", columns[3]) +
+                    " | " + CenterString("Kilemetertal", columns[4]) +
+                    " |"
+                    );
+                CreateTableFrameH(columns); // Create a horizontal table frame
+
+                var pagedCars = _carList.GetCars()
+                    .Skip(pageIndex * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                for (int i = 0; i < pagedCars.Count; i++)
+                {
+                    Console.WriteLine(
+                        "| " + $"{pagedCars[i].Id}".PadLeft(columns[0]) +
+                        " | " + $"{pagedCars[i].Brand}".PadRight(columns[1]) +
+                        " | " + $"{pagedCars[i].Model}".PadRight(columns[2]) +
+                        " | " + $"{pagedCars[i].Year}".PadRight(columns[3]) +
+                        " | " + $"{pagedCars[i].Mileage}".PadLeft(columns[4]) +
+                        " |");
+
+                    CreateTableFrameH(columns); // Create a horizontal table frame
+                }
+
+                Console.WriteLine("ESC: Afslut");
+                Console.WriteLine($"\nSide {pageIndex + 1} af {totalPages}");
+                if (pageIndex > 0)
+                {
+                    Console.WriteLine("F11 previous page");
+                }
+                if (totalPages > pageIndex + 1)
+                {
+                    Console.WriteLine("F12 next page");
+                }
+
+                if (errorMessage != "")
+                {
+                    var Position = Console.GetCursorPosition();
+                    Console.SetCursorPosition(0, Position.Top + 2);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(errorMessage);
+                    Console.ResetColor();
+                    Console.SetCursorPosition(Position.Left, Position.Top);
+                    errorMessage = "";
+                }
+
+                var key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    return;
+                }
+                else if (key.Key == ConsoleKey.F12 && pageIndex < totalPages - 1)
+                {
+                    pageIndex++;
+                }
+                else if (key.Key == ConsoleKey.F11 && pageIndex > 0)
+                {
+                    pageIndex--;
+                }
+                else
+                {
+                    errorMessage = $"Fejl: Gyldige taster er F1-F{pagedCars.Count}.";
+                }
+            }
+        }
+
+        #endregion Rapport methods
         #region Menu methods
 
         static void Menu()
         {
+            string errorMessage = "";
             do
             {
                 List<MenuItem> menuItems = new List<MenuItem> { };
 
+                menuItems.Add(new MenuItem("Vis liste af biler", 5));
                 menuItems.Add(new MenuItem("Vælg bil", 0));
                 menuItems.Add(new MenuItem("Tilføj bil", 1));
                 if (_selectedCar != null)
                 {
                     menuItems.Add(new MenuItem($"Fjern bilen", 2));
-                    menuItems.Add(new MenuItem("List biler", 3));
+                    menuItems.Add(new MenuItem("Bil detaljer", 3));
                     if (_selectedCar.IsEngineRunning)
                     {
                         menuItems.Add(new MenuItem("Stop motor", 4));
@@ -320,8 +460,6 @@ namespace CarApp
                     {
                         menuItems.Add(new MenuItem("Start motor", 4));
                     }
-                    menuItems.Add(new MenuItem("Opdater kilometer", 5));
-                    menuItems.Add(new MenuItem("Beregn brændstof", 6));
                     menuItems.Add(new MenuItem("Beregn tur pris", 7));
                     menuItems.Add(new MenuItem("Er kilometer tal et palindrom?", 22));
                 }
@@ -337,49 +475,75 @@ namespace CarApp
 
                 int selectedIndex = PaganizesMenu(menuItems, 10);
 
+                Console.SetCursorPosition(0, Console.CursorTop + 1);
+                PrintError(errorMessage);
+
                 int CTop = Console.CursorTop;
 
-                switch (selectedIndex)
+                if (_selectedCar == null)
                 {
-                    case 0:
-                        _selectedCar = SelectCar();
-                        break;
-                    case 1:
-                        _carList.AddCar(InputAddCar());
-                        break;
-                    case 2:
-                        RemoveCar();
-                        break;
-                    case 3:
-                        //ListCars();
-                        break;
-                    case 4:
-                        _selectedCar?.ToggleEngine();
-                        break;
-                    case 5:
-                        //UpdateMileage();
-                        break;
-                    case 6:
-                        //CalculateFuelNeeded();
-                        break;
-                    case 7:
-                        //CalculateTripCost();
-                        break;
-                    case 22:
-                        PalinDrome();
-                        break;
-                    case -1:
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        errorMessage = "Ugyldig valg";
-                        break;
+                    switch (selectedIndex)
+                    {
+                        case 0:
+                            _selectedCar = SelectCar();
+                            break;
+                        case 1:
+                            _carList.Add(InputAddCar());
+                            break;
+                        case 5:
+                            PrintCarList();
+                            break;
+                        case -1:
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            errorMessage = "Ugyldig valg";
+                            break;
+                    }
                 }
+                else
+                {
+                    switch (selectedIndex)
+                    {
+                        case 0:
+                            _selectedCar = SelectCar();
+                            break;
+                        case 1:
+                            _carList.Add(InputAddCar());
+                            break;
+                        case 2:
+                            RemoveCar(_selectedCar);
+                            break;
+                        case 3:
+                            PrintCarDetail(_selectedCar);
+                            break;
+                        case 4:
+                            _selectedCar?.ToggleEngine();
+                            break;
+                        case 5:
+                            PrintCarList();
+                            break;
+                        case 7:
+                            CalculateTripCost(_selectedCar);
+                            break;
+                        case 22:
+                            PalinDrome(_selectedCar);
+                            break;
+                        case -1:
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            errorMessage = "Ugyldig valg";
+                            break;
+                    }
+                }
+
             } while (true);
         }
 
         static int PaganizesMenu(List<MenuItem> menuItems, int pageSize, bool sorting = false)
         {
+            string errorMessage = "";
             int pageIndex = 0;
             (int Left, int Top) Position;
             Console.CursorVisible = false;
@@ -467,7 +631,6 @@ namespace CarApp
             Console.OutputEncoding = Encoding.UTF8;
 
             Menu();
-
         }
     }
 }

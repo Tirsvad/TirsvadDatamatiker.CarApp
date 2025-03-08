@@ -110,7 +110,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Stops the engine.
         /// </summary>
         public void StopEngine()
         {
@@ -152,5 +152,8 @@
         {
             return (double)(fuelNeeded * fuelPrice);
         }
+
+
+
     }
 }
