@@ -57,7 +57,7 @@ namespace CarApp
 
         static bool IsFuelTypeIdExists(int id)
         {
-            return _fuelTypeList.FuelTypeCollection.Exists(f => f.Id == id);
+            return _fuelTypeList.Exists(id);
         }
 
 
@@ -69,7 +69,7 @@ namespace CarApp
             List<MenuItem> menuItems = new List<MenuItem>();
 
             int i = 0;
-            foreach (Car car in _carList.CarCollection)
+            foreach (Car car in _carList.GetCars())
             {
                 menuItems.Add(new MenuItem($"{car.Brand} {car.Model} {car.Year}", i));
                 i++;
@@ -79,7 +79,7 @@ namespace CarApp
 
             int selectedIndex = PaganizesMenu(menuItems, 10);
             if (selectedIndex == -1) { return null; }
-            return _carList.CarCollection[selectedIndex];
+            return _carList.GetCars()[selectedIndex];
         }
 
         static Car InputAddCar()
@@ -147,7 +147,7 @@ namespace CarApp
             do
             {
                 Console.WriteLine("Brændstoftyper:"); // Display the fuel types
-                foreach (FuelType fuelType in _fuelTypeList.FuelTypeCollection)
+                foreach (FuelType fuelType in _fuelTypeList.GetFuelTypes())
                 {
                     Console.WriteLine($"{fuelType.Id}: {fuelType.Name} ({fuelType.Price} kr/liter)");
                 }
@@ -213,7 +213,7 @@ namespace CarApp
                 errorMessage = "Ingen bil valgt";
                 return;
             }
-            _carList.RemoveCar(_selectedCar);
+            _carList.Remove(_selectedCar);
             _selectedCar = null;
         }
 
@@ -298,6 +298,34 @@ namespace CarApp
         }
 
         #endregion String methods
+        #region Rapport methods
+
+        /// <summary>
+        /// Displays a report of the car's information.
+        /// </summary>
+        /// <param name="car">The car object to display the report for.</param>
+        static void PrintCarDetail(Car car)
+        {
+            Console.Clear();
+            Header("Bilrapport"); // Display the header
+            Console.WriteLine();
+            Console.WriteLine(
+                $"Bilmærke: {car.Brand}" + "\n" +
+                $"Bilmodel: {car.Model}" + "\n" +
+                $"Årgang: {car.Year}" + "\n" +
+                $"Gear: {car.GearType}" + "\n" +
+                $"Brændstof: {_fuelTypeList.GetFuelTypes()[car.FuelTypeId].Name}" + "\n" +
+                $"Forbrug: {car.FuelEfficiency} km/l" + "\n" +
+                $"Kilometerstand: {car.Mileage}" +
+                (IsPalindrome(car) ? " ** Palindrome nummer **" : "") + "\n" + // Check if the mileage is a palindrome
+                $"Beskrivelse: {car.Description}" + "\n" +
+                (car.IsEngineRunning ? "Bilen er tændt" : "Bilen er slukket") + "\n"
+                );
+            Console.WriteLine("\nTast for at forsætte...");
+            Console.Write(Console.ReadKey());
+        }
+
+        #endregion Rapport methods
         #region Menu methods
 
         static void Menu()
@@ -311,7 +339,7 @@ namespace CarApp
                 if (_selectedCar != null)
                 {
                     menuItems.Add(new MenuItem($"Fjern bilen", 2));
-                    menuItems.Add(new MenuItem("List biler", 3));
+                    menuItems.Add(new MenuItem("Bil detaljer", 3));
                     if (_selectedCar.IsEngineRunning)
                     {
                         menuItems.Add(new MenuItem("Stop motor", 4));
@@ -320,7 +348,6 @@ namespace CarApp
                     {
                         menuItems.Add(new MenuItem("Start motor", 4));
                     }
-                    menuItems.Add(new MenuItem("Opdater kilometer", 5));
                     menuItems.Add(new MenuItem("Beregn brændstof", 6));
                     menuItems.Add(new MenuItem("Beregn tur pris", 7));
                     menuItems.Add(new MenuItem("Er kilometer tal et palindrom?", 22));
@@ -345,13 +372,20 @@ namespace CarApp
                         _selectedCar = SelectCar();
                         break;
                     case 1:
-                        _carList.AddCar(InputAddCar());
+                        _carList.Add(InputAddCar());
                         break;
                     case 2:
                         RemoveCar();
                         break;
                     case 3:
-                        //ListCars();
+                        if (_selectedCar != null)
+                        {
+                            PrintCarDetail(_selectedCar);
+                        }
+                        else
+                        {
+                            errorMessage = "Ingen bil valgt";
+                        }
                         break;
                     case 4:
                         _selectedCar?.ToggleEngine();
@@ -467,7 +501,6 @@ namespace CarApp
             Console.OutputEncoding = Encoding.UTF8;
 
             Menu();
-
         }
     }
 }
