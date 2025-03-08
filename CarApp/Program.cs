@@ -325,6 +325,94 @@ namespace CarApp
             Console.Write(Console.ReadKey());
         }
 
+        /// <summary>
+        /// Displays a list of cars in a table format.
+        /// </summary>
+        static void PrintCarList()
+        {
+            List<int> columns = new() { 3, 20, 20, 8, 20 }; // number of columns and their width
+            int pageIndex = 0;
+            int pageSize = 10;
+            int totalPages = (int)Math.Ceiling(_carList.GetCars().Count / (double)pageSize);
+            string errorMessage = "";
+
+            while (true)
+            {
+                Console.Clear();
+                Header("Biloversigt");
+
+                // Create Table for console
+                CreateTableFrameH(columns); // Create a horizontal table frame
+                Console.WriteLine(
+                    "| " + "#".PadLeft(columns[0]) +
+                    " | " + CenterString("Mærke", columns[1]) +
+                    " | " + CenterString("Model", columns[2]) +
+                    " | " + CenterString("Årgang", columns[3]) +
+                    " | " + CenterString("Kilemetertal", columns[4]) +
+                    " |"
+                    );
+                CreateTableFrameH(columns); // Create a horizontal table frame
+
+                var pagedCars = _carList.GetCars()
+                    .Skip(pageIndex * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                for (int i = 0; i < pagedCars.Count; i++)
+                {
+                    Console.WriteLine(
+                        "| " + $"{pagedCars[i].Id}".PadLeft(columns[0]) +
+                        " | " + $"{pagedCars[i].Brand}".PadRight(columns[1]) +
+                        " | " + $"{pagedCars[i].Model}".PadRight(columns[2]) +
+                        " | " + $"{pagedCars[i].Year}".PadRight(columns[3]) +
+                        " | " + $"{pagedCars[i].Mileage}".PadLeft(columns[4]) +
+                        " |");
+
+                    CreateTableFrameH(columns); // Create a horizontal table frame
+                }
+
+                Console.WriteLine("ESC: Afslut");
+                Console.WriteLine($"\nSide {pageIndex + 1} af {totalPages}");
+                if (pageIndex > 0)
+                {
+                    Console.WriteLine("F11 previous page");
+                }
+                if (totalPages > pageIndex + 1)
+                {
+                    Console.WriteLine("F12 next page");
+                }
+
+                if (errorMessage != "")
+                {
+                    var Position = Console.GetCursorPosition();
+                    Console.SetCursorPosition(0, Position.Top + 2);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(errorMessage);
+                    Console.ResetColor();
+                    Console.SetCursorPosition(Position.Left, Position.Top);
+                    errorMessage = "";
+                }
+
+                var key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    return;
+                }
+                else if (key.Key == ConsoleKey.F12 && pageIndex < totalPages - 1)
+                {
+                    pageIndex++;
+                }
+                else if (key.Key == ConsoleKey.F11 && pageIndex > 0)
+                {
+                    pageIndex--;
+                }
+                else
+                {
+                    errorMessage = $"Fejl: Gyldige taster er F1-F{pagedCars.Count}.";
+                }
+            }
+        }
+
         #endregion Rapport methods
         #region Menu methods
 
@@ -334,6 +422,7 @@ namespace CarApp
             {
                 List<MenuItem> menuItems = new List<MenuItem> { };
 
+                menuItems.Add(new MenuItem("Vis liste af biler", 5));
                 menuItems.Add(new MenuItem("Vælg bil", 0));
                 menuItems.Add(new MenuItem("Tilføj bil", 1));
                 if (_selectedCar != null)
@@ -391,7 +480,7 @@ namespace CarApp
                         _selectedCar?.ToggleEngine();
                         break;
                     case 5:
-                        //UpdateMileage();
+                        PrintCarList();
                         break;
                     case 6:
                         //CalculateFuelNeeded();
