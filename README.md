@@ -99,7 +99,16 @@ This is an example of how to list things you need to use the software and how to
 
 4. Run the project
 
-5. Optionally, you can import sample data by pressing 'F7' in menu and then 'F1' in database menu
+5. Login with the following credentials
+    ```
+    Username: admin1
+    Password: admin1
+    ```
+    or
+    ```
+    Username: user1
+    Password: user1
+    ```
 
 You may need to remove / change key bindings ´F11´ in the VS buildin terminal to use the application properly.
 

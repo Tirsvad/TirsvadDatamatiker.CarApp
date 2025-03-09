@@ -3,7 +3,6 @@ using CarApp.Model;
 
 namespace CarApp
 {
-
     internal record struct MenuItem(string Name, int Index)
     {
         public static implicit operator (string, int)(MenuItem value)
@@ -33,6 +32,8 @@ namespace CarApp
         /// The year of the first car in the world.
         /// </summary>
         static int FirstAutomobileYear { get; } = 1886;
+
+        static string? CurrentUser { get; set; }
 
         #region Is methods
 
@@ -449,10 +450,13 @@ namespace CarApp
                 menuItems.Add(new MenuItem("Log ud", 6));
                 menuItems.Add(new MenuItem("Vis liste af biler", 5));
                 menuItems.Add(new MenuItem("Vælg bil", 0));
-                menuItems.Add(new MenuItem("Tilføj bil", 1));
                 if (_selectedCar != null)
                 {
-                    menuItems.Add(new MenuItem($"Fjern bilen", 2));
+                    if (_auth.GetRole(_auth.User) == Role.Type.Admin)
+                    {
+                        menuItems.Add(new MenuItem("Tilføj bil", 1));
+                        menuItems.Add(new MenuItem($"Fjern bilen", 2));
+                    }
                     menuItems.Add(new MenuItem("Bil detaljer", 3));
                     if (_selectedCar.IsEngineRunning)
                     {
