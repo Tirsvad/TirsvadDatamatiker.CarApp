@@ -13,31 +13,111 @@
         +void StartEngine()
         +void StopEngine()
         +void UpdateMileAge(int addDistanceInKm)
+        +static double CalculateFuelNeeded(Car car, int distance)
+        +static double CalculateTripCost(Car car, double fuelNeeded, double fuelPrice)
+        +uint getId()
+        +void setId(uint id) private
+        +string getBrand()
+        +void setBrand(string brand) private
+        +string getModel()
+        +void setModel(string model) private
+        +uint getYear()
+        +void setYear(uint year) private
+        +char getGearType()
+        +void setGearType(char gearType) private
+        +uint getFuelTypeId()
+        +void setFuelTypeId(uint fuelTypeId) private
+        +double getFuelEfficiency()
+        +void setFuelEfficiency(double fuelEfficiency) private
+        +uint getMileage()
+        +void setMileage(uint mileage) private
+        +string getDescription()
+        +void setDescription(string description) private
+    }
+
+    class CarList {
+        List~Car~ CarCollection
+        +static CarList Instance
+        +void AddCar(Car car)
+        +void RemoveCar(Car car)
+        +void RemoveCar(int index)
+        +string ToString()
+        +uint GenerateId()
+        +List~Car~ getCarCollection()
+        +void setCarCollection(List~Car~ carCollection)
     }
 
     class FuelType {
         uint Id
         string Name
         decimal Price
-    }
-
-    class CarList {
-        List<Car> Car
-        +static CarList Instance
-        +void AddCar(Car car)
-        +void RemoveCar(Car car)
-        +string ToString()
-        +void Seed()
-        +uint GenerateId()
+        +uint getId()
+        +string getName()
+        +decimal getPrice()
     }
 
     class FuelTypeList {
         List~FuelType~ FuelTypeCollection
         +static FuelTypeList Instance
         +void Seed()
-        +uint GenerateId()
+        +List~FuelType~ getFuelTypeCollection()
+    }
+
+    class User {
+        int Id
+        string Name
+        string Email
+        string Password
+        string Phone
+        string Address
+        int RolleId
+        +int getId()
+        +void setId(int id) private
+        +string getName()
+        +void setName(string name) private
+        +string getEmail()
+        +void setEmail(string email) private
+        +string getPassword()
+        +void setPassword(string password) private
+        +string getPhone()
+        +void setPhone(string phone) private
+        +string getAddress()
+        +void setAddress(string address) private
+        +int getRolleId()
+        +void setRolleId(int rolleId) private
+    }
+
+    class UserList {
+        List~User~ Users
+        +static UserList Instance
+        +void Seed()
+    }
+
+    class Role {
+        int Id
+        string Type
+        +int getId()
+        +void setId(int id) private
+        +string getType()
+        +void setType(string type) private
+    }
+
+    class RoleList {
+        List~Role~ Roles
+        +static RoleList Instance
+        +void Seed()
+    }
+
+    class DataContext {
+        CarList CarList
+        FuelTypeList FuelTypeList
     }
 
     Car --> FuelTypeList : uses
+    User --> RoleList : uses
     CarList "1" *-- "many" Car : contains
     FuelTypeList "1" *-- "many" FuelType : contains
+    UserList "1" *-- "many" User : contains
+    RoleList "1" *-- "many" Role : contains
+    DataContext --> CarList : contains
+    DataContext --> FuelTypeList : contains

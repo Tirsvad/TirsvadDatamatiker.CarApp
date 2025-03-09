@@ -106,15 +106,16 @@ You may need to remove / change key bindings ´F11´ in the VS buildin terminal 
 ## Features
 
 - [x] Add car
-- [x] Load / Save car to database
 - [x] Calculate trip fuel price
 - [x] Print rapport of car
+- [x] Authentication
 
 ## Todo
 
 - [ ] Export / Import json data
+- [ ] Load / Save car to database
 - [ ] Clear Database
-- [ ] Add user for each car
+- [ ] Add owner for each car
 
 ## Known issues
 
