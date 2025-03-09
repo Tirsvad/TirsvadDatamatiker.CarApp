@@ -24,6 +24,7 @@ namespace CarApp
     {
         static int _paganize = 10;
         static Car? _selectedCar;
+        static Authentication _auth = new Authentication();
 
         static readonly FuelTypeList _fuelTypeList = FuelTypeList.Instance;
         static readonly CarList _carList = CarList.Instance;
@@ -438,13 +439,14 @@ namespace CarApp
         #endregion Rapport methods
         #region Menu methods
 
-        static void Menu()
+        static bool Menu()
         {
             string errorMessage = "";
             do
             {
                 List<MenuItem> menuItems = new List<MenuItem> { };
 
+                menuItems.Add(new MenuItem("Log ud", 6));
                 menuItems.Add(new MenuItem("Vis liste af biler", 5));
                 menuItems.Add(new MenuItem("Vælg bil", 0));
                 menuItems.Add(new MenuItem("Tilføj bil", 1));
@@ -480,64 +482,41 @@ namespace CarApp
 
                 int CTop = Console.CursorTop;
 
-                if (_selectedCar == null)
+                switch (selectedIndex)
                 {
-                    switch (selectedIndex)
-                    {
-                        case 0:
-                            _selectedCar = SelectCar();
-                            break;
-                        case 1:
-                            _carList.Add(InputAddCar());
-                            break;
-                        case 5:
-                            PrintCarList();
-                            break;
-                        case -1:
-                            Environment.Exit(0);
-                            break;
-                        default:
-                            errorMessage = "Ugyldig valg";
-                            break;
-                    }
+                    case 0:
+                        _selectedCar = SelectCar();
+                        break;
+                    case 1:
+                        _carList.Add(InputAddCar());
+                        break;
+                    case 2:
+                        RemoveCar(_selectedCar);
+                        break;
+                    case 3:
+                        PrintCarDetail(_selectedCar);
+                        break;
+                    case 4:
+                        _selectedCar?.ToggleEngine();
+                        break;
+                    case 5:
+                        PrintCarList();
+                        break;
+                    case 6:
+                        _auth.Logout();
+                        return false;
+                    case 7:
+                        CalculateTripCost(_selectedCar);
+                        break;
+                    case 22:
+                        PalinDrome(_selectedCar);
+                        break;
+                    case -1:
+                        return true;
+                    default:
+                        errorMessage = "Ugyldig valg";
+                        break;
                 }
-                else
-                {
-                    switch (selectedIndex)
-                    {
-                        case 0:
-                            _selectedCar = SelectCar();
-                            break;
-                        case 1:
-                            _carList.Add(InputAddCar());
-                            break;
-                        case 2:
-                            RemoveCar(_selectedCar);
-                            break;
-                        case 3:
-                            PrintCarDetail(_selectedCar);
-                            break;
-                        case 4:
-                            _selectedCar?.ToggleEngine();
-                            break;
-                        case 5:
-                            PrintCarList();
-                            break;
-                        case 7:
-                            CalculateTripCost(_selectedCar);
-                            break;
-                        case 22:
-                            PalinDrome(_selectedCar);
-                            break;
-                        case -1:
-                            Environment.Exit(0);
-                            break;
-                        default:
-                            errorMessage = "Ugyldig valg";
-                            break;
-                    }
-                }
-
             } while (true);
         }
 
@@ -630,7 +609,29 @@ namespace CarApp
             // Set the console output encoding to UTF-8 so æøå are displayed correctly
             Console.OutputEncoding = Encoding.UTF8;
 
-            Menu();
+            bool exit = false;
+
+            do
+            {
+                Console.Clear();
+                Header("Log ind");
+                Console.Write("Brugernavn: ");
+                string username = Console.ReadLine();
+                Console.Write("Adgangskode: ");
+                string password = Console.ReadLine();
+                if (_auth.Login(username, password))
+                {
+                    Console.WriteLine("Du er logget ind");
+                    exit = Menu();
+                }
+                else
+                {
+                    PrintError("Forkert brugernavn eller adgangskode");
+                    Console.WriteLine("Tryk på en tast for at fortsætte...");
+                    Console.ReadKey();
+                    continue;
+                }
+            } while (!exit);
         }
     }
 }
