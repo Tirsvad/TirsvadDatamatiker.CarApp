@@ -93,21 +93,6 @@
         +void Seed()
     }
 
-    class Role {
-        int Id
-        string Type
-        +int getId()
-        +void setId(int id) private
-        +string getType()
-        +void setType(string type) private
-    }
-
-    class RoleList {
-        List~Role~ Roles
-        +static RoleList Instance
-        +void Seed()
-    }
-
     class DataContext {
         CarList CarList
         FuelTypeList FuelTypeList

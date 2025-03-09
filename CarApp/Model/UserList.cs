@@ -36,7 +36,7 @@
                 "user1@hotmail.com",    // Email
                 "61616161",             // Phone
                 "Acme 22",              // Address
-                2));                    // RoleId
+                1));                    // See Constants.RoleType
             Users.Add(new User(
                 2,
                 "admin1",
@@ -44,7 +44,7 @@
                 "admin1@hotmail.com",
                 "61616162",
                 "Acme 23",
-                1));
+                0));
         }
     }
 }
