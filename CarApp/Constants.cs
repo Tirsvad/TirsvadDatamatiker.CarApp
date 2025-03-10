@@ -23,6 +23,9 @@
 
         #endregion File paths
 
+        public const string carAppTitle = "Car Application";
+        public const string carAppVersion = "v1.0";
+
         #region Error messages
         // Error Messages
 

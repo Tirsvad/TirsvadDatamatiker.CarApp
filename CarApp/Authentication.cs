@@ -31,20 +31,20 @@ namespace CarApp
             User = null;
         }
 
-        public Role.Type GetRole(String user)
+        public Role GetRole(String user)
         {
             if (user == null)
             {
-                return Role.Type.Guest;
+                return Role.Guest;
             }
             foreach (User item in Users.Users)
             {
                 if (item.Name == User)
                 {
-                    return (Role.Type)item.RolleId;
+                    return (Role)item.RolleId;
                 }
             }
-            return Role.Type.Guest;
+            return Role.Guest;
         }
     }
 }
