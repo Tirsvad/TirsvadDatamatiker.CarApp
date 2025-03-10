@@ -16,17 +16,17 @@
     <br />
     <br />
     <!-- PROJECT SCREENSHOTS -->
-    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_mainMenu.png">
-        <img src="images/Screenshot_mainMenu.png" alt="Main Menu" height="120">
+    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_login.png">
+        <img src="images/Screenshot_login.png" alt="Main Menu" height="120">
     </a>
-    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_databaseMenu.png">
-        <img src="images/Screenshot_databaseMenu.png" alt="Database Menu" height="120">
+    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_mainMenu.png">
+        <img src="images/Screenshot_mainMenu.png" alt="Database Menu" height="120">
     </a>
     <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_selectCar.png">
         <img src="images/Screenshot_selectCar.png" alt="Select Car" height="120">
     </a>
-    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_carRapport.png">
-        <img src="images/Screenshot_carRapport.png" alt="Car Rapport" height="120">
+    <a href="https://github.com/TirsvadDatamatiker/CarApp/blob/master/images/Screenshot_MainMenu2.png">
+        <img src="images/Screenshot_MainMenu2.png" alt="Car Rapport" height="120">
     </a>    
     <br />
     <a href="https://github.com/TirsvadDatamatiker/CarApp"><strong>Explore the docs »</strong></a>

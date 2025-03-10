@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using CarApp.Helper;
 using CarApp.Model;
 
 namespace CarApp
@@ -37,7 +38,7 @@ namespace CarApp
 
         #region Is methods
 
-        // <summary>
+        /// <summary>
         /// Checks if a car's mileage is a palindrome.
         /// </summary>
         /// <param name="car">The car object containing the mileage information.</param>
@@ -56,15 +57,23 @@ namespace CarApp
             return true;
         }
 
-        static bool IsFuelTypeIdExists(int id)
+        /// <summary>
+        /// Do the fuel type ID exists in the list.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        static bool DoFuelTypeIdExists(int id)
         {
             return _fuelTypeList.Exists(id);
         }
 
-
         #endregion Is methods
         #region Car methods
 
+        /// <summary>
+        /// Selects a car from the list of cars.
+        /// </summary>
+        /// <returns>The selected car object.</returns>
         static Car? SelectCar()
         {
             List<MenuItem> menuItems = new List<MenuItem>();
@@ -83,6 +92,10 @@ namespace CarApp
             return _carList.GetCars()[selectedIndex];
         }
 
+        /// <summary>
+        /// Input a new car to add to the list.
+        /// </summary>
+        /// <returns>A car object</returns>
         static Car InputAddCar()
         {
             string? brand; // Brand of the car
@@ -159,12 +172,12 @@ namespace CarApp
                     fuelTypeId = -1; // Set the fuel type to -1 as it will get 0 from parse!
                     PrintError("Brændstoftype skal være et tal."); // Display an error message
                 }
-                else if (!IsFuelTypeIdExists(fuelTypeId)) // If the fuel type does not exist
+                else if (!DoFuelTypeIdExists(fuelTypeId)) // If the fuel type does not exist
                 {
                     PrintError("Brændstoftype findes ikke."); // Display an error message
                 }
 
-            } while (!IsFuelTypeIdExists(fuelTypeId)); // Repeat until a valid fuel type is entered
+            } while (!DoFuelTypeIdExists(fuelTypeId)); // Repeat until a valid fuel type is entered
 
             do
             {
@@ -207,12 +220,20 @@ namespace CarApp
             return car; // Return the car object
         }
 
+        /// <summary>
+        /// Removes a car from the list.
+        /// </summary>
+        /// <param name="selectedCar"></param>
         static void RemoveCar(Car selectedCar)
         {
             _carList.Remove(selectedCar);
             _selectedCar = null;
         }
 
+        /// <summary>
+        /// Checks if the mileage of a car is a palindrome.
+        /// </summary>
+        /// <param name="selectedCar">The car object to check.</param>
         static void PalinDrome(Car selectedCar)
         {
             Console.Clear();
@@ -229,12 +250,22 @@ namespace CarApp
 
         }
 
+        /// <summary>
+        /// Calculates the fuel needed for a trip.
+        /// </summary>
+        /// <param name="selectedCar">The car object to calculate the fuel needed for.</param>
+        /// <param name="distance">The distance of the trip.</param>
+        /// <returns>The fuel needed for the trip.</returns>
         static double CalculateFuelNeeded(Car selectedCar, double distance)
         {
             double fuelNeeded = distance / selectedCar.FuelEfficiency;
             return fuelNeeded;
         }
 
+        /// <summary>
+        /// Calculates the cost of a trip.
+        /// </summary>
+        /// <param name="selectedCar">The car object to calculate the cost for.</param>
         private static void CalculateTripCost(Car selectedCar)
         {
             Console.Clear();
@@ -283,12 +314,16 @@ namespace CarApp
         /// <summary>
         /// Displays a title with the specified text.
         /// </summary>
-        /// <param name="text">The text to display as a title.</param>
-        public static void Header(string text)
+        public static void Header(string subTitle, string title = $"{Constants.carAppTitle} {Constants.carAppVersion}")
         {
             Console.Clear();
-            Console.WriteLine(text);
-            Console.WriteLine(new string('=', text.Length));
+            int l = Math.Max(title.Length, subTitle.Length) + 3;
+            Frame frame = new Frame(l, 2);
+            frame.SetFrameText(title);
+            frame.Render();
+            Console.WriteLine();
+            Console.WriteLine(CenterString(subTitle, l));
+            Console.WriteLine(new string('-', l + 1));
             Console.WriteLine();
         }
 
@@ -319,6 +354,33 @@ namespace CarApp
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(message);
             Console.ResetColor();
+        }
+
+        /// <summary>
+        /// Hide the password input.
+        /// </summary>
+        /// <returns>Password user entered</returns>
+        static public string GetPassword()
+        {
+            string pass = string.Empty;
+            ConsoleKey key;
+            do
+            {
+                var keyInfo = Console.ReadKey(intercept: true);
+                key = keyInfo.Key;
+
+                if (key == ConsoleKey.Backspace && pass.Length > 0)
+                {
+                    Console.Write("\b \b");
+                    pass = pass[0..^1];
+                }
+                else if (!char.IsControl(keyInfo.KeyChar))
+                {
+                    Console.Write("*");
+                    pass += keyInfo.KeyChar;
+                }
+            } while (key != ConsoleKey.Enter);
+            return pass;
         }
 
         #endregion String methods
@@ -395,8 +457,6 @@ namespace CarApp
                     CreateTableFrameH(columns); // Create a horizontal table frame
                 }
 
-                Console.WriteLine("ESC: Afslut");
-                Console.WriteLine($"\nSide {pageIndex + 1} af {totalPages}");
                 if (pageIndex > 0)
                 {
                     Console.WriteLine("F11 previous page");
@@ -405,6 +465,8 @@ namespace CarApp
                 {
                     Console.WriteLine("F12 next page");
                 }
+                Console.WriteLine("ESC: Afslut");
+                Console.WriteLine($"\nSide {pageIndex + 1} af {totalPages}");
 
                 if (errorMessage != "")
                 {
@@ -440,6 +502,10 @@ namespace CarApp
         #endregion Rapport methods
         #region Menu methods
 
+        /// <summary>
+        /// Displays the main menu and handles the user's choice.
+        /// </summary>
+        /// <returns>True if the user wants to exit, otherwise false.</returns>
         static bool Menu()
         {
             string errorMessage = "";
@@ -452,7 +518,7 @@ namespace CarApp
                 menuItems.Add(new MenuItem("Vælg bil", 0));
                 if (_selectedCar != null)
                 {
-                    if (_auth.GetRole(_auth.User) == Role.Type.Admin)
+                    if (_auth.GetRole(_auth.User) == Role.Admin)
                     {
                         menuItems.Add(new MenuItem("Tilføj bil", 1));
                         menuItems.Add(new MenuItem($"Fjern bilen", 2));
@@ -524,6 +590,13 @@ namespace CarApp
             } while (true);
         }
 
+        /// <summary>
+        /// Paginates a list of menu items.
+        /// </summary>
+        /// <param name="menuItems"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="sorting"></param>
+        /// <returns></returns>
         static int PaganizesMenu(List<MenuItem> menuItems, int pageSize, bool sorting = false)
         {
             string errorMessage = "";
@@ -608,6 +681,11 @@ namespace CarApp
 
         #endregion Menu methods
 
+        /// <summary>
+        /// The main entry point of the program.
+        /// Handles the login and menu logic.
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             // Set the console output encoding to UTF-8 so æøå are displayed correctly
@@ -622,7 +700,7 @@ namespace CarApp
                 Console.Write("Brugernavn: ");
                 string username = Console.ReadLine();
                 Console.Write("Adgangskode: ");
-                string password = Console.ReadLine();
+                string password = GetPassword();
                 if (_auth.Login(username, password))
                 {
                     Console.WriteLine("Du er logget ind");
