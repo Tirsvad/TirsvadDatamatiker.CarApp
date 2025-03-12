@@ -35,7 +35,7 @@
         /// <summary>
         /// Gets or sets the fuel type ID of the car.
         /// </summary>
-        public int FuelTypeId { get; private set; }
+        public FuelType FuelType { get; private set; }
 
         /// <summary>
         /// Gets or sets the fuel efficiency of the car.
@@ -65,11 +65,11 @@
         /// <param name="model">The model of the car.</param>
         /// <param name="year">The year of the car.</param>
         /// <param name="gearType">The gear type of the car.</param>
-        /// <param name="fuelTypeId">The fuel type ID of the car.</param>
+        /// <param name="fuelType">The fuel type ID of the car.</param>
         /// <param name="fuelEfficiency">The fuel efficiency of the car.</param>
         /// <param name="mileage">The mileage of the car.</param>
         /// <param name="description">The description of the car.</param>
-        public Car(int id, string brand, string model, int year, char gearType, int fuelTypeId, double fuelEfficiency, int mileage, string description = "")
+        public Car(int id, string brand, string model, int year, char gearType, FuelType fuelType, double fuelEfficiency, int mileage, string description = "")
         {
             string user = Environment.GetEnvironmentVariable("USER");
 
@@ -80,7 +80,7 @@
             Model = model;
             Year = year;
             GearType = gearType;
-            FuelTypeId = fuelTypeId;
+            FuelType = fuelType;
             FuelEfficiency = fuelEfficiency;
             Mileage = mileage;
             Description = description;
