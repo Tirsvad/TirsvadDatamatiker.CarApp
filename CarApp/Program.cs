@@ -26,7 +26,8 @@ namespace CarApp
         static Car? _selectedCar;
         static Authentication _auth = new Authentication();
 
-        static readonly FuelTypeList _fuelTypeList = FuelTypeList.Instance;
+        static readonly FuelType _fuelType = new FuelType();
+        static readonly FuelPriceList fuelPricelist = FuelPriceList.Instance;
         static readonly CarList _carList = CarList.Instance;
 
         /// <summary>
@@ -35,6 +36,26 @@ namespace CarApp
         static int FirstAutomobileYear { get; } = 1886;
 
         static string? CurrentUser { get; set; }
+
+        private static void Login()
+        {
+            Console.Clear();
+            Header("Log ind");
+            Console.Write("Brugernavn: ");
+            string username = Console.ReadLine();
+            Console.Write("Adgangskode: ");
+            string password = GetPassword();
+            if (!_auth.Login(username, password))
+            {
+                PrintError("Forkert brugernavn eller adgangskode");
+                Console.WriteLine("Tryk på en tast for at fortsætte...");
+                Console.ReadKey();
+            }
+            else
+            {
+                CurrentUser = username;
+            }
+        }
 
         #region Is methods
 
@@ -57,14 +78,9 @@ namespace CarApp
             return true;
         }
 
-        /// <summary>
-        /// Do the fuel type ID exists in the list.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        static bool DoFuelTypeIdExists(int id)
+        static bool DoFuelTypeIdExists(int fuelTypeId)
         {
-            return _fuelTypeList.Exists(id);
+            return Enum.IsDefined(typeof(FuelType), fuelTypeId);
         }
 
         #endregion Is methods
@@ -161,9 +177,9 @@ namespace CarApp
             do
             {
                 Console.WriteLine("Brændstoftyper:"); // Display the fuel types
-                foreach (FuelType fuelType in _fuelTypeList.GetFuelTypes())
+                foreach (FuelType fuelType in Enum.GetValues(typeof(FuelType)))
                 {
-                    Console.WriteLine($"{fuelType.Id}: {fuelType.Name} ({fuelType.Price} kr/liter)");
+                    Console.WriteLine($"{(int)fuelType}: {fuelType}");
                 }
                 Console.Write("Brændstoftype: ");
                 string? input = Console.ReadLine(); // Read the fuel type from the console
@@ -211,7 +227,7 @@ namespace CarApp
                 model: model,
                 year: year,
                 gearType: gearType,
-                fuelTypeId: fuelTypeId,
+                fuelType: (FuelType)fuelTypeId,
                 fuelEfficiency: fuelEfficiency,
                 mileage: mileage,
                 description: errMsg
@@ -279,7 +295,7 @@ namespace CarApp
                 return;
             }
             double fuelNeeded = CalculateFuelNeeded(selectedCar, distance);
-            decimal fuelPrice = _fuelTypeList.GetFuelTypes()[selectedCar.FuelTypeId].Price;
+            decimal fuelPrice = (decimal)fuelPricelist.FuelPrices.Find(f => f.FuelType == selectedCar.FuelType).Price;
             decimal tripCost = (decimal)fuelNeeded * fuelPrice;
             if (selectedCar.IsEngineRunning)
             {
@@ -400,7 +416,7 @@ namespace CarApp
                 $"Bilmodel: {car.Model}" + "\n" +
                 $"Årgang: {car.Year}" + "\n" +
                 $"Gear: {car.GearType}" + "\n" +
-                $"Brændstof: {_fuelTypeList.GetFuelTypes()[car.FuelTypeId].Name}" + "\n" +
+                $"Brændstof: {car.FuelType}" + "\n" +
                 $"Forbrug: {car.FuelEfficiency} km/l" + "\n" +
                 $"Kilometerstand: {car.Mileage}" +
                 (IsPalindrome(car) ? " ** Palindrome nummer **" : "") + "\n" + // Check if the mileage is a palindrome
@@ -506,16 +522,18 @@ namespace CarApp
         /// Displays the main menu and handles the user's choice.
         /// </summary>
         /// <returns>True if the user wants to exit, otherwise false.</returns>
-        static bool Menu()
+        static void Menu()
         {
             string errorMessage = "";
             do
             {
                 List<MenuItem> menuItems = new List<MenuItem> { };
-
-                menuItems.Add(new MenuItem("Log ud", 6));
+                if (_auth.User == null)
+                    menuItems.Add(new MenuItem("Log ind", 8));
+                else
+                    menuItems.Add(new MenuItem("Log ud", 6));
                 menuItems.Add(new MenuItem("Vis liste af biler", 5));
-                menuItems.Add(new MenuItem("Vælg bil", 0));
+                if (_auth.User != null) menuItems.Add(new MenuItem("Vælg bil", 0));
                 if (_selectedCar != null)
                 {
                     if (_auth.GetRole(_auth.User) == Role.Admin)
@@ -572,9 +590,12 @@ namespace CarApp
                     case 5:
                         PrintCarList();
                         break;
+                    case 8:
+                        Login();
+                        break;
                     case 6:
                         _auth.Logout();
-                        return false;
+                        break;
                     case 7:
                         CalculateTripCost(_selectedCar);
                         break;
@@ -582,7 +603,7 @@ namespace CarApp
                         PalinDrome(_selectedCar);
                         break;
                     case -1:
-                        return true;
+                        return;
                     default:
                         errorMessage = "Ugyldig valg";
                         break;
@@ -622,18 +643,24 @@ namespace CarApp
                 Console.WriteLine(pagedMenuItems[i], Console.WindowWidth);
             }
 
-            Console.WriteLine("ESC: Afslut");
+            Console.WriteLine();
 
-            Console.WriteLine($"\nSide {pageIndex + 1} af {totalPages}");
             if (pageIndex > 0)
             {
-                Console.WriteLine("F11 previous page");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("F11 ");
+                Console.ResetColor();
+                Console.Write("previous page, ");
             }
 
             if (totalPages > pageIndex + 1)
             {
-                Console.WriteLine("F12 next page");
+                Console.WriteLine("F12 next page, ");
             }
+
+            Console.WriteLine("ESC: Afslut");
+
+            Console.WriteLine($"\nSide {pageIndex + 1} af {totalPages}");
 
             if (errorMessage != "")
             {
@@ -691,29 +718,7 @@ namespace CarApp
             // Set the console output encoding to UTF-8 so æøå are displayed correctly
             Console.OutputEncoding = Encoding.UTF8;
 
-            bool exit = false;
-
-            do
-            {
-                Console.Clear();
-                Header("Log ind");
-                Console.Write("Brugernavn: ");
-                string username = Console.ReadLine();
-                Console.Write("Adgangskode: ");
-                string password = GetPassword();
-                if (_auth.Login(username, password))
-                {
-                    Console.WriteLine("Du er logget ind");
-                    exit = Menu();
-                }
-                else
-                {
-                    PrintError("Forkert brugernavn eller adgangskode");
-                    Console.WriteLine("Tryk på en tast for at fortsætte...");
-                    Console.ReadKey();
-                    continue;
-                }
-            } while (!exit);
+            Menu();
         }
     }
 }
