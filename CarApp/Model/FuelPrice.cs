@@ -1,6 +1,6 @@
 ﻿namespace CarApp.Model
 {
-    internal class FuelPrice
+    public class FuelPrice
     {
         public FuelType FuelType { get; }
         public double Price { get; }

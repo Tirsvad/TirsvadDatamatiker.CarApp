@@ -4,6 +4,11 @@ using CarApp.Model;
 
 namespace CarApp
 {
+    /// <summary>
+    /// Menu item record struct.
+    /// Where Name is the name of the menu item and Index is the index of the menu item.
+    /// Index is used to determine the selected menu item.
+    /// </summary>
     internal record struct MenuItem(string Name, int Index)
     {
         public static implicit operator (string, int)(MenuItem value)
@@ -20,34 +25,51 @@ namespace CarApp
     /// <summary>
     /// Handles CarApp's main program logic.
     /// </summary>
-    public class Program
+    internal class Program
     {
-        static int _paganize = 10;
-        static Car? _selectedCar;
-        static Authentication _auth = new Authentication();
+        static int _paganize = 10; ///< The pagination size for menus.
+        static Car? _selectedCar; ///< The selected car object
+        static Authentication _auth = new Authentication(); ///< Authentication object
 
-        static readonly FuelType _fuelType = new FuelType();
-        static readonly FuelPriceList fuelPricelist = FuelPriceList.Instance;
-        static readonly CarList _carList = CarList.Instance;
+        static readonly FuelType _fuelType = new FuelType(); ///< Fuel type object
+        static readonly FuelPriceList fuelPricelist = FuelPriceList.Instance; ///< Fuel price list object
+        static readonly CarList _carList = CarList.Instance; ///< Car list object
 
-        /// <summary>
-        /// The year of the first car in the world.
-        /// </summary>
-        static int FirstAutomobileYear { get; } = 1886;
+        static int FirstAutomobileYear { get; } = 1886; ///< The year of the first car in the world
 
         static string? CurrentUser { get; set; }
 
+        /// <summary>
+        /// Login the user.
+        /// Takes the username from the environment variables.
+        /// </summary>
+        /// <dependency>CarApp.Authentication</dependency>
         private static void Login()
         {
+            string? username = Environment.GetEnvironmentVariable("USER_NAME");
+            string msgDefault = "";
+            string errMsg = "";
             Console.Clear();
             Header("Log ind");
-            Console.Write("Brugernavn: ");
-            string username = Console.ReadLine();
+            if (username != "")
+                msgDefault = $"default \u001b[34m{username}\u001b[0m ";
+            Console.Write($"Brugernavn {msgDefault}: ");
+            string? username1 = Console.ReadLine();
+            if (username1 != "")
+                username = username1;
+
             Console.Write("Adgangskode: ");
             string password = GetPassword();
+            if (username == null)
+            {
+                PrintError("Ingen brugernavn indtastet");
+                Console.WriteLine("Tryk på en tast for at fortsætte...");
+                Console.ReadKey();
+            }
             if (!_auth.Login(username, password))
             {
-                PrintError("Forkert brugernavn eller adgangskode");
+
+                PrintError($"Forkert brugernavn '{username}' eller adgangskode");
                 Console.WriteLine("Tryk på en tast for at fortsætte...");
                 Console.ReadKey();
             }
@@ -406,7 +428,7 @@ namespace CarApp
         /// Displays a report of the car's information.
         /// </summary>
         /// <param name="car">The car object to display the report for.</param>
-        static void PrintCarDetail(Car car)
+        static void ShowCarDetail(Car car)
         {
             Console.Clear();
             Header("Bilrapport"); // Display the header
@@ -430,7 +452,7 @@ namespace CarApp
         /// <summary>
         /// Displays a list of cars in a table format.
         /// </summary>
-        static void PrintCarList()
+        static void ShowCarList()
         {
             List<int> columns = new() { 3, 20, 20, 8, 20 }; // number of columns and their width
             int pageIndex = 0;
@@ -515,6 +537,33 @@ namespace CarApp
             }
         }
 
+        /// <summary>
+        /// List cars by owners.
+        /// </summary>
+        static void ShowCarListByOwners()
+        {
+            Console.Clear();
+            Header("Ejer og deres biler");
+            Console.WriteLine();
+
+            var carsByOwner = _carList.GetCars()
+                .Where(car => car.Owner != null)
+                .GroupBy(car => car.Owner)
+                .OrderBy(group => group.Key.Name);
+
+            foreach (var ownerGroup in carsByOwner)
+            {
+                Console.WriteLine($"Ejer: {ownerGroup.Key.Name}");
+                foreach (var car in ownerGroup)
+                {
+                    Console.WriteLine($"- {car.Brand} {car.Model} {car.Year}");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("\nTryk på en tast for at fortsætte...");
+            Console.Write(Console.ReadKey());
+        }
+
         #endregion Rapport methods
         #region Menu methods
 
@@ -532,6 +581,8 @@ namespace CarApp
                     menuItems.Add(new MenuItem("Log ind", 8));
                 else
                     menuItems.Add(new MenuItem("Log ud", 6));
+                if (_auth.GetRole(_auth.User) == Role.Admin || _auth.GetRole(_auth.User) == Role.User)
+                    menuItems.Add(new MenuItem("Rapport", 9));
                 menuItems.Add(new MenuItem("Vis liste af biler", 5));
                 if (_auth.User != null) menuItems.Add(new MenuItem("Vælg bil", 0));
                 if (_selectedCar != null)
@@ -582,13 +633,13 @@ namespace CarApp
                         RemoveCar(_selectedCar);
                         break;
                     case 3:
-                        PrintCarDetail(_selectedCar);
+                        ShowCarDetail(_selectedCar);
                         break;
                     case 4:
                         _selectedCar?.ToggleEngine();
                         break;
                     case 5:
-                        PrintCarList();
+                        ShowCarList();
                         break;
                     case 8:
                         Login();
@@ -599,8 +650,46 @@ namespace CarApp
                     case 7:
                         CalculateTripCost(_selectedCar);
                         break;
+                    case 9:
+                        RapportMenu();
+                        break;
                     case 22:
                         PalinDrome(_selectedCar);
+                        break;
+                    case -1:
+                        return;
+                    default:
+                        errorMessage = "Ugyldig valg";
+                        break;
+                }
+            } while (true);
+        }
+
+        /// <summary>
+        /// Menu for showing reports.
+        /// </summary>
+        static void RapportMenu()
+        {
+            string errorMessage = "";
+            do
+            {
+                List<MenuItem> menuItems = new List<MenuItem> { };
+                menuItems.Add(new MenuItem("List ejer og deres biler", 0));
+
+                Console.Clear();
+                Header("Rapport Menu");
+
+                int selectedIndex = PaganizesMenu(menuItems, 10);
+
+                Console.SetCursorPosition(0, Console.CursorTop + 1);
+                PrintError(errorMessage);
+
+                int CTop = Console.CursorTop;
+
+                switch (selectedIndex)
+                {
+                    case 0:
+                        ShowCarListByOwners();
                         break;
                     case -1:
                         return;
@@ -717,6 +806,10 @@ namespace CarApp
         {
             // Set the console output encoding to UTF-8 so æøå are displayed correctly
             Console.OutputEncoding = Encoding.UTF8;
+
+            // Get the current OS user
+            string currentUser = Environment.UserName;
+            Console.WriteLine($"Current OS User: {currentUser}");
 
             Menu();
         }

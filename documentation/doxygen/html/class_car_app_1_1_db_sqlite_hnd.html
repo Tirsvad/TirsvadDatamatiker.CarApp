@@ -11,6 +11,8 @@
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -51,17 +53,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('class_car_app_1_1_db_sqlite_hnd.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -83,12 +97,6 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespace_car_app.html">CarApp</a></li><li class="navelem"><a class="el" href="class_car_app_1_1_db_sqlite_hnd.html">DbSqliteHnd</a></li>  </ul>
-</div>
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
@@ -103,25 +111,25 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab955d3b4ffe4a69b40dcb49096e543ca" id="r_ab955d3b4ffe4a69b40dcb49096e543ca"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; Car &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab955d3b4ffe4a69b40dcb49096e543ca">GetCars</a> ()</td></tr>
+<tr class="memitem:ab955d3b4ffe4a69b40dcb49096e543ca" id="r_ab955d3b4ffe4a69b40dcb49096e543ca"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="class_car_app_1_1_model_1_1_car.html">Car</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab955d3b4ffe4a69b40dcb49096e543ca">GetCars</a> ()</td></tr>
 <tr class="memdesc:ab955d3b4ffe4a69b40dcb49096e543ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the list of cars from the database.  <br /></td></tr>
 <tr class="separator:ab955d3b4ffe4a69b40dcb49096e543ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf1be52ffabe45b1f833345cea24309c" id="r_acf1be52ffabe45b1f833345cea24309c"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; FuelType &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf1be52ffabe45b1f833345cea24309c">GetFuelTypes</a> ()</td></tr>
+<tr class="memitem:acf1be52ffabe45b1f833345cea24309c" id="r_acf1be52ffabe45b1f833345cea24309c"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="namespace_car_app.html#afdce064e25092b1adf4ea53fa7ad139b">FuelType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf1be52ffabe45b1f833345cea24309c">GetFuelTypes</a> ()</td></tr>
 <tr class="memdesc:acf1be52ffabe45b1f833345cea24309c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the list of fuel types from the database.  <br /></td></tr>
 <tr class="separator:acf1be52ffabe45b1f833345cea24309c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b01f90b9b79f10b2503b6914490b394" id="r_a0b01f90b9b79f10b2503b6914490b394"><td class="memItemLeft" align="right" valign="top">FuelType?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b01f90b9b79f10b2503b6914490b394">GetFuelType</a> (int id)</td></tr>
+<tr class="memitem:a0b01f90b9b79f10b2503b6914490b394" id="r_a0b01f90b9b79f10b2503b6914490b394"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_car_app.html#afdce064e25092b1adf4ea53fa7ad139b">FuelType</a>?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b01f90b9b79f10b2503b6914490b394">GetFuelType</a> (int id)</td></tr>
 <tr class="memdesc:a0b01f90b9b79f10b2503b6914490b394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a fuel type by its ID.  <br /></td></tr>
 <tr class="separator:a0b01f90b9b79f10b2503b6914490b394"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae7e1d5e6f9a5e859562b556529ce671" id="r_aae7e1d5e6f9a5e859562b556529ce671"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae7e1d5e6f9a5e859562b556529ce671">AddCar</a> (Car car)</td></tr>
+<tr class="memitem:aae7e1d5e6f9a5e859562b556529ce671" id="r_aae7e1d5e6f9a5e859562b556529ce671"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae7e1d5e6f9a5e859562b556529ce671">AddCar</a> (<a class="el" href="class_car_app_1_1_model_1_1_car.html">Car</a> car)</td></tr>
 <tr class="memdesc:aae7e1d5e6f9a5e859562b556529ce671"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new car to the database.  <br /></td></tr>
 <tr class="separator:aae7e1d5e6f9a5e859562b556529ce671"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a531019150e199d992da00d7d0f7c3502" id="r_a531019150e199d992da00d7d0f7c3502"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a531019150e199d992da00d7d0f7c3502">DeleteCar</a> (Car car)</td></tr>
+<tr class="memitem:a531019150e199d992da00d7d0f7c3502" id="r_a531019150e199d992da00d7d0f7c3502"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a531019150e199d992da00d7d0f7c3502">DeleteCar</a> (<a class="el" href="class_car_app_1_1_model_1_1_car.html">Car</a> car)</td></tr>
 <tr class="memdesc:a531019150e199d992da00d7d0f7c3502"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes a car from the database.  <br /></td></tr>
 <tr class="separator:a531019150e199d992da00d7d0f7c3502"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2a58254d051a776135a7a3f2069ca4d" id="r_ac2a58254d051a776135a7a3f2069ca4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac2a58254d051a776135a7a3f2069ca4d">UpdateCar</a> (Car car)</td></tr>
+<tr class="memitem:ac2a58254d051a776135a7a3f2069ca4d" id="r_ac2a58254d051a776135a7a3f2069ca4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac2a58254d051a776135a7a3f2069ca4d">UpdateCar</a> (<a class="el" href="class_car_app_1_1_model_1_1_car.html">Car</a> car)</td></tr>
 <tr class="memdesc:ac2a58254d051a776135a7a3f2069ca4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the details of an existing car in the database.  <br /></td></tr>
 <tr class="separator:ac2a58254d051a776135a7a3f2069ca4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49c0015eb2738c790cd164176f75368c" id="r_a49c0015eb2738c790cd164176f75368c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49c0015eb2738c790cd164176f75368c">AddFuelType</a> (FuelType fuelType)</td></tr>
+<tr class="memitem:a49c0015eb2738c790cd164176f75368c" id="r_a49c0015eb2738c790cd164176f75368c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49c0015eb2738c790cd164176f75368c">AddFuelType</a> (<a class="el" href="namespace_car_app.html#afdce064e25092b1adf4ea53fa7ad139b">FuelType</a> fuelType)</td></tr>
 <tr class="memdesc:a49c0015eb2738c790cd164176f75368c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new fuel type to the database.  <br /></td></tr>
 <tr class="separator:a49c0015eb2738c790cd164176f75368c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adaa150bcce3265ff068c8880a03f97a1" id="r_adaa150bcce3265ff068c8880a03f97a1"><td class="memItemLeft" align="right" valign="top"><a id="adaa150bcce3265ff068c8880a03f97a1" name="adaa150bcce3265ff068c8880a03f97a1"></a>
@@ -159,7 +167,7 @@ IDbConnection&#160;</td><td class="memItemRight" valign="bottom"><b>Connection</
         <tr>
           <td class="memname">void CarApp.DbSqliteHnd.AddCar </td>
           <td>(</td>
-          <td class="paramtype">Car</td>          <td class="paramname"><span class="paramname"><em>car</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_car_app_1_1_model_1_1_car.html">Car</a></td>          <td class="paramname"><span class="paramname"><em>car</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -177,6 +185,11 @@ IDbConnection&#160;</td><td class="memItemRight" valign="bottom"><b>Connection</
   </table>
   </dd>
 </dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_car_app_1_1_db_sqlite_hnd_aae7e1d5e6f9a5e859562b556529ce671_icgraph.png" border="0" usemap="#aclass_car_app_1_1_db_sqlite_hnd_aae7e1d5e6f9a5e859562b556529ce671_icgraph" alt=""/></div>
+</div>
 
 </div>
 </div>
@@ -192,7 +205,7 @@ IDbConnection&#160;</td><td class="memItemRight" valign="bottom"><b>Connection</
         <tr>
           <td class="memname">void CarApp.DbSqliteHnd.AddFuelType </td>
           <td>(</td>
-          <td class="paramtype">FuelType</td>          <td class="paramname"><span class="paramname"><em>fuelType</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="namespace_car_app.html#afdce064e25092b1adf4ea53fa7ad139b">FuelType</a></td>          <td class="paramname"><span class="paramname"><em>fuelType</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -210,6 +223,11 @@ IDbConnection&#160;</td><td class="memItemRight" valign="bottom"><b>Connection</
   </table>
   </dd>
 </dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_car_app_1_1_db_sqlite_hnd_a49c0015eb2738c790cd164176f75368c_icgraph.png" border="0" usemap="#aclass_car_app_1_1_db_sqlite_hnd_a49c0015eb2738c790cd164176f75368c_icgraph" alt=""/></div>
+</div>
 
 </div>
 </div>
@@ -225,7 +243,7 @@ IDbConnection&#160;</td><td class="memItemRight" valign="bottom"><b>Connection</
         <tr>
           <td class="memname">void CarApp.DbSqliteHnd.DeleteCar </td>
           <td>(</td>
-          <td class="paramtype">Car</td>          <td class="paramname"><span class="paramname"><em>car</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_car_app_1_1_model_1_1_car.html">Car</a></td>          <td class="paramname"><span class="paramname"><em>car</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -256,7 +274,7 @@ IDbConnection&#160;</td><td class="memItemRight" valign="bottom"><b>Connection</
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">IEnumerable&lt; Car &gt; CarApp.DbSqliteHnd.GetCars </td>
+          <td class="memname">IEnumerable&lt; <a class="el" href="class_car_app_1_1_model_1_1_car.html">Car</a> &gt; CarApp.DbSqliteHnd.GetCars </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -271,6 +289,11 @@ IDbConnection&#160;</td><td class="memItemRight" valign="bottom"><b>Connection</
 
 <p>Gets the list of cars from the database. </p>
 <dl class="section return"><dt>Returns</dt><dd>The list of cars.</dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_car_app_1_1_db_sqlite_hnd_ab955d3b4ffe4a69b40dcb49096e543ca_icgraph.png" border="0" usemap="#aclass_car_app_1_1_db_sqlite_hnd_ab955d3b4ffe4a69b40dcb49096e543ca_icgraph" alt=""/></div>
+</div>
 
 </div>
 </div>
@@ -284,7 +307,7 @@ IDbConnection&#160;</td><td class="memItemRight" valign="bottom"><b>Connection</
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">FuelType? CarApp.DbSqliteHnd.GetFuelType </td>
+          <td class="memname"><a class="el" href="namespace_car_app.html#afdce064e25092b1adf4ea53fa7ad139b">FuelType</a>? CarApp.DbSqliteHnd.GetFuelType </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
           <td></td>
@@ -318,7 +341,7 @@ IDbConnection&#160;</td><td class="memItemRight" valign="bottom"><b>Connection</
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">IEnumerable&lt; FuelType &gt; CarApp.DbSqliteHnd.GetFuelTypes </td>
+          <td class="memname">IEnumerable&lt; <a class="el" href="namespace_car_app.html#afdce064e25092b1adf4ea53fa7ad139b">FuelType</a> &gt; CarApp.DbSqliteHnd.GetFuelTypes </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -333,6 +356,11 @@ IDbConnection&#160;</td><td class="memItemRight" valign="bottom"><b>Connection</
 
 <p>Gets the list of fuel types from the database. </p>
 <dl class="section return"><dt>Returns</dt><dd>The list of fuel types.</dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_car_app_1_1_db_sqlite_hnd_acf1be52ffabe45b1f833345cea24309c_icgraph.png" border="0" usemap="#aclass_car_app_1_1_db_sqlite_hnd_acf1be52ffabe45b1f833345cea24309c_icgraph" alt=""/></div>
+</div>
 
 </div>
 </div>
@@ -348,7 +376,7 @@ IDbConnection&#160;</td><td class="memItemRight" valign="bottom"><b>Connection</
         <tr>
           <td class="memname">void CarApp.DbSqliteHnd.UpdateCar </td>
           <td>(</td>
-          <td class="paramtype">Car</td>          <td class="paramname"><span class="paramname"><em>car</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_car_app_1_1_model_1_1_car.html">Car</a></td>          <td class="paramname"><span class="paramname"><em>car</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -373,10 +401,13 @@ IDbConnection&#160;</td><td class="memItemRight" valign="bottom"><b>Connection</
 <li>CarApp/<b>DbSqliteHnd.cs</b></li>
 </ul>
 </div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_car_app.html">CarApp</a></li><li class="navelem"><a class="el" href="class_car_app_1_1_db_sqlite_hnd.html">DbSqliteHnd</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

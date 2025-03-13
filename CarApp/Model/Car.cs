@@ -52,6 +52,8 @@
         /// </summary>
         public string Description { get; private set; }
 
+        public Owner Owner { get; private set; }
+
         // Runtime properties
 
         //private FuelTypeList FuelTypeList { get; set; }
@@ -69,12 +71,18 @@
         /// <param name="fuelEfficiency">The fuel efficiency of the car.</param>
         /// <param name="mileage">The mileage of the car.</param>
         /// <param name="description">The description of the car.</param>
-        public Car(int id, string brand, string model, int year, char gearType, FuelType fuelType, double fuelEfficiency, int mileage, string description = "")
+        public Car(
+            int id,
+            string brand,
+            string model,
+            int year,
+            char gearType,
+            FuelType fuelType,
+            double fuelEfficiency,
+            int mileage,
+            string description = ""
+            )
         {
-            string user = Environment.GetEnvironmentVariable("USER");
-
-            Console.WriteLine(user);
-
             Id = id;
             Brand = brand;
             Model = model;
@@ -83,6 +91,44 @@
             FuelType = fuelType;
             FuelEfficiency = fuelEfficiency;
             Mileage = mileage;
+            Description = description;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the Car class.
+        /// </summary>
+        /// <param name="id">The ID of the car.</param>
+        /// <param name="brand">The brand of the car.</param>
+        /// <param name="model">The model of the car.</param>
+        /// <param name="year">The year of the car.</param>
+        /// <param name="gearType">The gear type of the car.</param>
+        /// <param name="fuelType">The fuel type ID of the car.</param>
+        /// <param name="fuelEfficiency">The fuel efficiency of the car.</param>
+        /// <param name="mileage">The mileage of the car.</param>
+        /// <param name="owner">The owner of the car.</param>
+        /// <param name="description">The description of the car.</param>
+        public Car(
+            int id,
+            string brand,
+            string model,
+            int year,
+            char gearType,
+            FuelType fuelType,
+            double fuelEfficiency,
+            int mileage,
+            Owner? owner,
+            string description = ""
+            )
+        {
+            Id = id;
+            Brand = brand;
+            Model = model;
+            Year = year;
+            GearType = gearType;
+            FuelType = fuelType;
+            FuelEfficiency = fuelEfficiency;
+            Mileage = mileage;
+            Owner = owner;
             Description = description;
         }
 
@@ -152,8 +198,5 @@
         {
             return (double)(fuelNeeded * fuelPrice);
         }
-
-
-
     }
 }

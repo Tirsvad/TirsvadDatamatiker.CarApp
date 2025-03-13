@@ -36,15 +36,6 @@
             +void setDescription(string description) private
         }
 
-        class CarApp.Model.FuelType {
-            uint Id
-            string Name
-            decimal Price
-            +uint getId()
-            +string getName()
-            +decimal getPrice()
-        }
-
         class CarApp.Model.CarList {
             List~Car~ CarCollection
             +static CarList Instance
@@ -55,6 +46,15 @@
             +uint GenerateId()
             +List~Car~ getCarCollection()
             +void setCarCollection(List~Car~ carCollection)
+        }
+
+        class CarApp.Model.FuelType {
+            <<enumeration>>
+            Diesel
+            Benzin
+            Electric
+            Hybrid
+            Brint
         }
 
         class CarApp.Model.FuelTypeList {
@@ -116,11 +116,6 @@
             Guest
         }
 
-        class CarApp.Model.DataContext {
-            CarList CarList
-            FuelTypeList FuelTypeList
-        }
-
         class CarApp.Model.FuelPrice {
             FuelType FuelType
             double Price
@@ -135,50 +130,10 @@
         }
     }
 
-    namespace CarApp.Helper {
-        class CarApp.Helper.Authentication {
-            +bool Login(string email, string password)
-            +void Logout()
-            +bool IsLoggedIn()
-            +bool IsAdmin()
-            +bool IsUser()
-            +bool IsGuest()
-        }
-    }
-
-    namespace CarApp {
-        class CarApp.Program {
-            +void Main(string[] args)
-            +Car? SelectCar()
-            +Car InputAddCar()
-            +void RemoveCar(Car selectedCar)
-            +void PalinDrome(Car selectedCar)
-            +double CalculateFuelNeeded(Car selectedCar, double distance)
-            +void CalculateTripCost(Car selectedCar)
-            +void PrintCarDetail(Car car)
-            +void PrintCarList()
-            +void Menu()
-            +int PaganizesMenu(List~MenuItem~ menuItems, int pageSize, bool sorting = false)
-        }
-    }
-
     CarApp.Model.Car --> CarApp.Model.FuelTypeList : uses
     CarApp.Model.CarList "1" *-- "many" CarApp.Model.Car : contains
     CarApp.Model.FuelTypeList "1" *-- "many" CarApp.Model.FuelType : contains
     CarApp.Model.UserList "1" *-- "many" CarApp.Model.User : contains
     CarApp.Model.RoleList "1" *-- "many" CarApp.Model.Role : contains
-    CarApp.Model.DataContext --> CarApp.Model.CarList : contains
-    CarApp.Model.DataContext --> CarApp.Model.FuelTypeList : contains
     CarApp.Model.FuelPriceList "1" *-- "many" CarApp.Model.FuelPrice : contains
     CarApp.Model.FuelPrice --> CarApp.Model.FuelType : uses
-    CarApp.Program --> CarApp.Model.CarList : uses
-    CarApp.Program --> CarApp.Model.FuelTypeList : uses
-    CarApp.Program --> CarApp.Model.Car : uses
-    CarApp.Program --> CarApp.Model.FuelType : uses
-    CarApp.Program --> CarApp.Model.FuelPriceList : uses
-    CarApp.Program --> CarApp.Model.FuelPrice : uses
-    CarApp.Program --> CarApp.Model.UserList : uses
-    CarApp.Program --> CarApp.Model.RoleList : uses
-    CarApp.Program --> CarApp.Model.Role : uses
-    CarApp.Program --> CarApp.Model.DataContext : uses
-    CarApp.Program --> CarApp.Helper.Authentication : uses

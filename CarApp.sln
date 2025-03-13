@@ -22,6 +22,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
 		documentation\DCD.mmd = documentation\DCD.mmd
+		documentation\UML.mmd = documentation\UML.mmd
 	EndProjectSection
 EndProject
 Global
@@ -46,5 +47,8 @@ Global
 		{94E17EAB-DF61-405B-A1E0-1178BFDBE9F5} = {C6A141EE-5F84-421C-9D09-34FD1790D426}
 		{6CDB135D-FC65-4096-96E6-6F1C7997FADF} = {C6A141EE-5F84-421C-9D09-34FD1790D426}
 		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {C6A141EE-5F84-421C-9D09-34FD1790D426}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5F3820BE-D635-4970-9D77-7133D9644795}
 	EndGlobalSection
 EndGlobal
