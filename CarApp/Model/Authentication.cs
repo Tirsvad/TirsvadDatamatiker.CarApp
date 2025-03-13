@@ -1,10 +1,8 @@
-﻿using CarApp.Model;
-
-namespace CarApp
+﻿namespace CarApp.Model
 {
     class Authentication
     {
-        private UserList? Users { get; set; }
+        private UserList Users { get; set; }
 
         public string? User { get; private set; }
 
@@ -31,12 +29,11 @@ namespace CarApp
             User = null;
         }
 
-        public Role GetRole(String user)
+        public Role GetRole(string? user)
         {
             if (user == null)
-            {
                 return Role.Guest;
-            }
+
             foreach (User item in Users.Users)
             {
                 if (item.Name == User)
@@ -44,6 +41,7 @@ namespace CarApp
                     return (Role)item.RolleId;
                 }
             }
+
             return Role.Guest;
         }
     }
