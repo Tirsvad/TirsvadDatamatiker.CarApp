@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['getcars_0',['GetCars',['../class_car_app_1_1_db_sqlite_hnd.html#ab955d3b4ffe4a69b40dcb49096e543ca',1,'CarApp::DbSqliteHnd']]],
-  ['getfueltype_1',['GetFuelType',['../class_car_app_1_1_db_sqlite_hnd.html#a0b01f90b9b79f10b2503b6914490b394',1,'CarApp::DbSqliteHnd']]],
-  ['getfueltypes_2',['GetFuelTypes',['../class_car_app_1_1_db_sqlite_hnd.html#acf1be52ffabe45b1f833345cea24309c',1,'CarApp::DbSqliteHnd']]],
-  ['getpassword_3',['GetPassword',['../class_car_app_1_1_program.html#a24ac36aae3ae49fbbc117b372ad7acc2',1,'CarApp::Program']]]
+  ['exportdata_0',['ExportData',['../class_car_app_1_1_json_file_handler.html#a3187d3fca9dcd3507ca2bf5f376b41c4',1,'CarApp::JsonFileHandler']]],
+  ['exporttojson_1',['ExportToJson',['../class_car_app_1_1_db_sqlite_hnd.html#a50b583ab662ba428647b5a9b1fafc922',1,'CarApp::DbSqliteHnd']]]
 ];

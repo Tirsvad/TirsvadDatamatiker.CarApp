@@ -1,6 +1,6 @@
 ﻿namespace CarApp.Model
 {
-    class FuelPriceList
+    public class FuelPriceList
     {
         private static FuelPriceList? _instance;
         private static readonly object _lock = new object();
