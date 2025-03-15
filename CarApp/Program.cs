@@ -47,7 +47,6 @@ internal class Program
     {
         string? username = Environment.GetEnvironmentVariable("USER_NAME");
         string msgDefault = "";
-        string errMsg = "";
         Console.Clear();
         Header("Log ind");
         if (username != "")
@@ -101,11 +100,11 @@ internal class Program
 
     static bool DoFuelTypeIdExists(int fuelTypeId)
     {
-        return Enum.IsDefined(typeof(FuelType), fuelTypeId);
+        return Enum.IsDefined(typeof(Engine.FuelType), fuelTypeId);
     }
 
     #endregion Is methods
-    #region Car methods
+    #region Car user interaction methods
 
     /// <summary>
     /// Selects a car from the list of cars.
@@ -143,8 +142,28 @@ internal class Program
         int fuelTypeId; // Fuel type ID of the car
         double fuelEfficiency = 0f; // Fuel efficiency of the car
         string description = ""; // Description of the car
+        OwnerList ownerList = OwnerList.Instance; // Owner list object
 
-        string errMsg = "";
+        // Engine
+        string engineName;
+        double engineCcm;
+        int engineHorsePower;
+        int engineTorque;
+        Engine.FuelType? engineFuel = null;
+        int engineMileage;
+        DateTime engineLastService;
+        int engineServiceIntervalMileage;
+        int engineServiceIntervalMonths;
+
+        // Tire
+        string tireBrand;
+        string tireModel;
+        int tireWidth;
+        int tireHeight;
+        int tireInch;
+        Tire.ConstructionType? tireConstruction = null;
+        Tire.SeasonType? tireSeason = null;
+
         Console.Clear(); // Clear the console window
         Console.CursorVisible = true;
 
@@ -197,27 +216,6 @@ internal class Program
 
         do
         {
-            Console.WriteLine("Brændstoftyper:"); // Display the fuel types
-            foreach (FuelType fuelType in Enum.GetValues(typeof(FuelType)))
-            {
-                Console.WriteLine($"{(int)fuelType}: {fuelType}");
-            }
-            Console.Write("Brændstoftype: ");
-            string? input = Console.ReadLine(); // Read the fuel type from the console
-            if (!int.TryParse(input, out fuelTypeId)) // If the fuel type is not a number
-            {
-                fuelTypeId = -1; // Set the fuel type to -1 as it will get 0 from parse!
-                PrintError("Brændstoftype skal være et tal."); // Display an error message
-            }
-            else if (!DoFuelTypeIdExists(fuelTypeId)) // If the fuel type does not exist
-            {
-                PrintError("Brændstoftype findes ikke."); // Display an error message
-            }
-
-        } while (!DoFuelTypeIdExists(fuelTypeId)); // Repeat until a valid fuel type is entered
-
-        do
-        {
             Console.Write("Kilometer: ");
             string? input = Console.ReadLine(); // Read the mileage from the console
             if (!int.TryParse(input, out mileage)) // If the mileage is not a number
@@ -242,16 +240,228 @@ internal class Program
             description = Console.ReadLine() ?? string.Empty; // Read the description from the console
         } while (description == null); // Repeat until a valid description is entered
 
+        // Engine
+        do
+        {
+            Console.Write("Motor navn: ");
+            engineName = Console.ReadLine();
+            if (string.IsNullOrEmpty(engineName))
+            {
+                PrintError("Motor navn må ikke være tomt.");
+            }
+        } while (string.IsNullOrEmpty(engineName));
+
+        do
+        {
+            Console.Write("Motor ccm: ");
+            string? input = Console.ReadLine();
+            if (!double.TryParse(input, out engineCcm))
+            {
+                PrintError("Motor ccm skal være et tal.");
+            }
+        } while (engineCcm == 0);
+
+        do
+        {
+            Console.Write("Motor hestekræfter: ");
+            string? input = Console.ReadLine();
+            if (!int.TryParse(input, out engineHorsePower))
+            {
+                PrintError("Motor hestekræfter skal være et tal.");
+            }
+        } while (engineHorsePower == 0);
+
+        do
+        {
+            Console.Write("Motor drejningsmoment: ");
+            string? input = Console.ReadLine();
+            if (!int.TryParse(input, out engineTorque))
+            {
+                PrintError("Motor drejningsmoment skal være et tal.");
+            }
+        } while (engineTorque == 0);
+
+        do
+        {
+            Console.WriteLine("Brændstoftyper:");
+            foreach (Engine.FuelType fuelType in Enum.GetValues(typeof(Engine.FuelType)))
+            {
+                Console.WriteLine($"{(int)fuelType}: {fuelType}");
+            }
+            Console.Write("Brændstoftype: ");
+            string? input = Console.ReadLine();
+            if (!int.TryParse(input, out fuelTypeId) || !Enum.IsDefined(typeof(Engine.FuelType), fuelTypeId))
+            {
+                PrintError("Brændstoftype skal være et gyldigt tal.");
+            }
+            else
+            {
+                engineFuel = (Engine.FuelType)fuelTypeId;
+            }
+        } while (engineFuel == null);
+
+        do
+        {
+            Console.Write("Motor kilometerstand: ");
+            string? input = Console.ReadLine();
+            if (!int.TryParse(input, out engineMileage))
+            {
+                PrintError("Motor kilometerstand skal være et tal.");
+            }
+        } while (engineMileage == 0);
+
+        do
+        {
+            Console.Write("Sidste service (dd-MM-yyyy): ");
+            string? input = Console.ReadLine();
+            if (!DateTime.TryParse(input, out engineLastService))
+            {
+                PrintError("Sidste service skal være en gyldig dato.");
+            }
+        } while (engineLastService == DateTime.MinValue);
+
+        do
+        {
+            Console.Write("Service interval (kilometer): ");
+            string? input = Console.ReadLine();
+            if (!int.TryParse(input, out engineServiceIntervalMileage))
+            {
+                PrintError("Service interval skal være et tal.");
+            }
+        } while (engineServiceIntervalMileage == 0);
+
+        do
+        {
+            Console.Write("Service interval (måneder): ");
+            string? input = Console.ReadLine();
+            if (!int.TryParse(input, out engineServiceIntervalMonths))
+            {
+                PrintError("Service interval skal være et tal.");
+            }
+        } while (engineServiceIntervalMonths == 0);
+
+        // Tire
+        do
+        {
+            Console.Write("Dæk mærke: ");
+            tireBrand = Console.ReadLine();
+            if (string.IsNullOrEmpty(tireBrand))
+            {
+                PrintError("Dæk mærke må ikke være tomt.");
+            }
+        } while (string.IsNullOrEmpty(tireBrand));
+
+        do
+        {
+            Console.Write("Dæk model: ");
+            tireModel = Console.ReadLine();
+            if (string.IsNullOrEmpty(tireModel))
+            {
+                PrintError("Dæk model må ikke være tomt.");
+            }
+        } while (string.IsNullOrEmpty(tireModel));
+
+        do
+        {
+            Console.Write("Dæk bredde: ");
+            string? input = Console.ReadLine();
+            if (!int.TryParse(input, out tireWidth))
+            {
+                PrintError("Dæk bredde skal være et tal.");
+            }
+        } while (tireWidth == 0);
+
+        do
+        {
+            Console.Write("Dæk højde: ");
+            string? input = Console.ReadLine();
+            if (!int.TryParse(input, out tireHeight))
+            {
+                PrintError("Dæk højde skal være et tal.");
+            }
+        } while (tireHeight == 0);
+
+        do
+        {
+            Console.Write("Dæk tommer: ");
+            string? input = Console.ReadLine();
+            if (!int.TryParse(input, out tireInch))
+            {
+                PrintError("Dæk tommer skal være et tal.");
+            }
+        } while (tireInch == 0);
+
+        do
+        {
+            Console.WriteLine("Dæk konstruktionstyper:");
+            foreach (Tire.ConstructionType constructionType in Enum.GetValues(typeof(Tire.ConstructionType)))
+            {
+                Console.WriteLine($"{(int)constructionType}: {constructionType}");
+            }
+            Console.Write("Dæk konstruktionstype: ");
+            string? input = Console.ReadLine();
+            if (!int.TryParse(input, out int constructionTypeId) || !Enum.IsDefined(typeof(Tire.ConstructionType), constructionTypeId))
+            {
+                PrintError("Dæk konstruktionstype skal være et gyldigt tal.");
+            }
+            else
+            {
+                tireConstruction = (Tire.ConstructionType)constructionTypeId;
+            }
+        } while (!Enum.IsDefined(typeof(Tire.ConstructionType), tireConstruction));
+
+        do
+        {
+            Console.WriteLine("Dæk sæsontyper:");
+            foreach (Tire.SeasonType seasonType in Enum.GetValues(typeof(Tire.SeasonType)))
+            {
+                Console.WriteLine($"{(int)seasonType}: {seasonType}");
+            }
+            Console.Write("Dæk sæsontype: ");
+            string? input = Console.ReadLine();
+            if (!int.TryParse(input, out int seasonTypeId) || !Enum.IsDefined(typeof(Tire.SeasonType), seasonTypeId))
+            {
+                PrintError("Dæk sæsontype skal være et gyldigt tal.");
+            }
+            else
+            {
+                tireSeason = (Tire.SeasonType)seasonTypeId;
+            }
+        } while (!Enum.IsDefined(typeof(Tire.SeasonType), tireSeason));
+
         Car car = new Car(
-            _carList.GenerateId(),
+            id: _carList.GenerateId(),
             brand: brand,
             model: model,
             year: year,
             gearType: gearType,
-            fuelType: (FuelType)fuelTypeId,
+            //fuel: (Engine.FuelType)fuelTypeId,
             fuelEfficiency: fuelEfficiency,
             mileage: mileage,
-            description: errMsg
+            engine: new Engine(
+                name: "1.6",
+                ccm: 1600,
+                horsePower: 120,
+                torque: 200,
+                fuel: Engine.FuelType.Benzin,
+                mileage: 100000, // Mileage
+                lastService: DateTime.Now, // LastService
+                serviceIntervalMileage: 15000, // ServiceIntervalMileage
+                serviceIntervalMonths: 12 // ServiceIntervalMonths
+            ),
+                Wheel.GetSetOf4Wheels(
+                    new Tire(
+                        brand: "Bridgestone",
+                        model: "Turanza",
+                        width: 205,
+                        height: 55,
+                        inch: 16,
+                        construction: Tire.ConstructionType.Radial,
+                        season: Tire.SeasonType.Summer
+                        )
+                    ),
+                description: "A nice car",
+                owner: ownerList.GetOwnerById(0)
             ); // Create a new car object
 
         return car; // Return the car object
@@ -316,7 +526,7 @@ internal class Program
             return;
         }
         double fuelNeeded = CalculateFuelNeeded(selectedCar, distance);
-        decimal fuelPrice = (decimal)_fuelPricelist.FuelPrices.Find(f => f.FuelType == selectedCar.FuelType).Price;
+        decimal fuelPrice = (decimal)(_fuelPricelist.FuelPrices.Find(f => f.FuelType == selectedCar.Engine?.Fuel)?.Price ?? 0);
         decimal tripCost = (decimal)fuelNeeded * fuelPrice;
         if (selectedCar.IsEngineRunning)
         {
@@ -390,31 +600,38 @@ internal class Program
             return;
         }
         DateTime endTime = date.Add(endTimeSpan);
-
-        Console.Write($"Prisen på {selectedCar.FuelType} default '{FuelPriceList.Instance.FuelPrices.Find(f => f.FuelType == selectedCar.FuelType)?.Price}': ");
         double fuelPrice;
-        input = Console.ReadLine();
-        if (input == null || input == "")
-        {
-            fuelPrice = _fuelPricelist.GetPrice(selectedCar.FuelType) ?? 0f;
-        }
-        else if (!double.TryParse(input, out fuelPrice))
-        {
-            PrintError("Prisen skal være et tal!");
-            Console.WriteLine("\nTryk på en tast for at fortsætte...");
-            Console.ReadKey();
-            return;
-        }
 
+        if (selectedCar.Engine?.Fuel != null)
+        {
+            Console.Write($"Prisen på {selectedCar.Engine.Fuel} default '{FuelPriceList.Instance.FuelPrices.Find(f => f.FuelType == selectedCar.Engine.Fuel)?.Price}': ");
+            input = Console.ReadLine();
+            if (input == null || input == "")
+            {
+                fuelPrice = _fuelPricelist.GetPrice(selectedCar.Engine.Fuel) ?? 0f;
+            }
+            else if (!double.TryParse(input, out fuelPrice))
+                fuelPrice = _fuelPricelist.GetPrice(selectedCar.Engine.Fuel) ?? 0f;
+            {
+                PrintError("Prisen skal være et tal!");
+                Console.WriteLine("\nTryk på en tast for at fortsætte...");
+                Console.ReadKey();
+                return;
+            }
+        }
+        else
+        {
+            fuelPrice = 0;
+        }
         trip = new(distance, date, startTime, endTime, fuelPrice);
-        _selectedCar?.Trips?.AddTrip(trip);
+        _selectedCar?.Trips?.Append(trip);
         TimeSpan duration = trip.CalculateDuration();
         Console.WriteLine($"{trip.GetTripInfo(selectedCar)}");
         Console.WriteLine("\nTryk på en tast for at fortsætte...");
         Console.ReadKey();
     }
 
-    #endregion Car methods
+    #endregion Car user interaction methods
     #region Table methods
 
     /// <summary>
@@ -524,7 +741,7 @@ internal class Program
             $"Bilmodel: {car.Model}" + "\n" +
             $"Årgang: {car.Year}" + "\n" +
             $"Gear: {car.GearType}" + "\n" +
-            $"Brændstof: {car.FuelType}" + "\n" +
+            $"Brændstof: {car.Engine?.Fuel}" + "\n" +
             $"Forbrug: {car.FuelEfficiency} km/l" + "\n" +
             $"Kilometerstand: {car.Mileage}" +
             (IsPalindrome(car) ? " ** Palindrome nummer **" : "") + "\n" + // Check if the mileage is a palindrome

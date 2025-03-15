@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['remove_0',['Remove',['../class_car_app_1_1_model_1_1_car_list.html#a7fa36f3c70a3bb40f4648f862a920be8',1,'CarApp::Model::CarList']]],
-  ['render_1',['Render',['../class_car_app_1_1_helper_1_1_frame.html#a964859879871c4120ba76dd2615b9fa8',1,'CarApp::Helper::Frame']]]
+  ['lastservice_0',['LastService',['../class_car_app_1_1_model_1_1_engine.html#afff43a91311034634af4d4215f501f90',1,'CarApp::Model::Engine']]],
+  ['login_1',['Login',['../class_car_app_1_1_model_1_1_authentication.html#aa5c437b321f61dcce808cfeede3985e3',1,'CarApp::Model::Authentication']]],
+  ['logout_2',['Logout',['../class_car_app_1_1_model_1_1_authentication.html#a902391009c793eb74cfb194b03148668',1,'CarApp::Model::Authentication']]]
 ];

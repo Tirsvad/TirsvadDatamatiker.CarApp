@@ -206,8 +206,8 @@ namespace CarApp
         {
             using (var connection = Connection)
             {
-                var sql = "INSERT INTO Cars (Brand, Model, Year, GearType, FuelType, FuelEfficiency, Mileage, Description) " +
-                          "VALUES (@Brand, @Model, @Year, @GearType, @FuelType, @FuelEfficiency, @Mileage, @Description)";
+                var sql = "INSERT INTO Cars (Brand, Model, Year, GearType, Fuel, FuelEfficiency, Mileage, Description) " +
+                          "VALUES (@Brand, @Model, @Year, @GearType, @Fuel, @FuelEfficiency, @Mileage, @Description)";
                 connection.Execute(sql, car);
             }
         }
@@ -234,7 +234,7 @@ namespace CarApp
             using (var connection = Connection)
             {
                 var sql = "UPDATE Cars SET Brand = @Brand, Model = @Model, Year = @Year, GearType = @GearType, " +
-                          "FuelType = @FuelType, FuelEfficiency = @FuelEfficiency, Mileage = @Mileage, Description = @Description " +
+                          "Fuel = @Fuel, FuelEfficiency = @FuelEfficiency, Mileage = @Mileage, Description = @Description " +
                           "WHERE Id = @Id";
                 connection.Execute(sql, car);
             }

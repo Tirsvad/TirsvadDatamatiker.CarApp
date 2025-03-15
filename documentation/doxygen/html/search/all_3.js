@@ -1,7 +1,23 @@
 var searchData=
 [
-  ['datacontainer_0',['DataContainer',['../class_car_app_1_1_json_file_handler_1_1_data_container.html',1,'CarApp::JsonFileHandler']]],
-  ['dbsqlitehnd_1',['DbSqliteHnd',['../class_car_app_1_1_db_sqlite_hnd.html',1,'CarApp']]],
-  ['deletecar_2',['DeleteCar',['../class_car_app_1_1_db_sqlite_hnd.html#a531019150e199d992da00d7d0f7c3502',1,'CarApp::DbSqliteHnd']]],
-  ['description_3',['Description',['../class_car_app_1_1_model_1_1_car.html#a223faae17ec4b683fab3458592850d47',1,'CarApp::Model::Car']]]
+  ['calculateduration_0',['CalculateDuration',['../class_car_app_1_1_model_1_1_trip.html#a542dd434f5a344a29623f3cbf34b9aa1',1,'CarApp::Model::Trip']]],
+  ['calculatefuelconsumption_1',['CalculateFuelConsumption',['../class_car_app_1_1_model_1_1_trip.html#abb248bd07175b87d6da25ea9e4bfa7c8',1,'CarApp::Model::Trip']]],
+  ['calculatefuelneeded_2',['CalculateFuelNeeded',['../class_car_app_1_1_model_1_1_car.html#a4391a7902833469a51ee1f9e533b9163',1,'CarApp::Model::Car']]],
+  ['calculatetripcost_3',['CalculateTripCost',['../class_car_app_1_1_model_1_1_car.html#a01eadc57597cc1957ebe4aa73919d505',1,'CarApp::Model::Car']]],
+  ['calculatetripprice_4',['CalculateTripPrice',['../class_car_app_1_1_model_1_1_trip.html#acb80dfe2490243062b8d05b4f0e440b2',1,'CarApp::Model::Trip']]],
+  ['car_5',['Car',['../class_car_app_1_1_model_1_1_car.html',1,'CarApp.Model.Car'],['../class_car_app_1_1_model_1_1_trip.html#addfb14c2c20714053bc175bb04d937bc',1,'CarApp.Model.Trip.Car'],['../class_car_app_1_1_model_1_1_car.html#a192db6bae0d286115d78b84420de3fac',1,'CarApp.Model.Car.Car()']]],
+  ['car_2ecs_6',['Car.cs',['../_car_8cs.html',1,'']]],
+  ['carapp_7',['CarApp',['../namespace_car_app.html',1,'']]],
+  ['carapp_2eassemblyinfo_2ecs_8',['CarApp.AssemblyInfo.cs',['../_car_app_8_assembly_info_8cs.html',1,'']]],
+  ['carapp_2eglobalusings_2eg_2ecs_9',['CarApp.GlobalUsings.g.cs',['../_car_app_8_global_usings_8g_8cs.html',1,'']]],
+  ['carapp_3a_3ahelper_10',['Helper',['../namespace_car_app_1_1_helper.html',1,'CarApp']]],
+  ['carapp_3a_3amodel_11',['Model',['../namespace_car_app_1_1_model.html',1,'CarApp']]],
+  ['carlist_12',['CarList',['../class_car_app_1_1_model_1_1_car_list.html',1,'CarApp::Model']]],
+  ['carlist_2ecs_13',['CarList.cs',['../_car_list_8cs.html',1,'']]],
+  ['cars_14',['Cars',['../class_car_app_1_1_json_file_handler_1_1_data_container.html#a4c4a1eb1352d26859669e7d470122c73',1,'CarApp::JsonFileHandler::DataContainer']]],
+  ['ccm_15',['Ccm',['../class_car_app_1_1_model_1_1_engine.html#a0d12c37975dfced8f030cb13a8a4da68',1,'CarApp::Model::Engine']]],
+  ['connection_16',['Connection',['../class_car_app_1_1_db_sqlite_hnd.html#a22d8363ffb351909de11f18a9bbea93f',1,'CarApp::DbSqliteHnd']]],
+  ['constants_2ecs_17',['Constants.cs',['../_constants_8cs.html',1,'']]],
+  ['construction_18',['Construction',['../class_car_app_1_1_model_1_1_tire.html#ac4ae6c91d9e7780f53d34b2bc849c305',1,'CarApp::Model::Tire']]],
+  ['constructiontype_19',['ConstructionType',['../class_car_app_1_1_model_1_1_tire.html#a4f9efed9d9995dad2b1e8a8871c71f14',1,'CarApp::Model::Tire']]]
 ];

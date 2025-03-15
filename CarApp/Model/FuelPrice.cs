@@ -2,11 +2,11 @@
 
 public class FuelPrice
 {
-    public FuelType FuelType { get; }
+    public Engine.FuelType FuelType { get; }
     public double Price { get; }
     public string Measurement { get; }
 
-    public FuelPrice(FuelType fuelType, double price, string measurement)
+    public FuelPrice(Engine.FuelType fuelType, double price, string measurement)
     {
         FuelType = fuelType;
         Price = price;

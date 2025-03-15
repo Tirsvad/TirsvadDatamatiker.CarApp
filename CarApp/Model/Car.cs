@@ -5,116 +5,44 @@
 /// </summary>
 public class Car
 {
-    // Database properties
-
-    /// <summary>
-    /// Gets and sets the Id of the car.
-    /// </summary>
-    public int Id { get; private set; }
-
-    /// <summary>
-    /// Gets or sets the brand of the car.
-    /// </summary>
-    public string Brand { get; private set; }
-
-    /// <summary>
-    /// Gets or sets the model of the car.
-    /// </summary>
-    public string Model { get; private set; }
-
-    /// <summary>
-    /// Gets or sets the year of the car.
-    /// </summary>
-    public int Year { get; private set; }
-
-    /// <summary>
-    /// Gets or sets the gear type of the car.
-    /// </summary>
-    public char GearType { get; private set; }
-
-    /// <summary>
-    /// Gets or sets the fuel type ID of the car.
-    /// </summary>
-    public FuelType FuelType { get; private set; }
-
-    /// <summary>
-    /// Gets or sets the fuel efficiency of the car.
-    /// </summary>
-    public double FuelEfficiency { get; private set; }
-
-    /// <summary>
-    /// Gets or sets the mileage of the car.
-    /// </summary>
-    public int Mileage { get; private set; }
-
-    /// <summary>
-    /// Gets or sets the description of the car.
-    /// </summary>
-    public string Description { get; private set; }
-
-    public Owner? Owner { get; private set; }
-
-    public TripList? Trips { get; set; }
+    // Properties
+    public int Id { get; private set; } ///> A unique ID for the car.
+    public string Brand { get; private set; } ///> The brand of the car.
+    public string Model { get; private set; } ///> The model of the car.
+    public int Year { get; private set; } ///> The year of the car.
+    public char GearType { get; private set; } ///> The gear type of the car.
+    public double FuelEfficiency { get; private set; } ///> The fuel efficiency of the car in kilometers per liter.
+    public int Mileage { get; private set; } ///> The mileage of the car in kilometers.
+    public Engine? Engine { get; private set; } ///> The engine object of the car.
+    // TODO: What if car has more than 4 wheels? (Ex. Land Rover Defender Flying Huntsman) 
+    public Wheel[] Wheels { get; private set; } = new Wheel[4]; ///> The wheels of the car.
+    public string Description { get; private set; } ///> The description of the car.
+    public Owner? Owner { get; private set; } ///> The owner of the car.
+    public List<Trip>? Trips { get; private set; } ///> The list of trips that this car has driven.
 
     // Runtime properties
-
-    //private FuelTypeList FuelTypeList { get; set; }
+    /// <summary>
+    /// Gets or sets a value indicating whether the engine is running.
+    /// </summary>
     public bool IsEngineRunning { get; set; } = false;
 
-    /// <summary>
-    /// Initializes a new instance of the Car class.
-    /// </summary>
-    /// <param name="id">The ID of the car.</param>
-    /// <param name="brand">The brand of the car.</param>
-    /// <param name="model">The model of the car.</param>
-    /// <param name="year">The year of the car.</param>
-    /// <param name="gearType">The gear type of the car.</param>
-    /// <param name="fuelType">The fuel type ID of the car.</param>
-    /// <param name="fuelEfficiency">The fuel efficiency of the car.</param>
-    /// <param name="mileage">The mileage of the car.</param>
-    /// <param name="description">The description of the car.</param>
-    public Car(int id, string brand, string model, int year, char gearType, FuelType fuelType, double fuelEfficiency, int mileage, string description = "")
+    public Car(int id, string brand, string model, int year, char gearType, double fuelEfficiency, int mileage, Engine engine, Wheel[] wheels, string description, Owner? owner)
     {
         Id = id;
         Brand = brand;
         Model = model;
         Year = year;
         GearType = gearType;
-        FuelType = fuelType;
         FuelEfficiency = fuelEfficiency;
         Mileage = mileage;
+        Engine = engine;
+        Wheels = wheels;
         Description = description;
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the Car class.
-    /// </summary>
-    /// <param name="id">The ID of the car.</param>
-    /// <param name="brand">The brand of the car.</param>
-    /// <param name="model">The model of the car.</param>
-    /// <param name="year">The year of the car.</param>
-    /// <param name="gearType">The gear type of the car.</param>
-    /// <param name="fuelType">The fuel type ID of the car.</param>
-    /// <param name="fuelEfficiency">The fuel efficiency of the car.</param>
-    /// <param name="mileage">The mileage of the car.</param>
-    /// <param name="owner">The owner of the car.</param>
-    /// <param name="description">The description of the car.</param>
-    public Car(int id, string brand, string model, int year, char gearType, FuelType fuelType, double fuelEfficiency, int mileage, Owner? owner, string description = "")
-    {
-        Id = id;
-        Brand = brand;
-        Model = model;
-        Year = year;
-        GearType = gearType;
-        FuelType = fuelType;
-        FuelEfficiency = fuelEfficiency;
-        Mileage = mileage;
         Owner = owner;
-        Description = description;
     }
 
     /// <summary>
-    /// Toggle the engine on or off.
+    /// Toggles the engine on or off.
     /// </summary>
     public void ToggleEngine()
     {
@@ -152,13 +80,13 @@ public class Car
     {
         if (IsEngineRunning)
         {
-            Trips?.AddTrip(trip);
+            Trips?.Add(trip);
             Mileage += (int)trip.Distance;
         }
     }
 
     /// <summary>
-    /// Adds a tour distance to the car's mileage if engine is running else it will simulate tour.
+    /// Adds a tour distance to the car's mileage if the engine is running, else it will simulate the tour.
     /// </summary>
     /// <param name="addDistanceInKm">The distance of the tour in kilometers.</param>
     public void UpdateMileAge(int addDistanceInKm)
@@ -186,10 +114,25 @@ public class Car
     /// <param name="car">The car object containing fuel type information.</param>
     /// <param name="fuelNeeded">The amount of fuel needed for the trip.</param>
     /// <param name="fuelPrice">The price of the fuel per liter.</param>
-    /// <!---->! This method should be in a separate class, not in the Car class. <!---->
     /// <returns>The cost of the trip.</returns>
-    static public double CalculateTripCost(Car car, double fuelNeeded, double fuelPrice)
+    public static double CalculateTripCost(Car car, double fuelNeeded, double fuelPrice)
     {
         return (double)(fuelNeeded * fuelPrice);
+    }
+
+    public double RemoveTrip(Trip trip)
+    {
+        Trips?.Remove(trip);
+        return trip.Distance;
+    }
+
+    public string ToStringAllTrip(Car car)
+    {
+        string result = "";
+        for (int i = 0; i < Trips?.Count; i++)
+        {
+            result += Trips[i].GetTripInfo(car) + "\n";
+        }
+        return result;
     }
 }
