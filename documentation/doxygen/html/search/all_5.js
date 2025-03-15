@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['fileversion_0',['FileVersion',['../class_car_app_1_1_json_file_handler_1_1_data_container.html#a9616b1bdbc23b60252d7f6596dabb3ec',1,'CarApp::JsonFileHandler::DataContainer']]],
-  ['frame_1',['Frame',['../class_car_app_1_1_helper_1_1_frame.html',1,'CarApp.Helper.Frame'],['../class_car_app_1_1_helper_1_1_frame.html#a259ec1f58fdf28a0e62b63f891563432',1,'CarApp.Helper.Frame.Frame(int width, int height)'],['../class_car_app_1_1_helper_1_1_frame.html#affc17bde46419839a00dc8290836c1b7',1,'CarApp.Helper.Frame.Frame(int width, int height, char leftTop, char rightTop, char leftBottom, char rightBottom, char horizontal, char vertical)']]],
-  ['fuelefficiency_2',['FuelEfficiency',['../class_car_app_1_1_model_1_1_car.html#a87efb6896271f9837429718dd3bb14ab',1,'CarApp::Model::Car']]],
-  ['fuelprice_3',['FuelPrice',['../class_car_app_1_1_model_1_1_fuel_price.html',1,'CarApp::Model']]],
-  ['fuelpricelist_4',['FuelPriceList',['../class_car_app_1_1_model_1_1_fuel_price_list.html',1,'CarApp::Model']]],
-  ['fueltype_5',['FuelType',['../class_car_app_1_1_model_1_1_car.html#a837eca41f26dff45884b6ac61e624e93',1,'CarApp.Model.Car.FuelType'],['../namespace_car_app.html#afdce064e25092b1adf4ea53fa7ad139b',1,'CarApp.FuelType']]],
-  ['fueltypes_6',['FuelTypes',['../class_car_app_1_1_json_file_handler_1_1_data_container.html#ae9e0ffcc7f246cb2f51d1e110dd982d9',1,'CarApp::JsonFileHandler::DataContainer']]]
+  ['electric_0',['Electric',['../class_car_app_1_1_model_1_1_engine.html#affc0775f17b4a9b13a4f5e5b24ddb870aa74711a0a27d5306d53f17771c2161cb',1,'CarApp::Model::Engine']]],
+  ['email_1',['Email',['../class_car_app_1_1_model_1_1_user.html#ab59ed27143bbe2ee0df4c5fde6e746cc',1,'CarApp::Model::User']]],
+  ['endtime_2',['EndTime',['../class_car_app_1_1_model_1_1_trip.html#aff006ea6c04f23879bcb9bcfa5c1fd95',1,'CarApp::Model::Trip']]],
+  ['engine_3',['Engine',['../class_car_app_1_1_model_1_1_engine.html',1,'CarApp.Model.Engine'],['../class_car_app_1_1_model_1_1_car.html#a365f91e3e5a83f5c968de5fa0f61eb5c',1,'CarApp.Model.Car.Engine'],['../class_car_app_1_1_model_1_1_engine.html#a3e93cec4bd609adad4984663fba92b46',1,'CarApp.Model.Engine.Engine(string name, double ccm, int horsePower, int torque, FuelType fuel, int mileage, DateTime lastService, int serviceIntervalMileage, int serviceIntervalMonths)'],['../class_car_app_1_1_model_1_1_engine.html#ae6f9d304c1dbc8c31f95e56b19020d60',1,'CarApp.Model.Engine.Engine(string name, int horsePower, int torque, FuelType fuel, int mileage, DateTime lastService, int serviceIntervalMileage, int serviceIntervalMonths)']]],
+  ['engine_2ecs_4',['Engine.cs',['../_engine_8cs.html',1,'']]],
+  ['exportdata_5',['ExportData',['../class_car_app_1_1_json_file_handler.html#a3187d3fca9dcd3507ca2bf5f376b41c4',1,'CarApp::JsonFileHandler']]],
+  ['exporttojson_6',['ExportToJson',['../class_car_app_1_1_db_sqlite_hnd.html#a50b583ab662ba428647b5a9b1fafc922',1,'CarApp::DbSqliteHnd']]]
 ];

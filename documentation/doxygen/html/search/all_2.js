@@ -1,12 +1,7 @@
 var searchData=
 [
-  ['calculatefuelneeded_0',['CalculateFuelNeeded',['../class_car_app_1_1_model_1_1_car.html#a4391a7902833469a51ee1f9e533b9163',1,'CarApp::Model::Car']]],
-  ['calculatetripcost_1',['CalculateTripCost',['../class_car_app_1_1_model_1_1_car.html#a01eadc57597cc1957ebe4aa73919d505',1,'CarApp::Model::Car']]],
-  ['car_2',['Car',['../class_car_app_1_1_model_1_1_car.html',1,'CarApp.Model.Car'],['../class_car_app_1_1_model_1_1_car.html#a504ba52489ebbd4170256059125fc3fb',1,'CarApp.Model.Car.Car(int id, string brand, string model, int year, char gearType, FuelType fuelType, double fuelEfficiency, int mileage, string description=&quot;&quot;)'],['../class_car_app_1_1_model_1_1_car.html#a092776d63c9d0560f5a8f117d86540ce',1,'CarApp.Model.Car.Car(int id, string brand, string model, int year, char gearType, FuelType fuelType, double fuelEfficiency, int mileage, Owner? owner, string description=&quot;&quot;)']]],
-  ['carapp_3',['CarApp',['../namespace_car_app.html',1,'']]],
-  ['carapp_3a_3ahelper_4',['Helper',['../namespace_car_app_1_1_helper.html',1,'CarApp']]],
-  ['carapp_3a_3amodel_5',['Model',['../namespace_car_app_1_1_model.html',1,'CarApp']]],
-  ['carlist_6',['CarList',['../class_car_app_1_1_model_1_1_car_list.html',1,'CarApp::Model']]],
-  ['cars_7',['Cars',['../class_car_app_1_1_json_file_handler_1_1_data_container.html#a4c4a1eb1352d26859669e7d470122c73',1,'CarApp::JsonFileHandler::DataContainer']]],
-  ['connection_8',['Connection',['../class_car_app_1_1_db_sqlite_hnd.html#a22d8363ffb351909de11f18a9bbea93f',1,'CarApp::DbSqliteHnd']]]
+  ['benzin_0',['Benzin',['../class_car_app_1_1_model_1_1_engine.html#affc0775f17b4a9b13a4f5e5b24ddb870a138be735c55896dbdbea9b6c5d503b6f',1,'CarApp::Model::Engine']]],
+  ['bias_1',['Bias',['../class_car_app_1_1_model_1_1_tire.html#a4f9efed9d9995dad2b1e8a8871c71f14a4ad6b9e6418fd2d739906bd47e887ae3',1,'CarApp::Model::Tire']]],
+  ['brand_2',['Brand',['../class_car_app_1_1_model_1_1_car.html#aedf466eef29ab9b3feef97a3cbdac508',1,'CarApp.Model.Car.Brand'],['../class_car_app_1_1_model_1_1_tire.html#ab68e2729134b344fc3798b84c5cac242',1,'CarApp.Model.Tire.Brand']]],
+  ['brint_3',['Brint',['../class_car_app_1_1_model_1_1_engine.html#affc0775f17b4a9b13a4f5e5b24ddb870a9b7aa94b1ac904aa07fb869ad9706342',1,'CarApp::Model::Engine']]]
 ];

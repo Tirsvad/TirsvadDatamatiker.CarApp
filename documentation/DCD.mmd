@@ -1,139 +1,170 @@
-﻿classDiagram
-    namespace CarApp.Model {
-        class CarApp.Model.Car {
-            uint Id
-            string Brand
-            string Model
-            uint Year
-            char GearType
-            uint FuelTypeId
-            double FuelEfficiency
-            uint Mileage
-            string Description
-            +void ToggleEngine()
-            +void StartEngine()
-            +void StopEngine()
-            +void UpdateMileAge(int addDistanceInKm)
-            +static double CalculateFuelNeeded(Car car, int distance)
-            +static double CalculateTripCost(Car car, double fuelNeeded, double fuelPrice)
-            +uint getId()
-            +void setId(uint id) private
-            +string getBrand()
-            +void setBrand(string brand) private
-            +string getModel()
-            +void setModel(string model) private
-            +uint getYear()
-            +void setYear(uint year) private
-            +char getGearType()
-            +void setGearType(char gearType) private
-            +uint getFuelTypeId()
-            +void setFuelTypeId(uint fuelTypeId) private
-            +double getFuelEfficiency()
-            +void setFuelEfficiency(double fuelEfficiency) private
-            +uint getMileage()
-            +void setMileage(uint mileage) private
-            +string getDescription()
-            +void setDescription(string description) private
-        }
+﻿---
+DCD for the CarApp project
+---
 
-        class CarApp.Model.CarList {
-            List~Car~ CarCollection
-            +static CarList Instance
-            +void AddCar(Car car)
-            +void RemoveCar(Car car)
-            +void RemoveCar(int index)
-            +string ToString()
-            +uint GenerateId()
-            +List~Car~ getCarCollection()
-            +void setCarCollection(List~Car~ carCollection)
-        }
+classDiagram
 
-        class CarApp.Model.FuelType {
-            <<enumeration>>
-            Diesel
-            Benzin
-            Electric
-            Hybrid
-            Brint
-        }
-
-        class CarApp.Model.FuelTypeList {
-            List~FuelType~ FuelTypeCollection
-            +static FuelTypeList Instance
-            +void Seed()
-            +List~FuelType~ getFuelTypeCollection()
-        }
-
-        class CarApp.Model.User {
-            int Id
-            string Name
-            string Email
-            string Password
-            string Phone
-            string Address
-            int RolleId
-            +int getId()
-            +void setId(int id) private
-            +string getName()
-            +void setName(string name) private
-            +string getEmail()
-            +void setEmail(string email) private
-            +string getPassword()
-            +void setPassword(string password) private
-            +string getPhone()
-            +void setPhone(string phone) private
-            +string getAddress()
-            +void setAddress(string address) private
-            +int getRolleId()
-            +void setRolleId(int rolleId) private
-        }
-
-        class CarApp.Model.UserList {
-            List~User~ Users
-            +static UserList Instance
-            +void Seed()
-        }
-
-        class CarApp.Model.Role {
-            int Id
-            string Type
-            +int getId()
-            +void setId(int id) private
-            +string getType()
-            +void setType(string type) private
-        }
-
-        class CarApp.Model.RoleList {
-            List~Role~ Roles
-            +static RoleList Instance
-            +void Seed()
-        }
-
-        class CarApp.Model.Role {
-            <<enumeration>>
-            Admin
-            User
-            Guest
-        }
-
-        class CarApp.Model.FuelPrice {
-            FuelType FuelType
-            double Price
-            string Measurement
-            +FuelPrice(FuelType fuelType, double price, string measurement)
-        }
-
-        class CarApp.Model.FuelPriceList {
-            List~FuelPrice~ FuelPrices
-            +static FuelPriceList Instance
-            +void Seed()
-        }
+namespace CarApp.Model {
+    class Car {
+        int Id
+        string Brand
+        string Model
+        int Year
+        char GearType
+        double FuelEfficiency
+        int Mileage
+        Engine? Engine
+        Wheel[] Wheels
+        string Description
+        Owner? Owner
+        List~Trip~? Trips
+        bool IsEngineRunning
+        Car(int id, string brand, string model, int year, char gearType, double fuelEfficiency, int mileage, Engine engine, Wheel[] wheels, string description, Owner? owner)
+        void ToggleEngine()
+        void StartEngine()
+        void StopEngine()
+        void Drive(Trip trip)
+        void UpdateMileAge(int addDistanceInKm)
+        static double CalculateFuelNeeded(Car car, int distance)
+        static double CalculateTripCost(Car car, double fuelNeeded, double fuelPrice)
+        double RemoveTrip(Trip trip)
+        string ToStringAllTrip(Car car)
+        int getId()
+        string getBrand()
+        string getModel()
+        int getYear()
+        char getGearType()
+        double getFuelEfficiency()
+        int getMileage()
+        Engine? getEngine()
+        Wheel[] getWheels()
+        string getDescription()
+        Owner? getOwner()
+        List~Trip~? getTrips()
+        bool getIsEngineRunning()
+        void setIsEngineRunning(bool value)
     }
 
-    CarApp.Model.Car --> CarApp.Model.FuelTypeList : uses
-    CarApp.Model.CarList "1" *-- "many" CarApp.Model.Car : contains
-    CarApp.Model.FuelTypeList "1" *-- "many" CarApp.Model.FuelType : contains
-    CarApp.Model.UserList "1" *-- "many" CarApp.Model.User : contains
-    CarApp.Model.RoleList "1" *-- "many" CarApp.Model.Role : contains
-    CarApp.Model.FuelPriceList "1" *-- "many" CarApp.Model.FuelPrice : contains
-    CarApp.Model.FuelPrice --> CarApp.Model.FuelType : uses
+    class Engine {
+        <<enumeration>> FuelType
+        string Name
+        double? Ccm
+        int HorsePower
+        int Torque
+        FuelType Fuel
+        int Mileage
+        DateTime LastService
+        int ServiceIntervalMileage
+        int ServiceIntervalMonths
+        Engine(string name, double ccm, int horsePower, int torque, FuelType fuel, int mileage, DateTime lastService, int serviceIntervalMileage, int serviceIntervalMonths)
+        Engine(string name, int horsePower, int torque, FuelType fuel, int mileage, DateTime lastService, int serviceIntervalMileage, int serviceIntervalMonths)
+        void AddMileage(int mileage)
+        bool IsServiceTime()
+        static bool TryParseHorsePower(string input, out int horsePower)
+        static bool TryParseTorque(string input, out int torque)
+        static bool TryParseCcm(string input, out double ccm)
+        static bool TryParseServiceIntervalMileage(string input, out int serviceIntervalMileage)
+        static bool TryParseServiceIntervalMonths(string input, out int serviceIntervalMonths)
+        string ToString()
+        string getName()
+        double? getCcm()
+        int getHorsePower()
+        int getTorque()
+        FuelType getFuel()
+        int getMileage()
+        void setMileage(int value)
+        DateTime getLastService()
+        void setLastService(DateTime value)
+        int getServiceIntervalMileage()
+        int getServiceIntervalMonths()
+    }
+
+    class Owner {
+        int Id
+        string Name
+        Owner(int id, string name)
+        void UpdateName(string name)
+        int getId()
+        string getName()
+        void setName(string value)
+    }
+
+    class Trip {
+        double Distance
+        DateTime TripDate
+        DateTime StartTime
+        DateTime EndTime
+        Car Car
+        double FuelPrice
+        Trip(double distance, DateTime tripDate, DateTime startTime, DateTime endTime, double fuelPrice)
+        TimeSpan CalculateDuration()
+        double CalculateFuelConsumption(Car car)
+        double CalculateTripPrice(double fuelNeeded)
+        string GetTripInfo(Car car)
+    }
+
+    class Wheel {
+        Tire Tire
+        Wheel(Tire tire)
+        static Wheel[] GetSetOf4Wheels(Tire tire)
+        Tire getTire()
+        void setTire(Tire value)
+    }
+
+    class Tire {
+        <<enumeration>> SeasonType
+        <<enumeration>> ConstructionType
+        string Brand
+        string Model
+        int Width
+        int Height
+        int Inch
+        ConstructionType Construction
+        SeasonType Season
+        Tire(string brand, string model, int width, int height, int inch, ConstructionType construction, SeasonType season)
+        string getBrand()
+        string getModel()
+        int getWidth()
+        int getHeight()
+        int getInch()
+        ConstructionType getConstruction()
+        SeasonType getSeason()
+    }
+
+    class CarList {
+        static CarList? _instance
+        static readonly object _lock
+        static CarList Instance
+        List~Car~ Cars
+        OwnerList OwnerList
+        CarList()
+        void Add(Car car)
+        void Remove(Car car)
+        List~Car~ GetCars()
+        string ToString()
+        void Seed()
+        int GenerateId()
+        static CarList getInstance()
+    }
+
+    class OwnerList {
+        List~Owner~ _owners
+        static OwnerList Instance
+        OwnerList()
+        void Seed()
+        void AddOwner(Owner owner)
+        void RemoveOwner(Owner owner)
+        List~Owner~ GetOwner(string name)
+        Owner? GetOwnerById(int id)
+        List~Owner~ getOwners()
+    }
+
+}
+
+Car "1" --* "1" Engine
+Car "1" --* "*" Wheel
+Car "0..1" --* "*" Trip
+Car "*" -- "0..1" Owner
+Wheel "1" --* "1" Tire
+CarList "0..1" --* "*" Car
+OwnerList "0..1" --* "*" Owner

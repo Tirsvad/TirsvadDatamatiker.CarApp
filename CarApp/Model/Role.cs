@@ -1,9 +1,8 @@
-﻿namespace CarApp.Model
+﻿namespace CarApp.Model;
+
+public enum Role
 {
-    public enum Role
-    {
-        Guest,
-        User,
-        Admin
-    }
+    Guest,
+    User,
+    Admin
 }

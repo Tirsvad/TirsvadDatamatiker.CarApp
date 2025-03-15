@@ -7,9 +7,6 @@ public class CarList
 {
     private static CarList? _instance;
     private static readonly object _lock = new object();
-    /// <summary>
-    /// Singleton instance of the CarList
-    /// </summary>
     public static CarList Instance
     {
         get
@@ -23,12 +20,9 @@ public class CarList
                 return _instance;
             }
         }
-    }
+    } ///> Singleton instance of the CarList
 
-    /// <summary>
-    /// List of cars
-    /// </summary>
-    private List<Car> Cars { get; }
+    private List<Car> Cars { get; } ///> List of cars
 
     // Runtime properties
 
@@ -82,21 +76,58 @@ public class CarList
     /// </summary>
     private void Seed()
     {
+        // public Car(int id, string brand, string model, int year, char gearType, double fuelEfficiency, int mileage, Engine engine, Wheel[] wheels, string description, Owner owner)
+
         // TODO: Load from Database
-        Add(new Car(GenerateId(), "Toyota", "Corolla", 2010, 'A', FuelType.Benzin, 15.0f, 100000, OwnerList.GetOwnerById(0), "A nice car"));
-        Add(new Car(GenerateId(), "Ford", "Focus", 2015, 'M', FuelType.Benzin, 14.3f, 50000, OwnerList.GetOwnerById(1), "A nice car"));
-        Add(new Car(GenerateId(), "Volkswagen", "Golf", 2018, 'M', FuelType.Diesel, 18.2f, 20000, "A sporty car"));
-        Add(new Car(GenerateId(), "Mercedes", "C-Class", 2021, 'A', FuelType.Diesel, 25.0f, 533335, OwnerList.GetOwnerById(3), "A luxurious car"));
-        Add(new Car(GenerateId(), "Tesla", "Model S", 2022, 'A', FuelType.Electric, 45.0f, 100, OwnerList.GetOwnerById(4), "An electric car"));
-        Add(new Car(GenerateId(), "Nissan", "Leaf", 2023, 'A', FuelType.Electric, 50.0f, 0, OwnerList.GetOwnerById(5), "An electric car"));
-        Add(new Car(GenerateId(), "Audi", "A4", 2019, 'A', FuelType.Diesel, 19.0f, 10000, OwnerList.GetOwnerById(6), "A luxurious car"));
-        Add(new Car(GenerateId(), "BMW", "M3", 2020, 'M', FuelType.Benzin, 12.0f, 5000, OwnerList.GetOwnerById(3), "A sporty car"));
-        Add(new Car(GenerateId(), "Chevrolet", "Camaro", 2017, 'M', FuelType.Benzin, 13.0f, 30000, OwnerList.GetOwnerById(2), "A sporty car"));
-        Add(new Car(GenerateId(), "Hyundai", "i30", 2016, 'A', FuelType.Benzin, 16.0f, 40000, OwnerList.GetOwnerById(2), "A nice car"));
-        Add(new Car(GenerateId(), "Kia", "Ceed", 2014, 'M', FuelType.Benzin, 14.0f, 60000, OwnerList.GetOwnerById(4), "A nice car"));
-        Add(new Car(GenerateId(), "Mazda", "3", 2013, 'A', FuelType.Benzin, 17.0f, 70000, OwnerList.GetOwnerById(2), "A nice car"));
-        Add(new Car(GenerateId(), "Subaru", "Impreza", 2012, 'M', FuelType.Benzin, 15.0f, 80000, OwnerList.GetOwnerById(5), "A nice car"));
-        Add(new Car(GenerateId(), "Volvo", "V60", 2011, 'A', FuelType.Diesel, 20.0f, 90000, "A strong car"));
+
+        Add(
+            new Car(
+                id: GenerateId(), // Auto generate ID
+                brand: "Toyota",
+                model: "Corolla",
+                year: 2010,
+                gearType: 'A',
+                fuelEfficiency: 15.0f,
+                mileage: 100000,
+                engine: new Engine(
+                    name: "1.6",
+                    ccm: 1600,
+                    horsePower: 120,
+                    torque: 200,
+                    fuel: Engine.FuelType.Benzin,
+                    mileage: 100000, // Mileage
+                    lastService: DateTime.Now, // LastService
+                    serviceIntervalMileage: 15000, // ServiceIntervalMileage
+                    serviceIntervalMonths: 12 // ServiceIntervalMonths
+                    ),
+                Wheel.GetSetOf4Wheels(
+                    new Tire(
+                        brand: "Bridgestone",
+                        model: "Turanza",
+                        width: 205,
+                        height: 55,
+                        inch: 16,
+                        construction: Tire.ConstructionType.Radial,
+                        season: Tire.SeasonType.Summer
+                        )
+                    ),
+                description: "A nice car",
+                owner: OwnerList.GetOwnerById(0)
+            )
+        );
+        Add(new Car(GenerateId(), "Ford", "Focus", 2015, 'M', 14.3f, 50000, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Benzin, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "A nice car", OwnerList.GetOwnerById(1)));
+        Add(new Car(GenerateId(), "Volkswagen", "Golf", 2018, 'M', 18.2f, 20000, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Diesel, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "A sporty car", OwnerList.GetOwnerById(2)));
+        Add(new Car(GenerateId(), "Mercedes", "C-Class", 2021, 'A', 25.0f, 533335, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Diesel, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "A luxurious car", OwnerList.GetOwnerById(3)));
+        Add(new Car(GenerateId(), "Tesla", "Model S", 2022, 'A', 45.0f, 100, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Electric, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "An electric car", OwnerList.GetOwnerById(4)));
+        Add(new Car(GenerateId(), "Nissan", "Leaf", 2023, 'A', 50.0f, 0, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Electric, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "An electric car", OwnerList.GetOwnerById(5)));
+        Add(new Car(GenerateId(), "Audi", "A4", 2019, 'A', 19.0f, 10000, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Diesel, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "A luxurious car", OwnerList.GetOwnerById(6)));
+        Add(new Car(GenerateId(), "BMW", "M3", 2020, 'M', 12.0f, 5000, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Benzin, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "A sporty car", OwnerList.GetOwnerById(3)));
+        Add(new Car(GenerateId(), "Chevrolet", "Camaro", 2017, 'M', 13.0f, 30000, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Benzin, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "A sporty car", OwnerList.GetOwnerById(2)));
+        Add(new Car(GenerateId(), "Hyundai", "i30", 2016, 'A', 16.0f, 40000, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Benzin, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "A nice car", OwnerList.GetOwnerById(2)));
+        Add(new Car(GenerateId(), "Kia", "Ceed", 2014, 'M', 14.0f, 60000, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Benzin, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "A nice car", OwnerList.GetOwnerById(4)));
+        Add(new Car(GenerateId(), "Mazda", "3", 2013, 'A', 17.0f, 70000, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Benzin, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "A nice car", OwnerList.GetOwnerById(2)));
+        Add(new Car(GenerateId(), "Subaru", "Impreza", 2012, 'M', 15.0f, 80000, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Benzin, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "A nice car", OwnerList.GetOwnerById(5)));
+        Add(new Car(GenerateId(), "Volvo", "V60", 2011, 'A', 20.0f, 90000, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Diesel, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "A strong car", OwnerList.GetOwnerById(6)));
     }
 
     /// <summary>

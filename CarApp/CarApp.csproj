@@ -8,6 +8,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="DbSqliteHnd.cs" />
+	  <Compile Remove="JsonFileHandler.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Dapper" Version="2.1.66" />
 		<PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.2" />
 	</ItemGroup>
@@ -23,6 +28,12 @@
 
 	<ItemGroup>
 	  <Folder Include="Data\" />
+	  <Folder Include="Helper\Input\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="DbSqliteHnd.cs" />
+	  <None Include="JsonFileHandler.cs" />
 	</ItemGroup>
 
 </Project>
