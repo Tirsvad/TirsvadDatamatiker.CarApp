@@ -149,6 +149,14 @@ View the class diagram [here](documentation/DCD.svg)
     <img src="documentation/DCD.svg" alt="Test Result" height="120">
 </a>
 
+
+## Doxygen
+
+To generate the doxygen documentation run the following command in the root of the project
+```sh
+doxygen Doxyfile
+```
+
 ## Testing
 
 ### Result
