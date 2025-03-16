@@ -1,5 +1,8 @@
 ﻿namespace CarApp.Model
 {
+    /// <summary>
+    /// Represents the engine of a car.
+    /// </summary>
     public class Engine
     {
         public enum FuelType

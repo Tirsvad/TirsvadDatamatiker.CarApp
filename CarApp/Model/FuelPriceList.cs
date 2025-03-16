@@ -1,5 +1,8 @@
 ﻿namespace CarApp.Model;
 
+/// <summary>
+/// Represents a list of fuel prices.
+/// </summary>
 public class FuelPriceList
 {
     private static FuelPriceList? _instance;

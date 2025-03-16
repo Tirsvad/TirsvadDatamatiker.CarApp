@@ -11,5 +11,5 @@ var searchData=
   ['getrole_8',['GetRole',['../class_car_app_1_1_model_1_1_authentication.html#a856e6c045af2fbffddab215f4f17c770',1,'CarApp::Model::Authentication']]],
   ['getsetof4wheels_9',['GetSetOf4Wheels',['../class_car_app_1_1_model_1_1_wheel.html#af2f2cb0e24cfb895c1328813d76edec6',1,'CarApp::Model::Wheel']]],
   ['gettripinfo_10',['GetTripInfo',['../class_car_app_1_1_model_1_1_trip.html#a39b4d4c11ccc13c954453d8b7c9f7c3b',1,'CarApp::Model::Trip']]],
-  ['guest_11',['Guest',['../namespace_car_app_1_1_model.html#acbda58b0cbb5a81da260520bc76fde46aadb831a7fdd83dd1e2a309ce7591dff8',1,'CarApp::Model']]]
+  ['guest_11',['Guest',['../class_car_app_1_1_model_1_1_user.html#ac847c89758a92f727b04f71b2d3ecee7aadb831a7fdd83dd1e2a309ce7591dff8',1,'CarApp.Model.User.Guest'],['../namespace_car_app_1_1_model.html#acbda58b0cbb5a81da260520bc76fde46aadb831a7fdd83dd1e2a309ce7591dff8',1,'CarApp.Model.Guest']]]
 ];

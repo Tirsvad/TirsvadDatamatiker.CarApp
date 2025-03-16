@@ -1,5 +1,8 @@
 ﻿namespace CarApp.Model;
 
+/// <summary>
+/// Represents the price of a fuel type.
+/// </summary>
 public class FuelPrice
 {
     public Engine.FuelType FuelType { get; }

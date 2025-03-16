@@ -222,19 +222,17 @@ namespace CarApp.Model {
     }
 }
 
-Program --> Car
-Program --> Authentication
-Program --> FuelPriceList
-Program --> CarList
-Program --> TripList
-Program --> MenuItem
-Car --> Engine
-Car --> Wheel
-Car --> Owner
-Car --> TripList
-Wheel --> Tire
-TripList --> Trip
-CarList --> Car
-FuelPriceList --> FuelPrice
-Authentication --> UserList
-OwnerList --> Owner
+Program --> Car : use
+Program --> Authentication : use
+Program --> FuelPriceList : use
+Program --> CarList : use
+Program --> MenuItem : use
+Car --> Engine : contains
+Car --> Wheel : contains
+Car --> Owner : contains
+Car --> Trip : contains
+Wheel --> Tire : contains
+CarList --> Car : contains
+FuelPriceList --> FuelPrice : contains
+Authentication --> UserList : use
+OwnerList --> Owner : contains

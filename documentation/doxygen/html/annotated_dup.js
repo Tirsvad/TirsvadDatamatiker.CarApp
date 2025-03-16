@@ -1,6 +1,9 @@
 var annotated_dup =
 [
     [ "CarApp", "namespace_car_app.html", [
+      [ "Handler", "namespace_car_app_1_1_handler.html", [
+        [ "JsonFileHandler", "class_car_app_1_1_handler_1_1_json_file_handler.html", "class_car_app_1_1_handler_1_1_json_file_handler" ]
+      ] ],
       [ "Helper", "namespace_car_app_1_1_helper.html", [
         [ "Frame", "class_car_app_1_1_helper_1_1_frame.html", "class_car_app_1_1_helper_1_1_frame" ]
       ] ],

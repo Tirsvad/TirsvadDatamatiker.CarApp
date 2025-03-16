@@ -1,5 +1,8 @@
 ﻿namespace CarApp.Model
 {
+    /// <summary>
+    /// Represents the authentication system.
+    /// </summary>
     class Authentication
     {
         private UserList Users { get; set; } ///> The list of users.
@@ -53,9 +56,9 @@
 
             foreach (User item in Users.Users)
             {
-                if (item.Name == User)
+                if (item.Name == user)
                 {
-                    return (Role)item.RolleId;
+                    return (Role)item.Role;
                 }
             }
             return Role.Guest;
