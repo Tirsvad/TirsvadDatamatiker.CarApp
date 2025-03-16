@@ -1,52 +1,82 @@
 ﻿namespace CarApp.Model;
 
+/// <summary>
+/// Represents a list of owners.
+/// </summary>
 public class OwnerList
 {
-    private List<Owner> _owners = new List<Owner>();
-
-    public static OwnerList Instance { get; } = new OwnerList();
-
-    private OwnerList()
-    {
-        Seed();
-    }
-
-    public List<Owner> Owners
+    private static OwnerList? _instance;
+    private static readonly object _lock = new object();
+    public static OwnerList Instance
     {
         get
         {
-            return _owners;
+            lock (_lock)
+            {
+                if (_instance == null)
+                {
+                    _instance = new OwnerList();
+                }
+                return _instance;
+            }
         }
     }
 
+    public List<Owner> Owners { get; private set; } ///> List of owners
+
+    private OwnerList()
+    {
+        Owners = [];
+        Seed();
+    }
+
+    /// <summary>
+    /// Seeds the list of owners with some initial data.
+    /// </summary>
     private void Seed()
     {
-        _owners.Add(new Owner(0, "John Nielsen"));
-        _owners.Add(new Owner(1, "Trine Nielsen"));
-        _owners.Add(new Owner(2, "Alice Jensen")); // is another person but same name
-        _owners.Add(new Owner(3, "Bob Pedersen"));
-        _owners.Add(new Owner(4, "Charles Hansen"));
-        _owners.Add(new Owner(5, "Diana Andersen"));
-        _owners.Add(new Owner(6, "Trine Nielsen")); // is another person but same name
+        Owners.Add(new Owner(0, "John Nielsen"));
+        Owners.Add(new Owner(1, "Trine Nielsen"));
+        Owners.Add(new Owner(2, "Alice Jensen")); // is another person but with same name
+        Owners.Add(new Owner(3, "Bob Pedersen"));
+        Owners.Add(new Owner(4, "Charles Hansen"));
+        Owners.Add(new Owner(5, "Diana Andersen"));
+        Owners.Add(new Owner(6, "Trine Nielsen")); // is another person but with same name
     }
 
+    /// <summary>
+    /// Adds an owner to the list.
+    /// </summary>
+    /// <param name="owner">The owner to add.</param>
     public void AddOwner(Owner owner)
     {
-        _owners.Add(owner);
+        Owners.Add(owner);
     }
 
+    /// <summary>
+    /// Removes an owner from the list.
+    /// </summary>
+    /// <param name="owner">The owner to remove.</param>
     public void RemoveOwner(Owner owner)
     {
-        _owners.Remove(owner);
+        Owners.Remove(owner);
     }
 
+    /// <summary>
+    /// Gets all owners with a specific name.
+    /// </summary>
+    /// <returns>A list of owners with the specified name.</returns>
     public List<Owner> GetOwner(string name)
     {
-        return _owners.FindAll(owner => owner.Name == name);
+        return Owners.FindAll(owner => owner.Name == name);
     }
 
+    /// <summary>
+    /// Gets an owner by their ID.
+    /// </summary>
+    /// <param name="id">The ID of the owner to get.</param>
     public Owner? GetOwnerById(int id)
     {
-        return _owners.Find(owner => owner.Id == id);
+        return Owners.Find(owner => owner.Id == id);
     }
 }

@@ -3,7 +3,6 @@ var dir_46c81cd471f33095c5b91df115ee9d35 =
     [ "Authentication.cs", "_authentication_8cs.html", "_authentication_8cs" ],
     [ "Car.cs", "_car_8cs.html", "_car_8cs" ],
     [ "CarList.cs", "_car_list_8cs.html", "_car_list_8cs" ],
-    [ "DataContext.cs", "_data_context_8cs.html", null ],
     [ "Engine.cs", "_engine_8cs.html", "_engine_8cs" ],
     [ "FuelPrice.cs", "_fuel_price_8cs.html", "_fuel_price_8cs" ],
     [ "FuelPriceList.cs", "_fuel_price_list_8cs.html", "_fuel_price_list_8cs" ],

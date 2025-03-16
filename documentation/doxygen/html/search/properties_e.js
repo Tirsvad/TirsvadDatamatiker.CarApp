@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rolleid_0',['RolleId',['../class_car_app_1_1_model_1_1_user.html#a43ce559ac9f286efca4c656aca91b96d',1,'CarApp::Model::User']]]
+  ['role_0',['Role',['../class_car_app_1_1_model_1_1_user.html#ad2de9cf31e22c0ffc043244ad7a9b1b0',1,'CarApp::Model::User']]]
 ];

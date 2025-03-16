@@ -36,7 +36,7 @@ public class UserList
             "user1@hotmail.com",    // Email
             "61616161",             // Phone
             "Acme 22",              // Address
-            1));                    // See Constants.RoleType
+            User.RoleType.User));                    // See Constants.RoleType
         Users.Add(new User(
             2,
             "admin1",
@@ -44,7 +44,7 @@ public class UserList
             "admin1@hotmail.com",
             "61616162",
             "Acme 23",
-            0));
+            User.RoleType.Admin));
 
         // Here we could put OS user data into the env.tmp file and read it here
         // It will not be implemented in the sources
@@ -70,7 +70,8 @@ public class UserList
             Environment.GetEnvironmentVariable("USER_EMAIL") ?? "defaultUser@example.com", // User email
             Environment.GetEnvironmentVariable("USER_PHONE") ?? "00000000", // User phone
             Environment.GetEnvironmentVariable("USER_ADDRESS") ?? "Default Address", // User address,
-            int.Parse(Environment.GetEnvironmentVariable("USER_ROLE_ID") ?? ((int)Role.Guest).ToString()))); // User role id
+            (User.RoleType)Enum.Parse(typeof(User.RoleType), Environment.GetEnvironmentVariable("USER_ROLE_ID") ?? nameof(User.RoleType.Guest)) // User role
+        ));
 
         foreach (var item in Users)
         {

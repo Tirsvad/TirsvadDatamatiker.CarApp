@@ -1,5 +1,8 @@
 ﻿namespace CarApp.Model;
 
+/// <summary>
+/// Represents an owner of a car.
+/// </summary>
 public class Owner
 {
     public int Id { get; private set; }

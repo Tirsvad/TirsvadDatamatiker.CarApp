@@ -9,7 +9,7 @@
         /// <summary>  
         /// The name of the JSON file used for storing application data.  
         /// </summary>  
-        public const string jsonFileName = "CarAppData.json";
+        public const string jsonFilePath = "CarAppData.json";
 
         /// <summary>  
         /// The name of the SQLite database file.  
