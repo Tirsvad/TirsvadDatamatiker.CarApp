@@ -118,13 +118,13 @@ You may need to remove / change key bindings ´F11´ in the VS buildin terminal 
 - [x] Calculate trip fuel price
 - [x] Print rapport of car
 - [x] Authentication
+- [x] Export / Import json data
+- [x] Add owner for each car
 
 ## Todo
 
-- [ ] Export / Import json data
 - [ ] Load / Save car to database
 - [ ] Clear Database
-- [ ] Add owner for each car
 
 ## Known issues
 

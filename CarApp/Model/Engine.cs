@@ -1,4 +1,6 @@
-﻿namespace CarApp.Model
+﻿using System.Text.Json.Serialization;
+
+namespace CarApp.Model
 {
     /// <summary>
     /// Represents the engine of a car.
@@ -23,6 +25,9 @@
         public DateTime LastService { get; private set; } ///> Last service date
         public int ServiceIntervalMileage { get; } ///> Service interval in kilometers
         public int ServiceIntervalMonths { get; } ///> Service interval in months
+
+        [JsonConstructor]
+        private Engine() { }
 
         /// <summary>
         /// Constructor for ICE Engine (Internal Combustion Engine)

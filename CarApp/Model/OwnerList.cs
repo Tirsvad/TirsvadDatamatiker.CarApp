@@ -24,17 +24,28 @@ public class OwnerList
 
     public List<Owner> Owners { get; private set; } ///> List of owners
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OwnerList"/> class.
+    /// JsonConstructor is used to create an instance of the class from JSON.
+    /// </summary>
     private OwnerList()
     {
         Owners = [];
         Seed();
     }
 
+    public List<Owner> GetOwners()
+    {
+        return Owners;
+    }
+
     /// <summary>
     /// Seeds the list of owners with some initial data.
+    /// Only used for testing purposes as we get the data from the json file
     /// </summary>
     private void Seed()
     {
+        /*
         Owners.Add(new Owner(0, "John Nielsen"));
         Owners.Add(new Owner(1, "Trine Nielsen"));
         Owners.Add(new Owner(2, "Alice Jensen")); // is another person but with same name
@@ -42,6 +53,7 @@ public class OwnerList
         Owners.Add(new Owner(4, "Charles Hansen"));
         Owners.Add(new Owner(5, "Diana Andersen"));
         Owners.Add(new Owner(6, "Trine Nielsen")); // is another person but with same name
+        */
     }
 
     /// <summary>

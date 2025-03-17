@@ -32,8 +32,13 @@ class JsonFileHandler
     public class DataContainer
     {
         public Version? Version { get; set; }
-        public CarList? Cars { get; set; }
-        public OwnerList? Owners { get; set; }
+        public List<Car> Cars { get; set; } = CarList.Instance.GetCars();
+        public List<Owner> Owners { get; set; } = OwnerList.Instance.GetOwners();
+
+        public DataContainer()
+        {
+            Version = null;
+        }
     }
 
     private JsonFileHandler()
@@ -41,8 +46,6 @@ class JsonFileHandler
         _dataContainer = new DataContainer
         {
             Version = _version,
-            Cars = CarList.Instance,
-            Owners = OwnerList.Instance
         };
     }
 
@@ -51,12 +54,20 @@ class JsonFileHandler
         lock (_lock)
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
+            // Debugging: Check if CarList.Instance is populated
+            if (_dataContainer.Cars == null || !_dataContainer.Cars.Any())
+            {
+                Console.WriteLine("No cars to export.");
+                Console.WriteLine("Press any key to continue...");
+                Console.WriteLine(Console.ReadLine());
+                return;
+            }
             string jsonString = JsonSerializer.Serialize(_dataContainer, options);
             File.WriteAllText(filePath, jsonString);
         }
     }
 
-    public DataContainer? ImportData(string filename)
+    public void ImportData(string filename)
     {
         lock (_lock)
         {
@@ -69,19 +80,32 @@ class JsonFileHandler
                     if (data == null)
                     {
                         Console.WriteLine("No dataContainer file found.");
-                        return null;
+                        return;
                     }
                     switch (data)
                     {
                         case { Version: { Major: 1, Minor: 0 } }:
-                            DataContainer dataContainer = new DataContainer();
-                            dataContainer.Version = data.Version;
-                            dataContainer.Cars = data.Cars;
-                            dataContainer.Owners = data.Owners;
-                            return dataContainer;
+                            _dataContainer.Version = data.Version;
+                            if (data.Cars != null)
+                            {
+                                _dataContainer.Cars?.Clear();
+                                foreach (var car in data.Cars)
+                                {
+                                    _dataContainer.Cars?.Add(car);
+                                }
+                            }
+                            if (data.Owners != null)
+                            {
+                                _dataContainer.Owners?.Clear();
+                                foreach (var owner in data.Owners)
+                                {
+                                    _dataContainer.Owners?.Add(owner);
+                                }
+                            }
+                            break;
                         default:
                             Console.WriteLine("Incompatible dataContainer file version.");
-                            return null;
+                            break;
                     }
                 }
             }
@@ -89,7 +113,6 @@ class JsonFileHandler
             {
                 Console.WriteLine($"Error importing dataContainer: {ex.Message}");
             }
-            return null;
         }
     }
 }

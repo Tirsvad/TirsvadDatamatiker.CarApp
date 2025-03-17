@@ -525,6 +525,10 @@ internal class Program
         Console.WriteLine("\nTryk på en tast for at fortsætte...");
         Console.ReadKey();
     }
+    /// <summary>
+    /// Get user input for a new trip and add it to the car's trip list.
+    /// </summary>
+    /// <param name="selectedCar"></param>
     static void InputTour(Car selectedCar)
     {
         string? input;
@@ -617,7 +621,6 @@ internal class Program
         Console.WriteLine("\nTryk på en tast for at fortsætte...");
         Console.ReadKey();
     }
-
     #endregion Car user interaction methods
     #region Table methods
 
@@ -861,7 +864,6 @@ internal class Program
     /// <returns>True if the user wants to exit, otherwise false.</returns>
     static void Menu()
     {
-        string errorMessage = "";
         Role role = _auth.GetRole(CurrentUser);
         Role[] rolesLoggedIn = [Role.User, Role.Admin];
         do
@@ -891,12 +893,6 @@ internal class Program
             {
                 action();
             }
-
-            Console.SetCursorPosition(0, Console.CursorTop + 1);
-            PrintError(errorMessage);
-
-            int CTop = Console.CursorTop;
-
         } while (true);
     }
     /// <summary>
@@ -905,7 +901,7 @@ internal class Program
     static void RapportMenu()
     {
         Role role = _auth.GetRole(CurrentUser);
-        string errorMessage = "";
+        Role[] rolesLoggedIn = [Role.User, Role.Admin];
         do
         {
             List<MenuItem> menuItems = new List<MenuItem> { };
@@ -931,15 +927,15 @@ internal class Program
             {
                 return;
             }
-
-            Console.SetCursorPosition(0, Console.CursorTop + 1);
-            PrintError(errorMessage);
-
         } while (true);
     }
+    /// <summary>
+    /// Menu for file and database operations.
+    /// </summary>
     static void FileMenu()
     {
-        //string errorMessage = "";
+        Role role = _auth.GetRole(CurrentUser);
+        Role[] rolesLoggedIn = [Role.User, Role.Admin];
         do
         {
             List<MenuItem> menuItems = new List<MenuItem> { };
@@ -958,10 +954,6 @@ internal class Program
             {
                 action();
             }
-            else
-            {
-                //errorMessage = "Ugyldig handling";
-            }
         } while (true);
     }
     /// <summary>
@@ -970,6 +962,8 @@ internal class Program
     /// <returns>The selected car object.</returns>
     static void SelectCarMenu()
     {
+        Role role = _auth.GetRole(CurrentUser);
+        Role[] rolesLoggedIn = [Role.User, Role.Admin];
         do
         {
             List<MenuItem> menuItems = new List<MenuItem>();
@@ -996,7 +990,6 @@ internal class Program
     }
     static void CarMenu()
     {
-        string errorMessage = "";
         Role role = _auth.GetRole(CurrentUser);
         Role[] rolesLoggedIn = [Role.User, Role.Admin];
         do
@@ -1151,14 +1144,10 @@ internal class Program
     #endregion Menu
     static void importJson()
     {
-        JsonFileHandler.DataContainer? data = JsonFileHandler.Instance.ImportData("cars.json");
-        if (data != null && data.Cars != null)
-        {
-            foreach (var car in data.Cars.GetCars())
-            {
-                _carList.Add(car);
-            }
-        }
+        JsonFileHandler.Instance.ImportData("cars.json");
+        Console.WriteLine("Biler er indlæst");
+        Console.WriteLine("\nTryk på en tast for at fortsætte...");
+        Console.Write(Console.ReadKey());
     }
     static void exportJson()
     {
