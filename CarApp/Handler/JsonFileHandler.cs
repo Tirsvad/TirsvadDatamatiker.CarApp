@@ -82,7 +82,12 @@ class JsonFileHandler
                 if (File.Exists(filename))
                 {
                     string jsonString = File.ReadAllText(filename);
-                    var data = JsonSerializer.Deserialize<DataContainer>(jsonString);
+                    var options = new JsonSerializerOptions
+                    {
+                        Converters = { new JsonEngineConverter() }
+                    };
+                    var data = JsonSerializer.Deserialize<DataContainer>(jsonString, options);
+
                     if (data == null)
                     {
                         Console.WriteLine("No dataContainer file found.");

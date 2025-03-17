@@ -88,6 +88,9 @@ internal class Program
             CurrentUser = username;
         }
     }
+    /// <summary>
+    /// Log out the user.
+    /// </summary>
     private static void Logout()
     {
         _auth.Logout();
@@ -559,7 +562,7 @@ internal class Program
 
         Console.Write("Indtast kilometer for turen: ");
         input = Console.ReadLine();
-        if (!double.TryParse(input, out double distance))
+        if (!int.TryParse(input, out int distance))
         {
             PrintError("Kilometer skal være et tal");
             Console.WriteLine("\nTryk på en tast for at fortsætte...");
@@ -601,8 +604,6 @@ internal class Program
                 fuelPrice = _fuelPricelist.GetPrice(selectedCar.Engine.Fuel) ?? 0f;
             }
             else if (!double.TryParse(input, out fuelPrice))
-                fuelPrice = _fuelPricelist.GetPrice(selectedCar.Engine.Fuel) ?? 0f;
-            else
             {
                 PrintError("Prisen skal være et tal!");
                 Console.WriteLine("\nTryk på en tast for at fortsætte...");
@@ -615,9 +616,18 @@ internal class Program
             fuelPrice = 0;
         }
         trip = new(distance, date, startTime, endTime, fuelPrice);
-        _selectedCar?.Trips?.Append(trip);
-        TimeSpan duration = trip.CalculateDuration();
-        Console.WriteLine($"{trip.GetTripInfo(selectedCar)}");
+        if (selectedCar.IsEngineRunning)
+        {
+            Console.WriteLine("Bilens id" + selectedCar.Id);
+            int index = _carList.Cars.FindIndex(c => c.Id == selectedCar.Id);
+            _carList.Cars[index].Mileage += distance;
+            _carList.Cars[index].Trips.Add(trip);
+            _selectedCar = _carList.Cars[index];
+            Console.WriteLine("Turen er kørt");
+            Console.WriteLine("\nTryk på en tast for at fortsætte...");
+            Console.ReadKey();
+        }
+        //TimeSpan duration = trip.CalculateDuration();
         Console.WriteLine("\nTryk på en tast for at fortsætte...");
         Console.ReadKey();
     }
@@ -855,6 +865,27 @@ internal class Program
         Console.Write(Console.ReadKey());
     }
 
+    static void ShowCarTrips()
+    {
+        Console.Clear();
+        Header("Ture");
+        Console.WriteLine();
+        if (_selectedCar?.Trips?.Count == 0)
+        {
+            Console.WriteLine("Ingen ture fundet");
+        }
+        else
+        {
+            if (_selectedCar != null)
+            {
+                string? output = Car.ToStringAllTrip(_selectedCar);
+                Console.WriteLine(output);
+            }
+        }
+        Console.WriteLine("\nTryk på en tast for at fortsætte...");
+        Console.Write(Console.ReadKey());
+    }
+
     #endregion Rapport methods
     #region Menu
 
@@ -938,11 +969,13 @@ internal class Program
         Role[] rolesLoggedIn = [Role.User, Role.Admin];
         do
         {
-            List<MenuItem> menuItems = new List<MenuItem> { };
-            menuItems.Add(new MenuItem("Json fil", null, null));
-            menuItems.Add(new MenuItem("Gem biler", (Action)exportJson, new Role[] { Role.Admin }));
-            menuItems.Add(new MenuItem("Indlæs biler", (Action)importJson, null));
-            menuItems.Add(new MenuItem("Database", null, null));
+            List<MenuItem> menuItems = new List<MenuItem>
+            {
+                new MenuItem("Json fil", null, null),
+                new MenuItem("Gem biler", (Action)exportJson, [Role.Admin]),
+                new MenuItem("Indlæs biler", (Action)importJson, null),
+                new MenuItem("Database", null, null)
+            };
             Console.Clear();
             Header("Fil og database Menu");
             MenuItem? menuItem = PaganizesMenu(menuItems, 10);
@@ -1011,6 +1044,7 @@ internal class Program
                     menuItems.Add(new MenuItem("Kør en tur (simuleret)", new Action(() => { InputTour(_selectedCar); }), rolesLoggedIn));
                 }
                 menuItems.Add(new MenuItem("Vis bil", new Action(() => { ShowCarDetail(_selectedCar); }), rolesLoggedIn));
+                menuItems.Add(new MenuItem("Se alle ture", (Action)ShowCarTrips, rolesLoggedIn));
                 menuItems.Add(new MenuItem("Palindrom", new Action(() => { PalinDrome(_selectedCar); }), null));
             }
             Console.Clear();
@@ -1041,17 +1075,15 @@ internal class Program
     static MenuItem? PaganizesMenu(List<MenuItem> menuItems, int pageSize, bool main = false)
     {
         string errorMessage = ""; ///> Error message to be display
-        int pageIndex = 0;
+        int pageIndex = 0; ///> Index of current page
         int x = 0;
         List<int> validIndex = []; ///> Index of Valid choice this user can make.
         List<int> validChoice = []; ///> Index of Valid choice this user can make.
-        List<MenuItem> newMenuItems = [];
+        List<MenuItem> newMenuItems = []; ///> New menu items
         (int Left, int Top) Position; ///> For cursor position
         Console.CursorVisible = false;
-
-        int totalPages = (int)Math.Ceiling(menuItems.Count / (double)pageSize);
-
-        Position = Console.GetCursorPosition();
+        int totalPages = (int)Math.Ceiling(menuItems.Count / (double)pageSize); ///> Total pages
+        Position = Console.GetCursorPosition(); ///> Get the current cursor position
         do
         {
             int ii = 1; ///> Index used for valid choice
@@ -1077,7 +1109,7 @@ internal class Program
                 {
                     newMenuItems.Add(item);
                     validIndex.Add(x++);
-                    return $"F{ii++}: {item.Name}";
+                    return AnsiCode.Colorize($"F{ii++} ", AnsiCode.BrightYellow) + item.Name;
                 }
                 else
                 {
@@ -1098,17 +1130,20 @@ internal class Program
 
             if (pageIndex > 0)
             {
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("F11 ");
-                Console.ResetColor();
+                Console.Write(AnsiCode.Colorize("F11 ", AnsiCode.Blue));
                 Console.Write("previous page, ");
             }
 
             if (totalPages > pageIndex + 1)
             {
-                Console.WriteLine("F12 next page, ");
+                Console.Write(AnsiCode.Colorize("F12 ", AnsiCode.Blue));
+                Console.WriteLine("next page, ");
             }
-            Console.WriteLine("ESC: Afslut");
+            Console.Write(AnsiCode.Colorize("ESC ", AnsiCode.Blue));
+            if (main)
+                Console.WriteLine("Afslut");
+            else
+                Console.WriteLine("Tilbage");
             Console.WriteLine($"\nSide {pageIndex + 1} af {totalPages}");
 
             var key = Console.ReadKey(true);
@@ -1131,7 +1166,7 @@ internal class Program
                 int selectedIndex = key.Key - ConsoleKey.F1;
                 if (validIndex[selectedIndex + (pageIndex * pageSize)] == -1)
                 {
-                    errorMessage = "Fejl: Ingen gyldige valg. Værdi -1";
+                    errorMessage = "Fejl: Valget er ugyldig.";
                 }
                 return newMenuItems[validIndex[selectedIndex + (pageIndex * pageSize)]];
             }
@@ -1151,7 +1186,7 @@ internal class Program
     }
     static void exportJson()
     {
-        JsonFileHandler.Instance.ExportData("cars.json");
+        JsonFileHandler.Instance.ExportData();
     }
 
     /// <summary>
@@ -1185,6 +1220,9 @@ internal class Program
         {
             Console.BufferHeight = 100; // Set the buffer height to 1000 lines
         }
+
+        // Auto load cars from json file
+        JsonFileHandler.Instance.ImportData();
 
         // Get the current OS user
         string currentUser = Environment.UserName;

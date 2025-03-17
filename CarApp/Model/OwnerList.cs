@@ -31,7 +31,7 @@ public class OwnerList
     private OwnerList()
     {
         Owners = [];
-        //Seed();
+        //Seed(); // Only used for testing purposes
     }
 
     public List<Owner> GetOwners()

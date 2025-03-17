@@ -3,28 +3,28 @@
   "Cars": [
     {
       "Id": 0,
-      "Brand": "Toyota",
-      "Model": "Corolla",
-      "Year": 2010,
+      "Brand": "Honda",
+      "Model": "Civic",
+      "Year": 2012,
       "GearType": "A",
-      "FuelEfficiency": 15,
-      "Mileage": 100000,
+      "FuelEfficiency": 14,
+      "Mileage": 80000,
       "Engine": {
-        "Name": "1.6",
-        "Ccm": 1600,
-        "HorsePower": 120,
-        "Torque": 200,
+        "Name": "1.8",
+        "Ccm": 1800,
+        "HorsePower": 140,
+        "Torque": 174,
         "Fuel": 0,
-        "Mileage": 100000,
-        "LastService": "2025-03-17T12:02:14.4153545+08:00",
+        "Mileage": 80000,
+        "LastService": "2025-03-18T00:58:56.152234+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
       "Wheels": [
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
+            "Brand": "Michelin",
+            "Model": "Primacy",
             "Width": 205,
             "Height": 55,
             "Inch": 16,
@@ -34,8 +34,8 @@
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
+            "Brand": "Michelin",
+            "Model": "Primacy",
             "Width": 205,
             "Height": 55,
             "Inch": 16,
@@ -45,8 +45,8 @@
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
+            "Brand": "Michelin",
+            "Model": "Primacy",
             "Width": 205,
             "Height": 55,
             "Inch": 16,
@@ -56,8 +56,8 @@
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
+            "Brand": "Michelin",
+            "Model": "Primacy",
             "Width": 205,
             "Height": 55,
             "Inch": 16,
@@ -66,176 +66,167 @@
           }
         }
       ],
-      "Description": "A nice car",
-      "Owner": {
-        "Id": 0,
-        "Name": "John Nielsen"
-      },
-      "Trips": null,
+      "Description": "A reliable car",
+      "Owner": null,
+      "Trips": [],
       "IsEngineRunning": false
     },
     {
       "Id": 1,
-      "Brand": "Ford",
-      "Model": "Focus",
+      "Brand": "Toyota",
+      "Model": "Camry",
       "Year": 2015,
-      "GearType": "M",
-      "FuelEfficiency": 14.300000190734863,
-      "Mileage": 50000,
+      "GearType": "A",
+      "FuelEfficiency": 12,
+      "Mileage": 60000,
       "Engine": {
-        "Name": "1.6",
-        "Ccm": 1600,
-        "HorsePower": 120,
-        "Torque": 200,
+        "Name": "2.5",
+        "Ccm": 2500,
+        "HorsePower": 178,
+        "Torque": 230,
         "Fuel": 0,
-        "Mileage": 100000,
-        "LastService": "2025-03-17T12:02:14.4171799+08:00",
+        "Mileage": 60000,
+        "LastService": "2025-03-18T00:58:56.1533405+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
       "Wheels": [
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Michelin",
+            "Model": "Primacy",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Michelin",
+            "Model": "Primacy",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Michelin",
+            "Model": "Primacy",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Michelin",
+            "Model": "Primacy",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         }
       ],
-      "Description": "A nice car",
-      "Owner": {
-        "Id": 1,
-        "Name": "Trine Nielsen"
-      },
-      "Trips": null,
+      "Description": "A comfortable sedan",
+      "Owner": null,
+      "Trips": [],
       "IsEngineRunning": false
     },
     {
       "Id": 2,
-      "Brand": "Volkswagen",
-      "Model": "Golf",
+      "Brand": "Ford",
+      "Model": "F-150",
       "Year": 2018,
-      "GearType": "M",
-      "FuelEfficiency": 18.200000762939453,
-      "Mileage": 20000,
+      "GearType": "A",
+      "FuelEfficiency": 10,
+      "Mileage": 40000,
       "Engine": {
-        "Name": "1.6",
-        "Ccm": 1600,
-        "HorsePower": 120,
-        "Torque": 200,
-        "Fuel": 1,
-        "Mileage": 100000,
-        "LastService": "2025-03-17T12:02:14.4171853+08:00",
+        "Name": "3.5",
+        "Ccm": 3500,
+        "HorsePower": 375,
+        "Torque": 470,
+        "Fuel": 0,
+        "Mileage": 40000,
+        "LastService": "2025-03-18T00:58:56.1533769+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
       "Wheels": [
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Goodyear",
+            "Model": "Wrangler",
+            "Width": 275,
+            "Height": 65,
+            "Inch": 18,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Goodyear",
+            "Model": "Wrangler",
+            "Width": 275,
+            "Height": 65,
+            "Inch": 18,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Goodyear",
+            "Model": "Wrangler",
+            "Width": 275,
+            "Height": 65,
+            "Inch": 18,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Goodyear",
+            "Model": "Wrangler",
+            "Width": 275,
+            "Height": 65,
+            "Inch": 18,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         }
       ],
-      "Description": "A sporty car",
-      "Owner": {
-        "Id": 2,
-        "Name": "Alice Jensen"
-      },
-      "Trips": null,
+      "Description": "A powerful truck",
+      "Owner": null,
+      "Trips": [],
       "IsEngineRunning": false
     },
     {
       "Id": 3,
-      "Brand": "Mercedes",
-      "Model": "C-Class",
-      "Year": 2021,
+      "Brand": "Chevrolet",
+      "Model": "Equinox",
+      "Year": 2017,
       "GearType": "A",
-      "FuelEfficiency": 25,
-      "Mileage": 533335,
+      "FuelEfficiency": 11,
+      "Mileage": 50000,
       "Engine": {
-        "Name": "1.6",
-        "Ccm": 1600,
-        "HorsePower": 120,
-        "Torque": 200,
-        "Fuel": 1,
-        "Mileage": 100000,
-        "LastService": "2025-03-17T12:02:14.4171858+08:00",
+        "Name": "2.0",
+        "Ccm": 2000,
+        "HorsePower": 252,
+        "Torque": 353,
+        "Fuel": 0,
+        "Mileage": 50000,
+        "LastService": "2025-03-18T00:58:56.1533777+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -243,729 +234,839 @@
         {
           "Tire": {
             "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Model": "Dueler",
+            "Width": 225,
+            "Height": 60,
+            "Inch": 17,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
             "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Model": "Dueler",
+            "Width": 225,
+            "Height": 60,
+            "Inch": 17,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
             "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Model": "Dueler",
+            "Width": 225,
+            "Height": 60,
+            "Inch": 17,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
             "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Model": "Dueler",
+            "Width": 225,
+            "Height": 60,
+            "Inch": 17,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         }
       ],
-      "Description": "A luxurious car",
-      "Owner": {
-        "Id": 3,
-        "Name": "Bob Pedersen"
-      },
-      "Trips": null,
+      "Description": "A versatile SUV",
+      "Owner": null,
+      "Trips": [],
       "IsEngineRunning": false
     },
     {
       "Id": 4,
-      "Brand": "Tesla",
-      "Model": "Model S",
-      "Year": 2022,
+      "Brand": "Honda",
+      "Model": "Accord",
+      "Year": 2016,
       "GearType": "A",
-      "FuelEfficiency": 45,
-      "Mileage": 100,
+      "FuelEfficiency": 13,
+      "Mileage": 70000,
       "Engine": {
-        "Name": "1.6",
-        "Ccm": 1600,
-        "HorsePower": 120,
-        "Torque": 200,
-        "Fuel": 2,
-        "Mileage": 100000,
-        "LastService": "2025-03-17T12:02:14.4171864+08:00",
+        "Name": "2.4",
+        "Ccm": 2400,
+        "HorsePower": 185,
+        "Torque": 245,
+        "Fuel": 0,
+        "Mileage": 70000,
+        "LastService": "2025-03-18T00:58:56.1533781+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
       "Wheels": [
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Continental",
+            "Model": "ProContact",
+            "Width": 225,
+            "Height": 50,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Continental",
+            "Model": "ProContact",
+            "Width": 225,
+            "Height": 50,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Continental",
+            "Model": "ProContact",
+            "Width": 225,
+            "Height": 50,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Continental",
+            "Model": "ProContact",
+            "Width": 225,
+            "Height": 50,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         }
       ],
-      "Description": "An electric car",
-      "Owner": {
-        "Id": 4,
-        "Name": "Charles Hansen"
-      },
-      "Trips": null,
+      "Description": "A reliable sedan",
+      "Owner": null,
+      "Trips": [],
       "IsEngineRunning": false
     },
     {
       "Id": 5,
       "Brand": "Nissan",
-      "Model": "Leaf",
-      "Year": 2023,
+      "Model": "Altima",
+      "Year": 2019,
       "GearType": "A",
-      "FuelEfficiency": 50,
-      "Mileage": 0,
+      "FuelEfficiency": 12.5,
+      "Mileage": 30000,
       "Engine": {
-        "Name": "1.6",
-        "Ccm": 1600,
-        "HorsePower": 120,
-        "Torque": 200,
-        "Fuel": 2,
-        "Mileage": 100000,
-        "LastService": "2025-03-17T12:02:14.4171872+08:00",
+        "Name": "2.5",
+        "Ccm": 2500,
+        "HorsePower": 188,
+        "Torque": 244,
+        "Fuel": 0,
+        "Mileage": 30000,
+        "LastService": "2025-03-18T00:58:56.1533788+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
       "Wheels": [
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Dunlop",
+            "Model": "SP Sport",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Dunlop",
+            "Model": "SP Sport",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Dunlop",
+            "Model": "SP Sport",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Dunlop",
+            "Model": "SP Sport",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         }
       ],
-      "Description": "An electric car",
-      "Owner": {
-        "Id": 5,
-        "Name": "Diana Andersen"
-      },
-      "Trips": null,
+      "Description": "A stylish sedan",
+      "Owner": null,
+      "Trips": [],
       "IsEngineRunning": false
     },
     {
       "Id": 6,
-      "Brand": "Audi",
-      "Model": "A4",
-      "Year": 2019,
+      "Brand": "Hyundai",
+      "Model": "Santa Fe",
+      "Year": 2020,
       "GearType": "A",
-      "FuelEfficiency": 19,
-      "Mileage": 10000,
+      "FuelEfficiency": 11.5,
+      "Mileage": 20000,
       "Engine": {
-        "Name": "1.6",
-        "Ccm": 1600,
-        "HorsePower": 120,
-        "Torque": 200,
-        "Fuel": 1,
-        "Mileage": 100000,
-        "LastService": "2025-03-17T12:02:14.4171886+08:00",
+        "Name": "2.4",
+        "Ccm": 2400,
+        "HorsePower": 185,
+        "Torque": 241,
+        "Fuel": 0,
+        "Mileage": 20000,
+        "LastService": "2025-03-18T00:58:56.1533792+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
       "Wheels": [
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Hankook",
+            "Model": "Dynapro",
+            "Width": 235,
+            "Height": 60,
+            "Inch": 18,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Hankook",
+            "Model": "Dynapro",
+            "Width": 235,
+            "Height": 60,
+            "Inch": 18,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Hankook",
+            "Model": "Dynapro",
+            "Width": 235,
+            "Height": 60,
+            "Inch": 18,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Hankook",
+            "Model": "Dynapro",
+            "Width": 235,
+            "Height": 60,
+            "Inch": 18,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         }
       ],
-      "Description": "A luxurious car",
-      "Owner": {
-        "Id": 6,
-        "Name": "Trine Nielsen"
-      },
-      "Trips": null,
+      "Description": "A family SUV",
+      "Owner": null,
+      "Trips": [],
       "IsEngineRunning": false
     },
     {
       "Id": 7,
-      "Brand": "BMW",
-      "Model": "M3",
-      "Year": 2020,
-      "GearType": "M",
-      "FuelEfficiency": 12,
-      "Mileage": 5000,
+      "Brand": "Kia",
+      "Model": "Optima",
+      "Year": 2018,
+      "GearType": "A",
+      "FuelEfficiency": 13.5,
+      "Mileage": 45000,
       "Engine": {
-        "Name": "1.6",
-        "Ccm": 1600,
-        "HorsePower": 120,
-        "Torque": 200,
+        "Name": "2.0",
+        "Ccm": 2000,
+        "HorsePower": 245,
+        "Torque": 353,
         "Fuel": 0,
-        "Mileage": 100000,
-        "LastService": "2025-03-17T12:02:14.4171971+08:00",
+        "Mileage": 45000,
+        "LastService": "2025-03-18T00:58:56.1533848+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
       "Wheels": [
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Nexen",
+            "Model": "N5000",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Nexen",
+            "Model": "N5000",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Nexen",
+            "Model": "N5000",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Nexen",
+            "Model": "N5000",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         }
       ],
-      "Description": "A sporty car",
-      "Owner": {
-        "Id": 3,
-        "Name": "Bob Pedersen"
-      },
-      "Trips": null,
+      "Description": "A sporty sedan",
+      "Owner": null,
+      "Trips": [],
       "IsEngineRunning": false
     },
     {
       "Id": 8,
-      "Brand": "Chevrolet",
-      "Model": "Camaro",
-      "Year": 2017,
-      "GearType": "M",
-      "FuelEfficiency": 13,
-      "Mileage": 30000,
+      "Brand": "Mazda",
+      "Model": "CX-9",
+      "Year": 2021,
+      "GearType": "A",
+      "FuelEfficiency": 10.5,
+      "Mileage": 15000,
       "Engine": {
-        "Name": "1.6",
-        "Ccm": 1600,
-        "HorsePower": 120,
-        "Torque": 200,
+        "Name": "2.5",
+        "Ccm": 2500,
+        "HorsePower": 250,
+        "Torque": 420,
         "Fuel": 0,
-        "Mileage": 100000,
-        "LastService": "2025-03-17T12:02:14.4171974+08:00",
+        "Mileage": 15000,
+        "LastService": "2025-03-18T00:58:56.1533851+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
       "Wheels": [
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Yokohama",
+            "Model": "Geolandar",
+            "Width": 255,
+            "Height": 50,
+            "Inch": 20,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Yokohama",
+            "Model": "Geolandar",
+            "Width": 255,
+            "Height": 50,
+            "Inch": 20,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Yokohama",
+            "Model": "Geolandar",
+            "Width": 255,
+            "Height": 50,
+            "Inch": 20,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Yokohama",
+            "Model": "Geolandar",
+            "Width": 255,
+            "Height": 50,
+            "Inch": 20,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         }
       ],
-      "Description": "A sporty car",
-      "Owner": {
-        "Id": 2,
-        "Name": "Alice Jensen"
-      },
-      "Trips": null,
+      "Description": "A premium SUV",
+      "Owner": null,
+      "Trips": [],
       "IsEngineRunning": false
     },
     {
       "Id": 9,
-      "Brand": "Hyundai",
-      "Model": "i30",
-      "Year": 2016,
+      "Brand": "Subaru",
+      "Model": "Forester",
+      "Year": 2017,
       "GearType": "A",
-      "FuelEfficiency": 16,
-      "Mileage": 40000,
+      "FuelEfficiency": 12,
+      "Mileage": 50000,
       "Engine": {
-        "Name": "1.6",
-        "Ccm": 1600,
-        "HorsePower": 120,
-        "Torque": 200,
+        "Name": "2.5",
+        "Ccm": 2500,
+        "HorsePower": 182,
+        "Torque": 239,
         "Fuel": 0,
-        "Mileage": 100000,
-        "LastService": "2025-03-17T12:02:14.4171979+08:00",
+        "Mileage": 50000,
+        "LastService": "2025-03-18T00:58:56.1533855+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
       "Wheels": [
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Falken",
+            "Model": "Wildpeak",
+            "Width": 225,
+            "Height": 60,
+            "Inch": 17,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Falken",
+            "Model": "Wildpeak",
+            "Width": 225,
+            "Height": 60,
+            "Inch": 17,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Falken",
+            "Model": "Wildpeak",
+            "Width": 225,
+            "Height": 60,
+            "Inch": 17,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Falken",
+            "Model": "Wildpeak",
+            "Width": 225,
+            "Height": 60,
+            "Inch": 17,
             "Construction": 0,
-            "Season": 1
+            "Season": 2
           }
         }
       ],
-      "Description": "A nice car",
-      "Owner": {
-        "Id": 2,
-        "Name": "Alice Jensen"
-      },
-      "Trips": null,
+      "Description": "A rugged SUV",
+      "Owner": null,
+      "Trips": [],
       "IsEngineRunning": false
     },
     {
       "Id": 10,
-      "Brand": "Kia",
-      "Model": "Ceed",
-      "Year": 2014,
-      "GearType": "M",
-      "FuelEfficiency": 14,
-      "Mileage": 60000,
+      "Brand": "Volkswagen",
+      "Model": "Passat",
+      "Year": 2019,
+      "GearType": "A",
+      "FuelEfficiency": 13,
+      "Mileage": 35000,
       "Engine": {
-        "Name": "1.6",
-        "Ccm": 1600,
-        "HorsePower": 120,
-        "Torque": 200,
+        "Name": "2.0",
+        "Ccm": 2000,
+        "HorsePower": 174,
+        "Torque": 207,
         "Fuel": 0,
-        "Mileage": 100000,
-        "LastService": "2025-03-17T12:02:14.4171982+08:00",
+        "Mileage": 35000,
+        "LastService": "2025-03-18T00:58:56.1533859+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
       "Wheels": [
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Pirelli",
+            "Model": "Cinturato",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Pirelli",
+            "Model": "Cinturato",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Pirelli",
+            "Model": "Cinturato",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
+            "Brand": "Pirelli",
+            "Model": "Cinturato",
+            "Width": 215,
             "Height": 55,
-            "Inch": 16,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         }
       ],
-      "Description": "A nice car",
-      "Owner": {
-        "Id": 4,
-        "Name": "Charles Hansen"
-      },
-      "Trips": null,
+      "Description": "A reliable sedan",
+      "Owner": null,
+      "Trips": [],
       "IsEngineRunning": false
     },
     {
       "Id": 11,
-      "Brand": "Mazda",
-      "Model": "3",
-      "Year": 2013,
-      "GearType": "A",
-      "FuelEfficiency": 17,
-      "Mileage": 70000,
+      "Brand": "Ford",
+      "Model": "Mustang",
+      "Year": 2018,
+      "GearType": "M",
+      "FuelEfficiency": 12,
+      "Mileage": 30000,
       "Engine": {
-        "Name": "1.6",
-        "Ccm": 1600,
-        "HorsePower": 120,
-        "Torque": 200,
+        "Name": "5.0",
+        "Ccm": 5000,
+        "HorsePower": 450,
+        "Torque": 529,
         "Fuel": 0,
-        "Mileage": 100000,
-        "LastService": "2025-03-17T12:02:14.4171985+08:00",
-        "ServiceIntervalMileage": 15000,
-        "ServiceIntervalMonths": 12
+        "Mileage": 30000,
+        "LastService": "2025-03-18T00:58:56.1533862+08:00",
+        "ServiceIntervalMileage": 10000,
+        "ServiceIntervalMonths": 6
       },
       "Wheels": [
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Pirelli",
+            "Model": "P Zero",
+            "Width": 255,
+            "Height": 40,
+            "Inch": 19,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Pirelli",
+            "Model": "P Zero",
+            "Width": 255,
+            "Height": 40,
+            "Inch": 19,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Pirelli",
+            "Model": "P Zero",
+            "Width": 255,
+            "Height": 40,
+            "Inch": 19,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Pirelli",
+            "Model": "P Zero",
+            "Width": 255,
+            "Height": 40,
+            "Inch": 19,
             "Construction": 0,
             "Season": 1
           }
         }
       ],
-      "Description": "A nice car",
-      "Owner": {
-        "Id": 2,
-        "Name": "Alice Jensen"
-      },
-      "Trips": null,
+      "Description": "A powerful sports car",
+      "Owner": null,
+      "Trips": [],
       "IsEngineRunning": false
     },
     {
       "Id": 12,
-      "Brand": "Subaru",
-      "Model": "Impreza",
-      "Year": 2012,
-      "GearType": "M",
-      "FuelEfficiency": 15,
-      "Mileage": 80000,
+      "Brand": "Chevrolet",
+      "Model": "Malibu",
+      "Year": 2016,
+      "GearType": "A",
+      "FuelEfficiency": 13,
+      "Mileage": 60000,
       "Engine": {
-        "Name": "1.6",
-        "Ccm": 1600,
-        "HorsePower": 120,
-        "Torque": 200,
+        "Name": "2.0",
+        "Ccm": 2000,
+        "HorsePower": 250,
+        "Torque": 353,
         "Fuel": 0,
-        "Mileage": 100000,
-        "LastService": "2025-03-17T12:02:14.4171989+08:00",
+        "Mileage": 60000,
+        "LastService": "2025-03-18T00:58:56.1533871+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
       "Wheels": [
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Goodyear",
+            "Model": "Eagle",
+            "Width": 225,
+            "Height": 50,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Goodyear",
+            "Model": "Eagle",
+            "Width": 225,
+            "Height": 50,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Goodyear",
+            "Model": "Eagle",
+            "Width": 225,
+            "Height": 50,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
-            "Width": 205,
-            "Height": 55,
-            "Inch": 16,
+            "Brand": "Goodyear",
+            "Model": "Eagle",
+            "Width": 225,
+            "Height": 50,
+            "Inch": 17,
             "Construction": 0,
             "Season": 1
           }
         }
       ],
-      "Description": "A nice car",
-      "Owner": {
-        "Id": 5,
-        "Name": "Diana Andersen"
-      },
-      "Trips": null,
+      "Description": "A comfortable sedan",
+      "Owner": null,
+      "Trips": [],
       "IsEngineRunning": false
     },
     {
       "Id": 13,
-      "Brand": "Volvo",
-      "Model": "V60",
-      "Year": 2011,
+      "Brand": "BMW",
+      "Model": "X5",
+      "Year": 2020,
       "GearType": "A",
-      "FuelEfficiency": 20,
-      "Mileage": 90000,
+      "FuelEfficiency": 10,
+      "Mileage": 20000,
       "Engine": {
-        "Name": "1.6",
-        "Ccm": 1600,
-        "HorsePower": 120,
-        "Torque": 200,
+        "Name": "3.0",
+        "Ccm": 3000,
+        "HorsePower": 335,
+        "Torque": 450,
         "Fuel": 1,
-        "Mileage": 100000,
-        "LastService": "2025-03-17T12:02:14.4171992+08:00",
+        "Mileage": 20000,
+        "LastService": "2025-03-18T00:58:56.1533873+08:00",
+        "ServiceIntervalMileage": 15000,
+        "ServiceIntervalMonths": 12
+      },
+      "Wheels": [
+        {
+          "Tire": {
+            "Brand": "Continental",
+            "Model": "CrossContact",
+            "Width": 255,
+            "Height": 50,
+            "Inch": 19,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Continental",
+            "Model": "CrossContact",
+            "Width": 255,
+            "Height": 50,
+            "Inch": 19,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Continental",
+            "Model": "CrossContact",
+            "Width": 255,
+            "Height": 50,
+            "Inch": 19,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Continental",
+            "Model": "CrossContact",
+            "Width": 255,
+            "Height": 50,
+            "Inch": 19,
+            "Construction": 0,
+            "Season": 2
+          }
+        }
+      ],
+      "Description": "A luxury SUV",
+      "Owner": null,
+      "Trips": [],
+      "IsEngineRunning": false
+    },
+    {
+      "Id": 14,
+      "Brand": "Audi",
+      "Model": "Q7",
+      "Year": 2019,
+      "GearType": "A",
+      "FuelEfficiency": 11,
+      "Mileage": 25000,
+      "Engine": {
+        "Name": "3.0",
+        "Ccm": 3000,
+        "HorsePower": 329,
+        "Torque": 440,
+        "Fuel": 1,
+        "Mileage": 25000,
+        "LastService": "2025-03-18T00:58:56.1533875+08:00",
+        "ServiceIntervalMileage": 15000,
+        "ServiceIntervalMonths": 12
+      },
+      "Wheels": [
+        {
+          "Tire": {
+            "Brand": "Dunlop",
+            "Model": "SP Sport",
+            "Width": 275,
+            "Height": 45,
+            "Inch": 20,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Dunlop",
+            "Model": "SP Sport",
+            "Width": 275,
+            "Height": 45,
+            "Inch": 20,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Dunlop",
+            "Model": "SP Sport",
+            "Width": 275,
+            "Height": 45,
+            "Inch": 20,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Dunlop",
+            "Model": "SP Sport",
+            "Width": 275,
+            "Height": 45,
+            "Inch": 20,
+            "Construction": 0,
+            "Season": 2
+          }
+        }
+      ],
+      "Description": "A premium SUV",
+      "Owner": null,
+      "Trips": [],
+      "IsEngineRunning": false
+    },
+    {
+      "Id": 15,
+      "Brand": "Mercedes-Benz",
+      "Model": "E-Class",
+      "Year": 2017,
+      "GearType": "A",
+      "FuelEfficiency": 12.5,
+      "Mileage": 45000,
+      "Engine": {
+        "Name": "2.0",
+        "Ccm": 2000,
+        "HorsePower": 241,
+        "Torque": 370,
+        "Fuel": 0,
+        "Mileage": 45000,
+        "LastService": "2025-03-18T00:58:56.1533877+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -973,7 +1074,77 @@
         {
           "Tire": {
             "Brand": "Bridgestone",
-            "Model": "Turanza",
+            "Model": "Potenza",
+            "Width": 245,
+            "Height": 45,
+            "Inch": 18,
+            "Construction": 0,
+            "Season": 1
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Bridgestone",
+            "Model": "Potenza",
+            "Width": 245,
+            "Height": 45,
+            "Inch": 18,
+            "Construction": 0,
+            "Season": 1
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Bridgestone",
+            "Model": "Potenza",
+            "Width": 245,
+            "Height": 45,
+            "Inch": 18,
+            "Construction": 0,
+            "Season": 1
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Bridgestone",
+            "Model": "Potenza",
+            "Width": 245,
+            "Height": 45,
+            "Inch": 18,
+            "Construction": 0,
+            "Season": 1
+          }
+        }
+      ],
+      "Description": "A luxury sedan",
+      "Owner": null,
+      "Trips": [],
+      "IsEngineRunning": false
+    },
+    {
+      "Id": 16,
+      "Brand": "Hyundai",
+      "Model": "Elantra",
+      "Year": 2015,
+      "GearType": "A",
+      "FuelEfficiency": 15,
+      "Mileage": 70000,
+      "Engine": {
+        "Name": "1.8",
+        "Ccm": 1800,
+        "HorsePower": 145,
+        "Torque": 178,
+        "Fuel": 0,
+        "Mileage": 70000,
+        "LastService": "2025-03-18T00:58:56.1533879+08:00",
+        "ServiceIntervalMileage": 15000,
+        "ServiceIntervalMonths": 12
+      },
+      "Wheels": [
+        {
+          "Tire": {
+            "Brand": "Hankook",
+            "Model": "Ventus",
             "Width": 205,
             "Height": 55,
             "Inch": 16,
@@ -983,8 +1154,8 @@
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
+            "Brand": "Hankook",
+            "Model": "Ventus",
             "Width": 205,
             "Height": 55,
             "Inch": 16,
@@ -994,8 +1165,8 @@
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
+            "Brand": "Hankook",
+            "Model": "Ventus",
             "Width": 205,
             "Height": 55,
             "Inch": 16,
@@ -1005,8 +1176,8 @@
         },
         {
           "Tire": {
-            "Brand": "Bridgestone",
-            "Model": "Turanza",
+            "Brand": "Hankook",
+            "Model": "Ventus",
             "Width": 205,
             "Height": 55,
             "Inch": 16,
@@ -1015,43 +1186,221 @@
           }
         }
       ],
-      "Description": "A strong car",
-      "Owner": {
-        "Id": 6,
-        "Name": "Trine Nielsen"
+      "Description": "A compact sedan",
+      "Owner": null,
+      "Trips": [],
+      "IsEngineRunning": false
+    },
+    {
+      "Id": 17,
+      "Brand": "Kia",
+      "Model": "Sorento",
+      "Year": 2021,
+      "GearType": "A",
+      "FuelEfficiency": 13.5,
+      "Mileage": 15000,
+      "Engine": {
+        "Name": "2.5",
+        "Ccm": 2500,
+        "HorsePower": 191,
+        "Torque": 247,
+        "Fuel": 0,
+        "Mileage": 15000,
+        "LastService": "2025-03-18T00:58:56.1533881+08:00",
+        "ServiceIntervalMileage": 15000,
+        "ServiceIntervalMonths": 12
       },
-      "Trips": null,
+      "Wheels": [
+        {
+          "Tire": {
+            "Brand": "Nexen",
+            "Model": "Roadian",
+            "Width": 235,
+            "Height": 60,
+            "Inch": 18,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Nexen",
+            "Model": "Roadian",
+            "Width": 235,
+            "Height": 60,
+            "Inch": 18,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Nexen",
+            "Model": "Roadian",
+            "Width": 235,
+            "Height": 60,
+            "Inch": 18,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Nexen",
+            "Model": "Roadian",
+            "Width": 235,
+            "Height": 60,
+            "Inch": 18,
+            "Construction": 0,
+            "Season": 2
+          }
+        }
+      ],
+      "Description": "A midsize SUV",
+      "Owner": null,
+      "Trips": [],
+      "IsEngineRunning": false
+    },
+    {
+      "Id": 18,
+      "Brand": "Mazda",
+      "Model": "CX-5",
+      "Year": 2018,
+      "GearType": "A",
+      "FuelEfficiency": 14,
+      "Mileage": 40000,
+      "Engine": {
+        "Name": "2.5",
+        "Ccm": 2500,
+        "HorsePower": 187,
+        "Torque": 252,
+        "Fuel": 0,
+        "Mileage": 40000,
+        "LastService": "2025-03-18T00:58:56.1533883+08:00",
+        "ServiceIntervalMileage": 15000,
+        "ServiceIntervalMonths": 12
+      },
+      "Wheels": [
+        {
+          "Tire": {
+            "Brand": "Yokohama",
+            "Model": "Geolandar",
+            "Width": 225,
+            "Height": 65,
+            "Inch": 17,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Yokohama",
+            "Model": "Geolandar",
+            "Width": 225,
+            "Height": 65,
+            "Inch": 17,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Yokohama",
+            "Model": "Geolandar",
+            "Width": 225,
+            "Height": 65,
+            "Inch": 17,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Yokohama",
+            "Model": "Geolandar",
+            "Width": 225,
+            "Height": 65,
+            "Inch": 17,
+            "Construction": 0,
+            "Season": 2
+          }
+        }
+      ],
+      "Description": "A compact SUV",
+      "Owner": null,
+      "Trips": [],
+      "IsEngineRunning": false
+    },
+    {
+      "Id": 19,
+      "Brand": "Subaru",
+      "Model": "Outback",
+      "Year": 2019,
+      "GearType": "A",
+      "FuelEfficiency": 13,
+      "Mileage": 35000,
+      "Engine": {
+        "Name": "2.5",
+        "Ccm": 2500,
+        "HorsePower": 182,
+        "Torque": 239,
+        "Fuel": 0,
+        "Mileage": 35000,
+        "LastService": "2025-03-18T00:58:56.1533885+08:00",
+        "ServiceIntervalMileage": 15000,
+        "ServiceIntervalMonths": 12
+      },
+      "Wheels": [
+        {
+          "Tire": {
+            "Brand": "Falken",
+            "Model": "Wildpeak",
+            "Width": 225,
+            "Height": 60,
+            "Inch": 18,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Falken",
+            "Model": "Wildpeak",
+            "Width": 225,
+            "Height": 60,
+            "Inch": 18,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Falken",
+            "Model": "Wildpeak",
+            "Width": 225,
+            "Height": 60,
+            "Inch": 18,
+            "Construction": 0,
+            "Season": 2
+          }
+        },
+        {
+          "Tire": {
+            "Brand": "Falken",
+            "Model": "Wildpeak",
+            "Width": 225,
+            "Height": 60,
+            "Inch": 18,
+            "Construction": 0,
+            "Season": 2
+          }
+        }
+      ],
+      "Description": "A rugged crossover",
+      "Owner": null,
+      "Trips": [],
       "IsEngineRunning": false
     }
   ],
-  "Owners": [
-    {
-      "Id": 0,
-      "Name": "John Nielsen"
-    },
-    {
-      "Id": 1,
-      "Name": "Trine Nielsen"
-    },
-    {
-      "Id": 2,
-      "Name": "Alice Jensen"
-    },
-    {
-      "Id": 3,
-      "Name": "Bob Pedersen"
-    },
-    {
-      "Id": 4,
-      "Name": "Charles Hansen"
-    },
-    {
-      "Id": 5,
-      "Name": "Diana Andersen"
-    },
-    {
-      "Id": 6,
-      "Name": "Trine Nielsen"
-    }
-  ]
+  "Owners": []
 }

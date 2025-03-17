@@ -17,7 +17,7 @@ namespace CarApp.Model
         }
 
         public string Name { get; }
-        public double? Ccm { get; }
+        public int? Ccm { get; }
         public int HorsePower { get; }
         public int Torque { get; }
         public FuelType Fuel { get; }
@@ -27,7 +27,10 @@ namespace CarApp.Model
         public int ServiceIntervalMonths { get; } ///> Service interval in months
 
         [JsonConstructor]
-        private Engine() { }
+        private Engine()
+        {
+            Engine engine = new Engine("Default", 0, 0, 0, FuelType.Benzin, 0, DateTime.Now, 0, 0);
+        }
 
         /// <summary>
         /// Constructor for ICE Engine (Internal Combustion Engine)
@@ -41,7 +44,7 @@ namespace CarApp.Model
         /// <param name="lastService"></param>
         /// <param name="serviceIntervalMileage"></param>
         /// <param name="serviceIntervalMonths"></param>
-        public Engine(string name, double ccm, int horsePower, int torque, FuelType fuel, int mileage, DateTime lastService, int serviceIntervalMileage, int serviceIntervalMonths)
+        public Engine(string name, int ccm, int horsePower, int torque, FuelType fuel, int mileage, DateTime lastService, int serviceIntervalMileage, int serviceIntervalMonths)
         {
             Name = name;
             Ccm = ccm;
@@ -87,7 +90,7 @@ namespace CarApp.Model
             return (Mileage >= ServiceIntervalMileage);
         }
 
-        public static bool TryParseHorsePower(string input, out int horsePower)
+        public static bool TryParseHorsePower(string input, int horsePower)
         {
             if (int.TryParse(input, out horsePower) && horsePower > 0)
             {
@@ -97,7 +100,7 @@ namespace CarApp.Model
             return false;
         }
 
-        public static bool TryParseTorque(string input, out int torque)
+        public static bool TryParseTorque(string input, int torque)
         {
             if (int.TryParse(input, out torque) && torque > 0)
             {
@@ -107,9 +110,9 @@ namespace CarApp.Model
             return false;
         }
 
-        public static bool TryParseCcm(string input, out double ccm)
+        public static bool TryParseCcm(string input, int ccm)
         {
-            if (double.TryParse(input, out ccm) && ccm > 0)
+            if (int.TryParse(input, out ccm) && ccm > 0)
             {
                 return true;
             }
@@ -117,7 +120,7 @@ namespace CarApp.Model
             return false;
         }
 
-        public static bool TryParseServiceIntervalMileage(string input, out int serviceIntervalMileage)
+        public static bool TryParseServiceIntervalMileage(string input, int serviceIntervalMileage)
         {
             if (int.TryParse(input, out serviceIntervalMileage) && serviceIntervalMileage > 0)
             {
@@ -127,7 +130,7 @@ namespace CarApp.Model
             return false;
         }
 
-        public static bool TryParseServiceIntervalMonths(string input, out int serviceIntervalMonths)
+        public static bool TryParseServiceIntervalMonths(string input, int serviceIntervalMonths)
         {
             if (int.TryParse(input, out serviceIntervalMonths) && serviceIntervalMonths > 0)
             {

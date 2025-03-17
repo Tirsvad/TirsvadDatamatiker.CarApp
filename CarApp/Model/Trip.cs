@@ -6,7 +6,6 @@ public class Trip
     public DateTime TripDate { get; private set; }
     public DateTime StartTime { get; private set; }
     public DateTime EndTime { get; private set; }
-    public Car Car { get; private set; }
     public double FuelPrice { get; private set; }
 
     public Trip(double distance, DateTime tripDate, DateTime startTime, DateTime endTime, double fuelPrice)
