@@ -1144,7 +1144,7 @@ internal class Program
     #endregion Menu
     static void importJson()
     {
-        JsonFileHandler.Instance.ImportData("cars.json");
+        JsonFileHandler.Instance.ImportData();
         Console.WriteLine("Biler er indlæst");
         Console.WriteLine("\nTryk på en tast for at fortsætte...");
         Console.Write(Console.ReadKey());

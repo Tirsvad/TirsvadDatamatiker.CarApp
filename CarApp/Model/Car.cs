@@ -19,7 +19,7 @@ public class Car
     // TODO: What if car has more than 4 wheels? (Ex. Land Rover Defender Flying Huntsman) 
     public Wheel[] Wheels { get; private set; } = new Wheel[4]; ///> The wheels of the car.
     public string Description { get; private set; } ///> The description of the car.
-    public Owner? Owner { get; private set; } ///> The owner of the car.
+    public Owner? Owner { get; set; } ///> The owner of the car.
     public List<Trip>? Trips { get; private set; } ///> The list of trips that this car has driven.
 
     // Runtime properties
