@@ -14,13 +14,13 @@ public class Car
     public int Year { get; private set; } ///> The year of the car.
     public char GearType { get; private set; } ///> The gear type of the car.
     public double FuelEfficiency { get; private set; } ///> The fuel efficiency of the car in kilometers per liter.
-    public int Mileage { get; private set; } ///> The mileage of the car in kilometers.
-    public Engine? Engine { get; private set; } ///> The engine object of the car.
+    public int Mileage { get; set; } ///> The mileage of the car in kilometers.
+    public Engine? Engine { get; set; } ///> The engine object of the car.
     // TODO: What if car has more than 4 wheels? (Ex. Land Rover Defender Flying Huntsman) 
     public Wheel[] Wheels { get; private set; } = new Wheel[4]; ///> The wheels of the car.
     public string Description { get; private set; } ///> The description of the car.
     public Owner? Owner { get; set; } ///> The owner of the car.
-    public List<Trip>? Trips { get; private set; } ///> The list of trips that this car has driven.
+    public List<Trip> Trips { get; set; } = [];///> The list of trips that this car has driven.
 
     // Runtime properties
     /// <summary>
@@ -129,12 +129,12 @@ public class Car
         return trip.Distance;
     }
 
-    public string ToStringAllTrip(Car car)
+    public static string ToStringAllTrip(Car car)
     {
         string result = "";
-        for (int i = 0; i < Trips?.Count; i++)
+        for (int i = 0; i < car.Trips?.Count; i++)
         {
-            result += Trips[i].GetTripInfo(car) + "\n";
+            result += car.Trips[i].GetTripInfo(car) + "\n";
         }
         return result;
     }
