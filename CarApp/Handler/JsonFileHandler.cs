@@ -25,19 +25,24 @@ class JsonFileHandler
         }
     }
 
-    private const string _filePath = Constants.jsonFilePath;
-    private readonly Version _version = new Version(1, 0);
-    private readonly DataContainer _dataContainer = new DataContainer();
+    private const string _filePath = Constants.jsonFilePath; ///> The file path for the JSON file.
+    private readonly Version _version = new Version(1, 0); ///> The version of the JSON file.
+    private readonly DataContainer _dataContainer = new DataContainer(); ///> The data container for the JSON file.
 
+    /// <summary>
+    /// Represents the data container for the JSON file.
+    /// </summary>
     public class DataContainer
     {
         public Version? Version { get; set; }
-        public List<Car> Cars { get; set; } = CarList.Instance.GetCars();
-        public List<Owner> Owners { get; set; } = OwnerList.Instance.GetOwners();
+        public List<Car>? Cars { get; set; }
+        public List<Owner>? Owners { get; set; }
 
         public DataContainer()
         {
             Version = null;
+            Cars = CarList.Instance.GetCars();
+            Owners = OwnerList.Instance.GetOwners();
         }
     }
 
@@ -47,27 +52,28 @@ class JsonFileHandler
         {
             Version = _version,
         };
-    }
+    } ///> Private constructor for singleton pattern
 
+    /// <summary>
+    /// Exports data to a JSON file.
+    /// </summary>
+    /// <param name="filePath">Optional. Default value from Constants.jsonFilePath</param>
     public void ExportData(string filePath = _filePath)
     {
         lock (_lock)
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
-            // Debugging: Check if CarList.Instance is populated
-            if (_dataContainer.Cars == null || !_dataContainer.Cars.Any())
-            {
-                Console.WriteLine("No cars to export.");
-                Console.WriteLine("Press any key to continue...");
-                Console.WriteLine(Console.ReadLine());
-                return;
-            }
             string jsonString = JsonSerializer.Serialize(_dataContainer, options);
             File.WriteAllText(filePath, jsonString);
         }
     }
 
-    public void ImportData(string filename)
+    /// <summary>
+    /// Imports data from a JSON file.
+    /// Reassign owner object for Car objects. So owner object is the same in OwnerList and CarList.
+    /// </summary>
+    /// <param name="filename">Optional. Default value from Constants.jsonFilePath</param>
+    public void ImportData(string filename = _filePath)
     {
         lock (_lock)
         {
@@ -82,30 +88,23 @@ class JsonFileHandler
                         Console.WriteLine("No dataContainer file found.");
                         return;
                     }
-                    switch (data)
+                    if (data.Version?.Major == 1)
                     {
-                        case { Version: { Major: 1, Minor: 0 } }:
-                            _dataContainer.Version = data.Version;
-                            if (data.Cars != null)
-                            {
-                                _dataContainer.Cars?.Clear();
-                                foreach (var car in data.Cars)
-                                {
-                                    _dataContainer.Cars?.Add(car);
-                                }
-                            }
-                            if (data.Owners != null)
-                            {
-                                _dataContainer.Owners?.Clear();
-                                foreach (var owner in data.Owners)
-                                {
-                                    _dataContainer.Owners?.Add(owner);
-                                }
-                            }
-                            break;
-                        default:
-                            Console.WriteLine("Incompatible dataContainer file version.");
-                            break;
+                        for (int i = 0; i < data.Owners?.Count; i++)
+                        {
+                            Owner owner = data.Owners[i];
+                            OwnerList.Instance.AddOwner(owner);
+                        }
+                        for (int i = 0; i < data.Cars?.Count; i++)
+                        {
+                            Car car = data.Cars[i];
+                            car.Owner = OwnerList.Instance.GetOwners().Find(owner => owner.Id == car.Owner?.Id); // Reassign owner object
+                            CarList.Instance.Add(car);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Incompatible dataContainer file version.");
                     }
                 }
             }

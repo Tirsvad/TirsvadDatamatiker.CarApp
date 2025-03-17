@@ -31,7 +31,7 @@ public class OwnerList
     private OwnerList()
     {
         Owners = [];
-        Seed();
+        //Seed();
     }
 
     public List<Owner> GetOwners()
@@ -45,7 +45,6 @@ public class OwnerList
     /// </summary>
     private void Seed()
     {
-        /*
         Owners.Add(new Owner(0, "John Nielsen"));
         Owners.Add(new Owner(1, "Trine Nielsen"));
         Owners.Add(new Owner(2, "Alice Jensen")); // is another person but with same name
@@ -53,7 +52,6 @@ public class OwnerList
         Owners.Add(new Owner(4, "Charles Hansen"));
         Owners.Add(new Owner(5, "Diana Andersen"));
         Owners.Add(new Owner(6, "Trine Nielsen")); // is another person but with same name
-        */
     }
 
     /// <summary>
