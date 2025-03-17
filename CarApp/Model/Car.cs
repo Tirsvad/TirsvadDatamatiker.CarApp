@@ -1,4 +1,6 @@
-﻿namespace CarApp.Model;
+﻿using System.Text.Json.Serialization;
+
+namespace CarApp.Model;
 
 /// <summary>
 /// Represents a car with various properties.
@@ -26,6 +28,7 @@ public class Car
     /// </summary>
     public bool IsEngineRunning { get; set; } = false;
 
+    [JsonConstructor]
     public Car(int id, string brand, string model, int year, char gearType, double fuelEfficiency, int mileage, Engine engine, Wheel[] wheels, string description, Owner? owner)
     {
         Id = id;

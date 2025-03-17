@@ -28,11 +28,9 @@ public class CarList
 
     OwnerList OwnerList { get; }
 
-    /// <summary>
-    /// Constructor for the CarList
-    /// </summary>
     private CarList()
     {
+        // Initialize the Cars list
         Cars = new List<Car>();
         OwnerList = OwnerList.Instance;
         Seed();
@@ -73,13 +71,14 @@ public class CarList
 
     /// <summary>
     /// Seed the car list with some cars
+    /// Only used for testing purposes as we get the data from the json file
     /// </summary>
     private void Seed()
     {
         // public Car(int id, string brand, string model, int year, char gearType, double fuelEfficiency, int mileage, Engine engine, Wheel[] wheels, string description, Owner owner)
 
         // TODO: Load from Database
-
+        /*
         Add(
             new Car(
                 id: GenerateId(), // Auto generate ID
@@ -128,6 +127,7 @@ public class CarList
         Add(new Car(GenerateId(), "Mazda", "3", 2013, 'A', 17.0f, 70000, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Benzin, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "A nice car", OwnerList.GetOwnerById(2)));
         Add(new Car(GenerateId(), "Subaru", "Impreza", 2012, 'M', 15.0f, 80000, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Benzin, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "A nice car", OwnerList.GetOwnerById(5)));
         Add(new Car(GenerateId(), "Volvo", "V60", 2011, 'A', 20.0f, 90000, new Engine("1.6", 1600, 120, 200, Engine.FuelType.Diesel, 100000, DateTime.Now, 15000, 12), Wheel.GetSetOf4Wheels(new Tire("Bridgestone", "Turanza", 205, 55, 16, Tire.ConstructionType.Radial, Tire.SeasonType.Summer)), "A strong car", OwnerList.GetOwnerById(6)));
+        */
     }
 
     /// <summary>
@@ -142,4 +142,11 @@ public class CarList
             id = Cars.Last().Id + 1;
         return id;
     }
+
+    internal void Clear()
+    {
+        Cars.Clear();
+    }
+
+
 }

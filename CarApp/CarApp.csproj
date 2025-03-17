@@ -9,7 +9,16 @@
 
 	<ItemGroup>
 	  <Compile Remove="DbSqliteHnd.cs" />
-	  <Compile Remove="JsonFileHandler.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="data\cars.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="data\cars.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -27,13 +36,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Data\" />
 	  <Folder Include="Helper\Input\" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <None Include="DbSqliteHnd.cs" />
-	  <None Include="JsonFileHandler.cs" />
 	</ItemGroup>
 
 </Project>
