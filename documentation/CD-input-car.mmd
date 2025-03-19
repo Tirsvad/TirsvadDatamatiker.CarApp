@@ -1,0 +1,137 @@
+sequenceDiagram
+    participant User
+    participant Program
+    participant Authentication
+    participant CarList
+    participant JsonFileHandler
+
+    User->>Program: Main(args)
+    activate Program
+    Program->>JsonFileHandler: ImportData()
+    activate JsonFileHandler
+    JsonFileHandler-->>Program: Data Imported
+    deactivate JsonFileHandler
+    Program->>Program: Menu()
+    activate Program
+
+    loop Main Menu
+        alt _selectedCar != null
+            Program->>User: WriteLine(Selected Car)
+        end
+        Program->>Program: PaganizesMenu(menuItems, 10, main: true)
+        alt menuItem != null
+            Program->>Program: Execute menuItem.Action
+        end
+    end
+    deactivate Program
+
+    User->>Program: Login()
+    activate Program
+    Program->>User: Ask for username
+    User-->>Program: Username
+    Program->>User: Ask for password
+    User-->>Program: Password
+    Program->>Authentication: Login(username, password)
+    activate Authentication
+    alt Login Success
+        Authentication-->>Program: true
+        Program->>Program: Set CurrentUser
+    else Login Failure
+        Authentication-->>Program: false
+        Program->>User: Error Message
+    end
+    deactivate Authentication
+    deactivate Program
+
+    User->>Program: InputAddCar()
+    activate Program
+    loop until Success
+        Program->>User: Ask for brand
+        User-->>Program: Brand
+        alt invalid Brand
+            Program-->>User: Error Message
+        end
+    end
+    loop until Success
+        Program->>User: Ask for model
+        User-->>Program: Model
+        alt invalid Model
+            Program-->>User: Error Message
+        end
+    end
+    loop until Success
+        Program->>User: Ask for model year
+        User-->>Program: Year
+        alt invalid Year
+            Program-->>User: Error Message
+        end
+    end
+    loop until Success
+        Program->>User: Ask for gearType
+        User-->>Program: GearType
+        alt invalid Model
+            Program-->>User: Error Message
+        end
+    end
+    loop until Success
+        Program->>User: Ask for fuelType
+        User-->>Program: FuelType
+        alt invalid FuelType
+            Program-->>User: Error Message
+        end
+    end
+    loop until Success
+        Program->>User: Ask for mileage
+        User-->>Program: Mileage
+        alt invalid Mileage
+            Program-->>User: Error Message
+        end
+    end
+    loop until Success
+        Program->>User: Ask for fuel efficiency
+        User-->>Program: FuelEfficiency
+        alt invalid FuelEfficiency
+            Program-->>User: Error Message
+        end
+    end
+    loop until Success
+        Program->>User: Ask for description
+        User-->>Program: Description
+        alt invalid Description
+            Program-->>User: Error Message
+        end
+    end
+    loop until Success
+        Program->>User: Ask for engine name
+        User-->>Program: EngineName
+        alt invalid EngineName
+            Program-->>User: Error Message
+        end
+    end
+    loop until Success
+        Program->>User: Ask for horsepower
+        User-->>Program: Horsepower
+        alt invalid Horsepower
+            Program-->>User: Error Message
+        end
+    end
+    loop until Success
+        Program->>User: EngineTorque
+        User-->>Program: EngineTorque
+        alt invalid EngineTorque
+            Program-->>User: Error Message
+        end
+    end
+    loop until Success
+        Program->>User: Ask for tire details
+        User-->>Program: Tire Details
+        alt invalid Tire Details
+            Program-->>User: Error Message
+        end
+    end
+    Program->>CarList: GenerateId()
+    activate CarList
+    CarList-->>Program: New Car Id
+    Program->>CarList: Add(new Car)
+    deactivate CarList
+    deactivate Program
