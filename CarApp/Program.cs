@@ -50,6 +50,35 @@ internal class Program
 
     static string? CurrentUser { get; set; } ///> The current user
 
+
+    #region Is methods
+
+    /// <summary>
+    /// Checks if a car's mileage is a palindrome.
+    /// </summary>
+    /// <param name="car">The car object containing the mileage information.</param>
+    /// <returns>True if the mileage is a palindrome, otherwise false.</returns>
+    static bool IsPalindrome(Car car)
+    {
+        string odometer = car.Mileage.ToString() ?? string.Empty;
+
+        for (int i = 0; i < odometer.Length / 2; i++)
+        {
+            if (odometer[i] != odometer[odometer.Length - i - 1])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static bool DoFuelTypeIdExists(int fuelTypeId)
+    {
+        return Enum.IsDefined(typeof(Engine.FuelType), fuelTypeId);
+    }
+
+    #endregion Is methods
+    #region Car user interaction methods
     /// <summary>
     /// Login the user.
     /// Takes the username from the environment variables.
@@ -96,34 +125,6 @@ internal class Program
         _auth.Logout();
         CurrentUser = null;
     }
-    #region Is methods
-
-    /// <summary>
-    /// Checks if a car's mileage is a palindrome.
-    /// </summary>
-    /// <param name="car">The car object containing the mileage information.</param>
-    /// <returns>True if the mileage is a palindrome, otherwise false.</returns>
-    static bool IsPalindrome(Car car)
-    {
-        string odometer = car.Mileage.ToString() ?? string.Empty;
-
-        for (int i = 0; i < odometer.Length / 2; i++)
-        {
-            if (odometer[i] != odometer[odometer.Length - i - 1])
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    static bool DoFuelTypeIdExists(int fuelTypeId)
-    {
-        return Enum.IsDefined(typeof(Engine.FuelType), fuelTypeId);
-    }
-
-    #endregion Is methods
-    #region Car user interaction methods
     /// <summary>
     /// Input a new car to add to the list.
     /// </summary>
@@ -491,17 +492,6 @@ internal class Program
 
     }
     /// <summary>
-    /// Calculates the fuel needed for a trip.
-    /// </summary>
-    /// <param name="selectedCar">The car object to calculate the fuel needed for.</param>
-    /// <param name="distance">The distance of the trip.</param>
-    /// <returns>The fuel needed for the trip.</returns>
-    static double CalculateFuelNeeded(Car selectedCar, double distance)
-    {
-        double fuelNeeded = distance / selectedCar.FuelEfficiency;
-        return fuelNeeded;
-    }
-    /// <summary>
     /// Calculates the cost of a trip.
     /// </summary>
     /// <param name="selectedCar">The car object to calculate the cost for.</param>
@@ -510,14 +500,14 @@ internal class Program
         Console.Clear();
         Console.WriteLine("Indtast kilometer for turen:");
         string input = Console.ReadLine();
-        if (!double.TryParse(input, out double distance))
+        if (!int.TryParse(input, out int distance))
         {
             PrintError("Kilometer skal være et tal");
             Console.WriteLine("\nTryk på en tast for at fortsætte...");
             Console.ReadKey();
             return;
         }
-        double fuelNeeded = CalculateFuelNeeded(selectedCar, distance);
+        double fuelNeeded = Car.CalculateFuelNeeded(selectedCar, distance);
         decimal fuelPrice = (decimal)(_fuelPricelist.FuelPrices.Find(f => f.FuelType == selectedCar.Engine?.Fuel)?.Price ?? 0);
         decimal tripCost = (decimal)fuelNeeded * fuelPrice;
         if (selectedCar.IsEngineRunning)
@@ -749,7 +739,6 @@ internal class Program
         Console.WriteLine("\nTryk på en tast for at fortsætte...");
         Console.Write(Console.ReadKey());
     }
-
     /// <summary>
     /// Displays a list of cars in a table format.
     /// </summary>
@@ -905,7 +894,6 @@ internal class Program
                 new MenuItem("Log ud", (Action)Logout, rolesLoggedIn),
                 new MenuItem("Fil og database", (Action)FileMenu, rolesLoggedIn),
                 new MenuItem("Rapport", (Action)RapportMenu, null),
-                new MenuItem("Vælg bil", (Action)SelectCarMenu, rolesLoggedIn),
                 new MenuItem("Bil menu", (Action)CarMenu, rolesLoggedIn),
             ];
 
@@ -972,8 +960,8 @@ internal class Program
             List<MenuItem> menuItems = new List<MenuItem>
             {
                 new MenuItem("Json fil", null, null),
-                new MenuItem("Gem biler", (Action)exportJson, [Role.Admin]),
-                new MenuItem("Indlæs biler", (Action)importJson, null),
+                new MenuItem("Gem biler", (Action)ExportJson, [Role.Admin]),
+                new MenuItem("Indlæs biler", (Action)ImportJson, null),
                 new MenuItem("Database", null, null)
             };
             Console.Clear();
@@ -1076,17 +1064,21 @@ internal class Program
     {
         string errorMessage = ""; ///> Error message to be display
         int pageIndex = 0; ///> Index of current page
-        int x = 0;
-        List<int> validIndex = []; ///> Index of Valid choice this user can make.
-        List<int> validChoice = []; ///> Index of Valid choice this user can make.
-        List<MenuItem> newMenuItems = []; ///> New menu items
+        int x;
+        List<int> validIndex; ///> Index of Valid choice this user can make.
+        List<int> validChoice; ///> Index of Valid choice this user can make.
+        List<MenuItem> newMenuItems; ///> New menu items
         (int Left, int Top) Position; ///> For cursor position
         Console.CursorVisible = false;
         int totalPages = (int)Math.Ceiling(menuItems.Count / (double)pageSize); ///> Total pages
         Position = Console.GetCursorPosition(); ///> Get the current cursor position
         do
         {
-            int ii = 1; ///> Index used for valid choice
+            x = 0;
+            validIndex = [];
+            validChoice = [];
+            newMenuItems = [];
+            int indexValidChoice = 0; ///> Index used for valid choice. Used for display only.
             ClearConsoleFromPosition(Position.Left, Position.Top);
             Console.SetCursorPosition(Position.Left, Position.Top);
             if (errorMessage != "")
@@ -1109,12 +1101,12 @@ internal class Program
                 {
                     newMenuItems.Add(item);
                     validIndex.Add(x++);
-                    return AnsiCode.Colorize($"F{ii++} ", AnsiCode.BrightYellow) + item.Name;
+                    return AnsiCode.Colorize($"F{1 + indexValidChoice++} ", AnsiCode.BrightYellow) + item.Name;
                 }
                 else
                 {
                     validIndex.Add(-1);
-                    ii++;
+                    indexValidChoice++;
                     return null;
                 }
             })
@@ -1164,11 +1156,12 @@ internal class Program
             else if (key.Key >= ConsoleKey.F1 && key.Key <= ConsoleKey.F10)
             {
                 int selectedIndex = key.Key - ConsoleKey.F1;
-                if (validIndex[selectedIndex + (pageIndex * pageSize)] == -1)
+                if (selectedIndex <= indexValidChoice - 1)
                 {
-                    errorMessage = "Fejl: Valget er ugyldig.";
+                    if (validIndex[selectedIndex + (pageIndex * pageSize)] != -1)
+                        return newMenuItems[validIndex[selectedIndex + (pageIndex * pageSize)]];
                 }
-                return newMenuItems[validIndex[selectedIndex + (pageIndex * pageSize)]];
+                errorMessage = "Fejl: Valget er ugyldig.";
             }
             else
             {
@@ -1177,20 +1170,20 @@ internal class Program
         } while (true);
     }
     #endregion Menu
-    static void importJson()
+    static void ImportJson()
     {
         JsonFileHandler.Instance.ImportData();
         Console.WriteLine("Biler er indlæst");
         Console.WriteLine("\nTryk på en tast for at fortsætte...");
         Console.Write(Console.ReadKey());
     }
-    static void exportJson()
+    static void ExportJson()
     {
         JsonFileHandler.Instance.ExportData();
     }
 
     /// <summary>
-    /// Clears the console from a specific position.
+    /// Clears the console from a specific position and down.
     /// </summary>
     /// <param name="left">The left position to start clearing from.</param>
     /// <param name="top">The top position to start clearing from.</param>
