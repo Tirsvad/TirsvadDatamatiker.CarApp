@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentat
 	ProjectSection(SolutionItems) = preProject
 		documentation\DCD.mmd = documentation\DCD.mmd
 		documentation\UML.mmd = documentation\UML.mmd
+		documentation\SD-input-car.mmd = documentation\SD-input-car.mmd
 	EndProjectSection
 EndProject
 Global
