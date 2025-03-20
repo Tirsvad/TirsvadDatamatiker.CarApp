@@ -3,7 +3,7 @@ using CarApp.Model;
 
 namespace CarApp.Handler;
 
-class JsonFileHandler
+public class JsonFileHandler
 {
     private static JsonFileHandler? _instance;
     private static readonly object _lock = new object();
@@ -81,10 +81,12 @@ class JsonFileHandler
             {
                 if (File.Exists(filename))
                 {
+                    CarList.Instance.Clear();
+                    OwnerList.Instance.Clear();
                     string jsonString = File.ReadAllText(filename);
                     var options = new JsonSerializerOptions
                     {
-                        Converters = { new JsonEngineConverter() }
+                        //Converters = { new JsonEngineConverter() }
                     };
                     var data = JsonSerializer.Deserialize<DataContainer>(jsonString, options);
 
@@ -102,6 +104,7 @@ class JsonFileHandler
                         }
                         for (int i = 0; i < data.Cars?.Count; i++)
                         {
+
                             Car car = data.Cars[i];
                             car.Owner = OwnerList.Instance.GetOwners().Find(owner => owner.Id == car.Owner?.Id); // Reassign owner object
                             CarList.Instance.Add(car);
@@ -116,6 +119,8 @@ class JsonFileHandler
             catch (Exception ex)
             {
                 Console.WriteLine($"Error importing dataContainer: {ex.Message}");
+                Console.WriteLine("Tast for at forsætte");
+                Console.ReadKey();
             }
         }
     }

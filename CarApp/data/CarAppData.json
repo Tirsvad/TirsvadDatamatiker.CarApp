@@ -6,7 +6,7 @@
       "Brand": "Honda",
       "Model": "Civic",
       "Year": 2012,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 14,
       "Mileage": 80000,
       "Engine": {
@@ -14,9 +14,9 @@
         "Ccm": 1800,
         "HorsePower": 140,
         "Torque": 174,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 80000,
-        "LastService": "2025-03-18T00:58:56.152234+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -67,7 +67,10 @@
         }
       ],
       "Description": "A reliable car",
-      "Owner": null,
+      "Owner": {
+        "Id": 0,
+        "Name": "John Nielsen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -76,7 +79,7 @@
       "Brand": "Toyota",
       "Model": "Camry",
       "Year": 2015,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 12,
       "Mileage": 60000,
       "Engine": {
@@ -84,9 +87,9 @@
         "Ccm": 2500,
         "HorsePower": 178,
         "Torque": 230,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 60000,
-        "LastService": "2025-03-18T00:58:56.1533405+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -137,7 +140,10 @@
         }
       ],
       "Description": "A comfortable sedan",
-      "Owner": null,
+      "Owner": {
+        "Id": 2,
+        "Name": "Alice Jensen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -146,7 +152,7 @@
       "Brand": "Ford",
       "Model": "F-150",
       "Year": 2018,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 10,
       "Mileage": 40000,
       "Engine": {
@@ -154,9 +160,9 @@
         "Ccm": 3500,
         "HorsePower": 375,
         "Torque": 470,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 40000,
-        "LastService": "2025-03-18T00:58:56.1533769+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -207,7 +213,10 @@
         }
       ],
       "Description": "A powerful truck",
-      "Owner": null,
+      "Owner": {
+        "Id": 2,
+        "Name": "Alice Jensen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -216,7 +225,7 @@
       "Brand": "Chevrolet",
       "Model": "Equinox",
       "Year": 2017,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 11,
       "Mileage": 50000,
       "Engine": {
@@ -224,9 +233,9 @@
         "Ccm": 2000,
         "HorsePower": 252,
         "Torque": 353,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 50000,
-        "LastService": "2025-03-18T00:58:56.1533777+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -277,7 +286,10 @@
         }
       ],
       "Description": "A versatile SUV",
-      "Owner": null,
+      "Owner": {
+        "Id": 0,
+        "Name": "John Nielsen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -286,7 +298,7 @@
       "Brand": "Honda",
       "Model": "Accord",
       "Year": 2016,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 13,
       "Mileage": 70000,
       "Engine": {
@@ -294,9 +306,9 @@
         "Ccm": 2400,
         "HorsePower": 185,
         "Torque": 245,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 70000,
-        "LastService": "2025-03-18T00:58:56.1533781+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -347,7 +359,10 @@
         }
       ],
       "Description": "A reliable sedan",
-      "Owner": null,
+      "Owner": {
+        "Id": 6,
+        "Name": "Trine Nielsen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -356,7 +371,7 @@
       "Brand": "Nissan",
       "Model": "Altima",
       "Year": 2019,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 12.5,
       "Mileage": 30000,
       "Engine": {
@@ -364,9 +379,9 @@
         "Ccm": 2500,
         "HorsePower": 188,
         "Torque": 244,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 30000,
-        "LastService": "2025-03-18T00:58:56.1533788+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -417,7 +432,10 @@
         }
       ],
       "Description": "A stylish sedan",
-      "Owner": null,
+      "Owner": {
+        "Id": 4,
+        "Name": "Charles Hansen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -426,7 +444,7 @@
       "Brand": "Hyundai",
       "Model": "Santa Fe",
       "Year": 2020,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 11.5,
       "Mileage": 20000,
       "Engine": {
@@ -434,9 +452,9 @@
         "Ccm": 2400,
         "HorsePower": 185,
         "Torque": 241,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 20000,
-        "LastService": "2025-03-18T00:58:56.1533792+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -487,7 +505,10 @@
         }
       ],
       "Description": "A family SUV",
-      "Owner": null,
+      "Owner": {
+        "Id": 1,
+        "Name": "Trine Nielsen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -496,7 +517,7 @@
       "Brand": "Kia",
       "Model": "Optima",
       "Year": 2018,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 13.5,
       "Mileage": 45000,
       "Engine": {
@@ -504,9 +525,9 @@
         "Ccm": 2000,
         "HorsePower": 245,
         "Torque": 353,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 45000,
-        "LastService": "2025-03-18T00:58:56.1533848+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -557,7 +578,10 @@
         }
       ],
       "Description": "A sporty sedan",
-      "Owner": null,
+      "Owner": {
+        "Id": 4,
+        "Name": "Charles Hansen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -566,7 +590,7 @@
       "Brand": "Mazda",
       "Model": "CX-9",
       "Year": 2021,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 10.5,
       "Mileage": 15000,
       "Engine": {
@@ -574,9 +598,9 @@
         "Ccm": 2500,
         "HorsePower": 250,
         "Torque": 420,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 15000,
-        "LastService": "2025-03-18T00:58:56.1533851+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -627,7 +651,10 @@
         }
       ],
       "Description": "A premium SUV",
-      "Owner": null,
+      "Owner": {
+        "Id": 6,
+        "Name": "Trine Nielsen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -636,7 +663,7 @@
       "Brand": "Subaru",
       "Model": "Forester",
       "Year": 2017,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 12,
       "Mileage": 50000,
       "Engine": {
@@ -644,9 +671,9 @@
         "Ccm": 2500,
         "HorsePower": 182,
         "Torque": 239,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 50000,
-        "LastService": "2025-03-18T00:58:56.1533855+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -697,7 +724,10 @@
         }
       ],
       "Description": "A rugged SUV",
-      "Owner": null,
+      "Owner": {
+        "Id": 5,
+        "Name": "Diana Andersen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -706,7 +736,7 @@
       "Brand": "Volkswagen",
       "Model": "Passat",
       "Year": 2019,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 13,
       "Mileage": 35000,
       "Engine": {
@@ -714,9 +744,9 @@
         "Ccm": 2000,
         "HorsePower": 174,
         "Torque": 207,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 35000,
-        "LastService": "2025-03-18T00:58:56.1533859+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -767,7 +797,10 @@
         }
       ],
       "Description": "A reliable sedan",
-      "Owner": null,
+      "Owner": {
+        "Id": 3,
+        "Name": "Bob Pedersen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -776,7 +809,7 @@
       "Brand": "Ford",
       "Model": "Mustang",
       "Year": 2018,
-      "GearType": "M",
+      "GearType": "Manual",
       "FuelEfficiency": 12,
       "Mileage": 30000,
       "Engine": {
@@ -784,9 +817,9 @@
         "Ccm": 5000,
         "HorsePower": 450,
         "Torque": 529,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 30000,
-        "LastService": "2025-03-18T00:58:56.1533862+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 10000,
         "ServiceIntervalMonths": 6
       },
@@ -837,7 +870,10 @@
         }
       ],
       "Description": "A powerful sports car",
-      "Owner": null,
+      "Owner": {
+        "Id": 2,
+        "Name": "Alice Jensen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -846,7 +882,7 @@
       "Brand": "Chevrolet",
       "Model": "Malibu",
       "Year": 2016,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 13,
       "Mileage": 60000,
       "Engine": {
@@ -854,9 +890,9 @@
         "Ccm": 2000,
         "HorsePower": 250,
         "Torque": 353,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 60000,
-        "LastService": "2025-03-18T00:58:56.1533871+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -907,7 +943,10 @@
         }
       ],
       "Description": "A comfortable sedan",
-      "Owner": null,
+      "Owner": {
+        "Id": 3,
+        "Name": "Bob Pedersen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -916,7 +955,7 @@
       "Brand": "BMW",
       "Model": "X5",
       "Year": 2020,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 10,
       "Mileage": 20000,
       "Engine": {
@@ -924,9 +963,9 @@
         "Ccm": 3000,
         "HorsePower": 335,
         "Torque": 450,
-        "Fuel": 1,
+        "Fuel": "Diesel",
         "Mileage": 20000,
-        "LastService": "2025-03-18T00:58:56.1533873+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -977,7 +1016,10 @@
         }
       ],
       "Description": "A luxury SUV",
-      "Owner": null,
+      "Owner": {
+        "Id": 4,
+        "Name": "Charles Hansen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -986,7 +1028,7 @@
       "Brand": "Audi",
       "Model": "Q7",
       "Year": 2019,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 11,
       "Mileage": 25000,
       "Engine": {
@@ -994,9 +1036,9 @@
         "Ccm": 3000,
         "HorsePower": 329,
         "Torque": 440,
-        "Fuel": 1,
+        "Fuel": "Diesel",
         "Mileage": 25000,
-        "LastService": "2025-03-18T00:58:56.1533875+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -1047,7 +1089,10 @@
         }
       ],
       "Description": "A premium SUV",
-      "Owner": null,
+      "Owner": {
+        "Id": 5,
+        "Name": "Diana Andersen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -1056,7 +1101,7 @@
       "Brand": "Mercedes-Benz",
       "Model": "E-Class",
       "Year": 2017,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 12.5,
       "Mileage": 45000,
       "Engine": {
@@ -1064,9 +1109,9 @@
         "Ccm": 2000,
         "HorsePower": 241,
         "Torque": 370,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 45000,
-        "LastService": "2025-03-18T00:58:56.1533877+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -1117,7 +1162,10 @@
         }
       ],
       "Description": "A luxury sedan",
-      "Owner": null,
+      "Owner": {
+        "Id": 6,
+        "Name": "Trine Nielsen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -1126,7 +1174,7 @@
       "Brand": "Hyundai",
       "Model": "Elantra",
       "Year": 2015,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 15,
       "Mileage": 70000,
       "Engine": {
@@ -1134,9 +1182,9 @@
         "Ccm": 1800,
         "HorsePower": 145,
         "Torque": 178,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 70000,
-        "LastService": "2025-03-18T00:58:56.1533879+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -1187,7 +1235,10 @@
         }
       ],
       "Description": "A compact sedan",
-      "Owner": null,
+      "Owner": {
+        "Id": 2,
+        "Name": "Alice Jensen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -1196,7 +1247,7 @@
       "Brand": "Kia",
       "Model": "Sorento",
       "Year": 2021,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 13.5,
       "Mileage": 15000,
       "Engine": {
@@ -1204,9 +1255,9 @@
         "Ccm": 2500,
         "HorsePower": 191,
         "Torque": 247,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 15000,
-        "LastService": "2025-03-18T00:58:56.1533881+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -1257,7 +1308,10 @@
         }
       ],
       "Description": "A midsize SUV",
-      "Owner": null,
+      "Owner": {
+        "Id": 1,
+        "Name": "Trine Nielsen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -1266,7 +1320,7 @@
       "Brand": "Mazda",
       "Model": "CX-5",
       "Year": 2018,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 14,
       "Mileage": 40000,
       "Engine": {
@@ -1274,9 +1328,9 @@
         "Ccm": 2500,
         "HorsePower": 187,
         "Torque": 252,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 40000,
-        "LastService": "2025-03-18T00:58:56.1533883+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -1327,7 +1381,10 @@
         }
       ],
       "Description": "A compact SUV",
-      "Owner": null,
+      "Owner": {
+        "Id": 1,
+        "Name": "Trine Nielsen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     },
@@ -1336,7 +1393,7 @@
       "Brand": "Subaru",
       "Model": "Outback",
       "Year": 2019,
-      "GearType": "A",
+      "GearType": "Automatic",
       "FuelEfficiency": 13,
       "Mileage": 35000,
       "Engine": {
@@ -1344,9 +1401,9 @@
         "Ccm": 2500,
         "HorsePower": 182,
         "Torque": 239,
-        "Fuel": 0,
+        "Fuel": "Benzin",
         "Mileage": 35000,
-        "LastService": "2025-03-18T00:58:56.1533885+08:00",
+        "LastService": "2025-03-21T00:00:00+08:00",
         "ServiceIntervalMileage": 15000,
         "ServiceIntervalMonths": 12
       },
@@ -1397,10 +1454,42 @@
         }
       ],
       "Description": "A rugged crossover",
-      "Owner": null,
+      "Owner": {
+        "Id": 4,
+        "Name": "Charles Hansen"
+      },
       "Trips": [],
       "IsEngineRunning": false
     }
   ],
-  "Owners": []
+  "Owners": [
+    {
+      "Id": 0,
+      "Name": "John Nielsen"
+    },
+    {
+      "Id": 1,
+      "Name": "Trine Nielsen"
+    },
+    {
+      "Id": 2,
+      "Name": "Alice Jensen"
+    },
+    {
+      "Id": 3,
+      "Name": "Bob Pedersen"
+    },
+    {
+      "Id": 4,
+      "Name": "Charles Hansen"
+    },
+    {
+      "Id": 5,
+      "Name": "Diana Andersen"
+    },
+    {
+      "Id": 6,
+      "Name": "Trine Nielsen"
+    }
+  ]
 }

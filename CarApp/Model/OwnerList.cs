@@ -1,4 +1,6 @@
-﻿namespace CarApp.Model;
+﻿using System.Text.Json.Serialization;
+
+namespace CarApp.Model;
 
 /// <summary>
 /// Represents a list of owners.
@@ -28,10 +30,11 @@ public class OwnerList
     /// Initializes a new instance of the <see cref="OwnerList"/> class.
     /// JsonConstructor is used to create an instance of the class from JSON.
     /// </summary>
+    [JsonConstructor]
     private OwnerList()
     {
         Owners = [];
-        //Seed(); // Only used for testing purposes
+        Seed(); // Only used for testing purposes
     }
 
     public List<Owner> GetOwners()
@@ -88,5 +91,10 @@ public class OwnerList
     public Owner? GetOwnerById(int id)
     {
         return Owners.Find(owner => owner.Id == id);
+    }
+
+    public void Clear()
+    {
+        Owners.Clear();
     }
 }

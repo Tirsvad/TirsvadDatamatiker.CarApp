@@ -3,6 +3,7 @@ using System.Text;
 using CarApp.Handler;
 using CarApp.Helper;
 using CarApp.Model;
+using CarApp.Type;
 
 namespace CarApp;
 
@@ -74,7 +75,7 @@ internal class Program
 
     static bool DoFuelTypeIdExists(int fuelTypeId)
     {
-        return Enum.IsDefined(typeof(Engine.FuelType), fuelTypeId);
+        return Enum.IsDefined(typeof(FuelType), fuelTypeId);
     }
 
     #endregion Is methods
@@ -84,7 +85,7 @@ internal class Program
     /// Takes the username from the environment variables.
     /// </summary>
     /// <dependency>CarApp.Authentication</dependency>
-    private static void Login()
+    static void Login()
     {
         string? username = Environment.GetEnvironmentVariable("USER_NAME");
         string msgDefault = "";
@@ -120,7 +121,7 @@ internal class Program
     /// <summary>
     /// Log out the user.
     /// </summary>
-    private static void Logout()
+    static void Logout()
     {
         _auth.Logout();
         CurrentUser = null;
@@ -134,9 +135,9 @@ internal class Program
         string? brand; // Brand of the car
         string? model; // Model of the car
         int year; // Year of the car
-        char gearType; // Gear type as a character
+        GearType gear; // Gear type as a character
+        int gearTypeId; // Gear type ID for the car
         int mileage; // Mileage of the car
-        int fuelTypeId; // Fuel type ID of the car
         double fuelEfficiency = 0f; // Fuel efficiency of the car
         string description = ""; // Description of the car
         OwnerList ownerList = OwnerList.Instance; // Owner list object
@@ -146,7 +147,8 @@ internal class Program
         double engineCcm;
         int engineHorsePower;
         int engineTorque;
-        Engine.FuelType? engineFuel = null;
+        FuelType engineFuel;
+        int fuelTypeId; // Fuel type ID for the car
         int engineMileage;
         DateTime engineLastService;
         int engineServiceIntervalMileage;
@@ -202,14 +204,23 @@ internal class Program
 
         do
         {
-            Console.Write("Gear type (A/M): ");
-            gearType = char.ToUpper(Console.ReadKey().KeyChar); // Read the gear type from the console
-            Console.WriteLine(); // Move the cursor to the next line
-            if (gearType != 'A' && gearType != 'M') // If the gear type is not A or M
+            Console.WriteLine("Gear Typer:");
+            foreach (GearType gearType in Enum.GetValues(typeof(GearType)))
             {
-                PrintError("Gear type skal være enten A eller M."); // Display an error message
+                Console.WriteLine($"{(int)gearType}: {gearType}");
             }
-        } while (gearType != 'A' && gearType != 'M'); // Repeat until a valid gear type is entered
+            Console.Write("Indtast valg: ");
+            string? input = Console.ReadLine();
+            if (!int.TryParse(input, out gearTypeId) || !Enum.IsDefined(typeof(GearType), gearTypeId))
+            {
+                PrintError("Brændstoftype skal være et gyldigt tal.");
+            }
+            else
+            {
+                gear = (GearType)gearTypeId;
+                break;
+            }
+        } while (true);
 
         do
         {
@@ -281,21 +292,22 @@ internal class Program
         do
         {
             Console.WriteLine("Brændstoftyper:");
-            foreach (Engine.FuelType fuelType in Enum.GetValues(typeof(Engine.FuelType)))
+            foreach (FuelType fuelType in Enum.GetValues(typeof(FuelType)))
             {
                 Console.WriteLine($"{(int)fuelType}: {fuelType}");
             }
             Console.Write("Brændstoftype: ");
             string? input = Console.ReadLine();
-            if (!int.TryParse(input, out fuelTypeId) || !Enum.IsDefined(typeof(Engine.FuelType), fuelTypeId))
+            if (!int.TryParse(input, out fuelTypeId) || !Enum.IsDefined(typeof(FuelType), fuelTypeId))
             {
                 PrintError("Brændstoftype skal være et gyldigt tal.");
             }
             else
             {
-                engineFuel = (Engine.FuelType)fuelTypeId;
+                engineFuel = (FuelType)fuelTypeId;
+                break;
             }
-        } while (engineFuel == null);
+        } while (true);
 
         do
         {
@@ -423,16 +435,16 @@ internal class Program
             else
             {
                 tireSeason = (Tire.SeasonType)seasonTypeId;
+                break;
             }
-        } while (!Enum.IsDefined(typeof(Tire.SeasonType), tireSeason));
+        } while (true);
 
         Car car = new Car(
             id: _carList.GenerateId(),
             brand: brand,
             model: model,
             year: year,
-            gearType: gearType,
-            //fuel: (Engine.FuelType)fuelTypeId,
+            gearType: gear,
             fuelEfficiency: fuelEfficiency,
             mileage: mileage,
             engine: new Engine(
@@ -440,7 +452,7 @@ internal class Program
                 ccm: 1600,
                 horsePower: 120,
                 torque: 200,
-                fuel: Engine.FuelType.Benzin,
+                fuel: engineFuel,
                 mileage: 100000, // Mileage
                 lastService: DateTime.Now, // LastService
                 serviceIntervalMileage: 15000, // ServiceIntervalMileage
@@ -535,11 +547,11 @@ internal class Program
             Header("Kør en tur simuleret");
             Console.WriteLine(AnsiCode.Colorize("Start motoren for at køre en tur\n", AnsiCode.Yellow));
         }
-        Console.Write($"Intast dato for turen (default '{DateTime.Now:dd-MM-yyyy}': ");
+        Console.Write($"Indtast dato for turen (default '{DateTime.Now.Date:dd-MM-yyyy}': ");
         input = Console.ReadLine();
         if (string.IsNullOrEmpty(input))
         {
-            date = DateTime.Now;
+            date = DateTime.Now.Date;
         }
         else if (!DateTime.TryParse(input, out date))
         {
@@ -550,7 +562,9 @@ internal class Program
             return;
         }
 
-        Console.Write("Indtast kilometer for turen: ");
+        date = date.Date; // Remove the time part of the date
+
+        Console.Write("Indtast antal kilometer kørt: ");
         input = Console.ReadLine();
         if (!int.TryParse(input, out int distance))
         {
@@ -560,24 +574,25 @@ internal class Program
             return;
         }
 
-        Console.Write("Indtast start tidspunkt for turen: ");
+        Console.Write("Indtast start tidspunkt for turen (TT:mm): ");
         input = Console.ReadLine();
         if (!TimeSpan.TryParse(input, out TimeSpan startTimeSpan))
         {
             PrintError("Start tidspunkt skal være et tal");
-            PrintError("Format: HH:mm");
+            PrintError("Format: TT:mm");
             Console.WriteLine("\nTryk på en tast for at fortsætte...");
             Console.ReadKey();
             return;
         }
         DateTime startTime = date.Add(startTimeSpan);
 
-        Console.Write("Indtast slut tidspunkt for ture: ");
+
+        Console.Write("Indtast slut tidspunkt for turen (TT:mm): ");
         input = Console.ReadLine();
         if (!TimeSpan.TryParse(input, out TimeSpan endTimeSpan))
         {
             PrintError("slut tidspunkt skal være et tal");
-            PrintError("Format: HH:mm");
+            PrintError("Format: TT:mm");
             Console.WriteLine("\nTryk på en tast for at fortsætte...");
             Console.ReadKey();
             return;
@@ -610,14 +625,56 @@ internal class Program
         {
             Console.WriteLine("Bilens id" + selectedCar.Id);
             int index = _carList.Cars.FindIndex(c => c.Id == selectedCar.Id);
-            _carList.Cars[index].Mileage += distance;
-            _carList.Cars[index].Trips.Add(trip);
-            _selectedCar = _carList.Cars[index];
+            _carList.Cars[index].Mileage += distance; // Update the car's mileage
+            _carList.Cars[index].Trips.Add(trip); // Add the trip to the car's trip list
+            _selectedCar = _carList.Cars[index]; // Update the selected car with instance values
             Console.WriteLine("Turen er kørt");
+            TimeSpan duration = trip.CalculateDuration();
+            Console.WriteLine($"Turen tog {duration.Hours} timer og {duration.Minutes} minutter");
             Console.WriteLine("\nTryk på en tast for at fortsætte...");
             Console.ReadKey();
         }
-        //TimeSpan duration = trip.CalculateDuration();
+        else
+        {
+            Console.WriteLine("Turen er simuleret");
+            Console.WriteLine(trip.ToString());
+            TimeSpan duration = trip.CalculateDuration();
+            Console.WriteLine($"Turen tog {duration.Hours} timer og {duration.Minutes} minutter");
+            Console.WriteLine($"Turen vil koste " + trip.CalculateTripPrice(trip.CalculateFuelConsumption(selectedCar)) + " kr");
+            Console.WriteLine("\nTryk på en tast for at fortsætte...");
+            Console.ReadKey();
+        }
+    }
+    /// <summary>
+    /// Get list of trips for the selected car.
+    /// </summary>
+    static void GetTripsByDate()
+    {
+        Console.Clear();
+        Header("Ture fra dato");
+        Console.Write("Indtast dato (dd-MM-yyyy): ");
+        string input = Console.ReadLine();
+        if (!DateTime.TryParse(input, out DateTime date))
+        {
+            PrintError("Dato skal være et tal");
+            PrintError("Format: dd-MM-yyyy");
+            Console.WriteLine("\nTryk på en tast for at fortsætte...");
+            Console.ReadKey();
+            return;
+        }
+        List<Trip> trips = _selectedCar?.Trips.FindAll(t => t.TripDate.Date == date.Date) ?? new List<Trip>();
+        if (trips.Count == 0)
+        {
+            Console.WriteLine("Ingen ture fundet på denne dato");
+        }
+        else
+        {
+            Console.WriteLine("Ture fundet:");
+            foreach (Trip trip in trips)
+            {
+                Console.WriteLine(trip.ToString());
+            }
+        }
         Console.WriteLine("\nTryk på en tast for at fortsætte...");
         Console.ReadKey();
     }
@@ -657,7 +714,6 @@ internal class Program
         Console.WriteLine(new string('-', l + 1));
         Console.WriteLine();
     }
-
     /// <summary>
     /// Centers the given text within a specified width.
     /// </summary>
@@ -675,7 +731,6 @@ internal class Program
         int rightPadding = padding - leftPadding;
         return new string(' ', leftPadding) + text + new string(' ', rightPadding);
     }
-
     /// <summary>
     /// Prints an error message in red text.
     /// </summary>
@@ -684,7 +739,6 @@ internal class Program
     {
         Console.WriteLine(AnsiCode.Colorize(message, AnsiCode.Red));
     }
-
     /// <summary>
     /// Hide the password input.
     /// </summary>
@@ -1033,7 +1087,7 @@ internal class Program
                 }
                 menuItems.Add(new MenuItem("Vis bil", new Action(() => { ShowCarDetail(_selectedCar); }), rolesLoggedIn));
                 menuItems.Add(new MenuItem("Se alle ture", (Action)ShowCarTrips, rolesLoggedIn));
-                menuItems.Add(new MenuItem("Palindrom", new Action(() => { PalinDrome(_selectedCar); }), null));
+                menuItems.Add(new MenuItem("Se ture fra dato", (Action)GetTripsByDate, rolesLoggedIn));
             }
             Console.Clear();
             Header("Bil Menu");

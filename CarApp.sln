@@ -22,8 +22,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
 		documentation\DCD.mmd = documentation\DCD.mmd
-		documentation\UML.mmd = documentation\UML.mmd
+		documentation\Pseudokode-drive.txt = documentation\Pseudokode-drive.txt
+		documentation\Pseudokode-tripsByDate.txt = documentation\Pseudokode-tripsByDate.txt
 		documentation\SD-input-car.mmd = documentation\SD-input-car.mmd
+		documentation\SD-drive.mmd = documentation\SD-drive.mmd
+		documentation\UML.mmd = documentation\UML.mmd
+		documentation\SD-tripsByDate.mmd = documentation\SD-tripsByDate.mmd
 	EndProjectSection
 EndProject
 Global

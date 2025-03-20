@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using CarApp.Type;
 
 namespace CarApp.Model;
 
@@ -7,12 +8,13 @@ namespace CarApp.Model;
 /// </summary>
 public class Car
 {
-    // Properties
+    // Properties persistent
     public int Id { get; private set; } ///> A unique ID for the car.
     public string Brand { get; private set; } ///> The brand of the car.
     public string Model { get; private set; } ///> The model of the car.
     public int Year { get; private set; } ///> The year of the car.
-    public char GearType { get; private set; } ///> The gear type of the car.
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public GearType GearType { get; private set; } ///> The gear type of the car.
     public double FuelEfficiency { get; private set; } ///> The fuel efficiency of the car in kilometers per liter.
     public int Mileage { get; set; } ///> The mileage of the car in kilometers.
     public Engine? Engine { get; set; } ///> The engine object of the car.
@@ -20,16 +22,16 @@ public class Car
     public Wheel[] Wheels { get; private set; } = new Wheel[4]; ///> The wheels of the car.
     public string Description { get; private set; } ///> The description of the car.
     public Owner? Owner { get; set; } ///> The owner of the car.
-    public List<Trip> Trips { get; set; } = [];///> The list of trips that this car has driven.
+    public List<Trip> Trips { get; set; } = new List<Trip>(); ///> The list of trips that this car has driven.
 
-    // Runtime properties
+    // Properties runtime
     /// <summary>
     /// Gets or sets a value indicating whether the engine is running.
     /// </summary>
     public bool IsEngineRunning { get; set; } = false;
 
     [JsonConstructor]
-    public Car(int id, string brand, string model, int year, char gearType, double fuelEfficiency, int mileage, Engine engine, Wheel[] wheels, string description, Owner? owner)
+    public Car(int id, string brand, string model, int year, GearType gearType, double fuelEfficiency, int mileage, Engine engine, Wheel[] wheels, string description, Owner? owner)
     {
         Id = id;
         Brand = brand;
@@ -121,6 +123,19 @@ public class Car
     public static double CalculateTripCost(Car car, double fuelNeeded, double fuelPrice)
     {
         return (double)(fuelNeeded * fuelPrice);
+    }
+
+    private List<Trip> GetTripsByDate(DateTime date)
+    {
+        List<Trip> trips = new List<Trip>();
+        foreach (Trip trip in Trips)
+        {
+            if (trip.TripDate == date)
+            {
+                trips.Add(trip);
+            }
+        }
+        return trips;
     }
 
     public double RemoveTrip(Trip trip)
