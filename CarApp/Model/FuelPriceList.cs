@@ -1,4 +1,7 @@
-﻿namespace CarApp.Model;
+﻿using CarApp.Type;
+
+
+namespace CarApp.Model;
 
 /// <summary>
 /// Represents a list of fuel prices.
@@ -32,15 +35,15 @@ public class FuelPriceList
 
     private void Seed()
     {
-        FuelPrices.Add(new FuelPrice(Engine.FuelType.Diesel, 13.48, "liter"));
-        FuelPrices.Add(new FuelPrice(Engine.FuelType.Electric, 4.0, "kw"));
-        FuelPrices.Add(new FuelPrice(Engine.FuelType.Benzin, 14.66, "liter"));
-        double hybridPrice = this.FuelPrices.Find(f => f.FuelType == Engine.FuelType.Benzin)?.Price ?? 0.0;
-        FuelPrices.Add(new FuelPrice(Engine.FuelType.Hybrid, hybridPrice, "liter hvis der køres på el 50 % af turen"));
-        FuelPrices.Add(new FuelPrice(Engine.FuelType.Brint, 14.0, "per 100 gr"));
+        FuelPrices.Add(new FuelPrice(FuelType.Diesel, 13.48, "liter"));
+        FuelPrices.Add(new FuelPrice(FuelType.Electric, 4.0, "kw"));
+        FuelPrices.Add(new FuelPrice(FuelType.Benzin, 14.66, "liter"));
+        double hybridPrice = this.FuelPrices.Find(f => f.FuelType == FuelType.Benzin)?.Price ?? 0.0;
+        FuelPrices.Add(new FuelPrice(FuelType.Hybrid, hybridPrice, "liter hvis der køres på el 50 % af turen"));
+        FuelPrices.Add(new FuelPrice(FuelType.Brint, 14.0, "per 100 gr"));
     }
 
-    public double? GetPrice(Engine.FuelType fuelType)
+    public double? GetPrice(FuelType fuelType)
     {
         return FuelPrices.Find(f => f.FuelType == fuelType)?.Price;
     }

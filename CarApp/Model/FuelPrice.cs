@@ -1,15 +1,17 @@
-﻿namespace CarApp.Model;
+﻿using CarApp.Type;
+
+namespace CarApp.Model;
 
 /// <summary>
 /// Represents the price of a fuel type.
 /// </summary>
 public class FuelPrice
 {
-    public Engine.FuelType FuelType { get; }
+    public FuelType FuelType { get; }
     public double Price { get; }
     public string Measurement { get; }
 
-    public FuelPrice(Engine.FuelType fuelType, double price, string measurement)
+    public FuelPrice(FuelType fuelType, double price, string measurement)
     {
         FuelType = fuelType;
         Price = price;

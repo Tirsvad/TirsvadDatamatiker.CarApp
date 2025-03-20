@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using CarApp.Type;
 
 namespace CarApp.Model
 {
@@ -7,30 +8,16 @@ namespace CarApp.Model
     /// </summary>
     public class Engine
     {
-        public enum FuelType
-        {
-            Benzin,
-            Diesel,
-            Electric,
-            Hybrid,
-            Brint
-        }
-
         public string Name { get; }
         public int? Ccm { get; }
         public int HorsePower { get; }
         public int Torque { get; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public FuelType Fuel { get; }
         public int Mileage { get; private set; }
         public DateTime LastService { get; private set; } ///> Last service date
         public int ServiceIntervalMileage { get; } ///> Service interval in kilometers
         public int ServiceIntervalMonths { get; } ///> Service interval in months
-
-        [JsonConstructor]
-        private Engine()
-        {
-            Engine engine = new Engine("Default", 0, 0, 0, FuelType.Benzin, 0, DateTime.Now, 0, 0);
-        }
 
         /// <summary>
         /// Constructor for ICE Engine (Internal Combustion Engine)
@@ -44,10 +31,11 @@ namespace CarApp.Model
         /// <param name="lastService"></param>
         /// <param name="serviceIntervalMileage"></param>
         /// <param name="serviceIntervalMonths"></param>
-        public Engine(string name, int ccm, int horsePower, int torque, FuelType fuel, int mileage, DateTime lastService, int serviceIntervalMileage, int serviceIntervalMonths)
+        //[JsonConstructor]
+        public Engine(string name, int? ccm, int horsePower, int torque, FuelType fuel, int mileage, DateTime lastService, int serviceIntervalMileage, int serviceIntervalMonths)
         {
             Name = name;
-            Ccm = ccm;
+            Ccm = ccm ?? 0;
             HorsePower = horsePower;
             Torque = torque;
             Fuel = fuel;
@@ -68,17 +56,17 @@ namespace CarApp.Model
         /// <param name="lastService"></param>
         /// <param name="serviceIntervalMileage"></param>
         /// <param name="serviceIntervalMonths"></param>
-        public Engine(string name, int horsePower, int torque, FuelType fuel, int mileage, DateTime lastService, int serviceIntervalMileage, int serviceIntervalMonths)
-        {
-            Name = name;
-            HorsePower = horsePower;
-            Torque = torque;
-            Fuel = fuel;
-            Mileage = mileage;
-            LastService = lastService;
-            ServiceIntervalMileage = serviceIntervalMileage;
-            ServiceIntervalMonths = serviceIntervalMonths;
-        }
+        //public Engine(string name, int horsePower, int torque, FuelType fuel, int mileage, DateTime lastService, int serviceIntervalMileage, int serviceIntervalMonths)
+        //{
+        //    Name = name;
+        //    HorsePower = horsePower;
+        //    Torque = torque;
+        //    Fuel = fuel;
+        //    Mileage = mileage;
+        //    LastService = lastService;
+        //    ServiceIntervalMileage = serviceIntervalMileage;
+        //    ServiceIntervalMonths = serviceIntervalMonths;
+        //}
 
         public void AddMileage(int mileage)
         {

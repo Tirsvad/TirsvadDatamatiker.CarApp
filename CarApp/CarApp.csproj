@@ -13,7 +13,7 @@
 
 	<ItemGroup>
 	  <Content Include="data\CarAppData.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Content>
 	</ItemGroup>
 
