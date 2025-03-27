@@ -3,32 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarApp", "CarApp\CarApp.csproj", "{A947F4E4-8AB5-43FC-953E-25295A19120C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarApp", "src\CarApp\CarApp.csproj", "{DFEB576D-E37B-5A6A-9699-F8AA2D9A6224}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C6A141EE-5F84-421C-9D09-34FD1790D426}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
+		src\Tests\Tests.csproj = src\Tests\Tests.csproj
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "logo", "logo", "{94E17EAB-DF61-405B-A1E0-1178BFDBE9F5}"
-	ProjectSection(SolutionItems) = preProject
-		logo\logo.png = logo\logo.png
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{6CDB135D-FC65-4096-96E6-6F1C7997FADF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{89A271D7-84AB-4C84-8AC2-2E9A9FC4DB7D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-	ProjectSection(SolutionItems) = preProject
-		documentation\DCD.mmd = documentation\DCD.mmd
-		documentation\Pseudokode-drive.txt = documentation\Pseudokode-drive.txt
-		documentation\Pseudokode-tripsByDate.txt = documentation\Pseudokode-tripsByDate.txt
-		documentation\SD-input-car.mmd = documentation\SD-input-car.mmd
-		documentation\SD-drive.mmd = documentation\SD-drive.mmd
-		documentation\UML.mmd = documentation\UML.mmd
-		documentation\SD-tripsByDate.mmd = documentation\SD-tripsByDate.mmd
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "src\Test\Test.csproj", "{D362BF47-7A16-1187-7CFD-2213D496CB3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,24 +18,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A947F4E4-8AB5-43FC-953E-25295A19120C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A947F4E4-8AB5-43FC-953E-25295A19120C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A947F4E4-8AB5-43FC-953E-25295A19120C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A947F4E4-8AB5-43FC-953E-25295A19120C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{89A271D7-84AB-4C84-8AC2-2E9A9FC4DB7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89A271D7-84AB-4C84-8AC2-2E9A9FC4DB7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89A271D7-84AB-4C84-8AC2-2E9A9FC4DB7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89A271D7-84AB-4C84-8AC2-2E9A9FC4DB7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFEB576D-E37B-5A6A-9699-F8AA2D9A6224}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFEB576D-E37B-5A6A-9699-F8AA2D9A6224}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFEB576D-E37B-5A6A-9699-F8AA2D9A6224}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFEB576D-E37B-5A6A-9699-F8AA2D9A6224}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D362BF47-7A16-1187-7CFD-2213D496CB3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D362BF47-7A16-1187-7CFD-2213D496CB3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D362BF47-7A16-1187-7CFD-2213D496CB3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D362BF47-7A16-1187-7CFD-2213D496CB3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{94E17EAB-DF61-405B-A1E0-1178BFDBE9F5} = {C6A141EE-5F84-421C-9D09-34FD1790D426}
-		{6CDB135D-FC65-4096-96E6-6F1C7997FADF} = {C6A141EE-5F84-421C-9D09-34FD1790D426}
-		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {C6A141EE-5F84-421C-9D09-34FD1790D426}
-	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {5F3820BE-D635-4970-9D77-7133D9644795}
+		SolutionGuid = {E8105640-8E09-4C59-A296-ED96A8A6CDB1}
 	EndGlobalSection
 EndGlobal

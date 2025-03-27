@@ -1,4 +1,6 @@
-﻿namespace CarApp
+﻿using System.Reflection;
+
+namespace CarApp
 {
     /// <summary>  
     /// Provides constant values used throughout the CarApp application.  
@@ -35,5 +37,15 @@
         public const string errorNoCarSelected = "Ingen bil valgt. Tilføj eller vælg en bil først.";
 
         #endregion Error messages
+
+        /// <summary>
+        /// Gets the version of the current assembly.
+        /// </summary>
+        /// <returns>The version of the current assembly.</returns>
+        public static string GetAssemblyVersion()
+        {
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            return version != null ? version.ToString() : "Version not found";
+        }
     }
 }
