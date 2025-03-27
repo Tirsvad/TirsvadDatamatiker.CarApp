@@ -68,70 +68,43 @@ namespace CarApp.Model
         //    ServiceIntervalMonths = serviceIntervalMonths;
         //}
 
+
+        /// <summary>
+        /// Adds mileage to the engine.
+        /// </summary>
         public void AddMileage(int mileage)
         {
             Mileage += mileage;
         }
 
+        /// <summary>
+        /// Checks if the engine needs service.
+        /// </summary>
         public bool IsServiceTime()
         {
             return (Mileage >= ServiceIntervalMileage);
         }
 
-        public static bool TryParseHorsePower(string input, int horsePower)
+        /// <summary>
+        /// Parses the input string to an integer and returns the value if it is greater than 0.
+        /// </summary>
+        /// <Returns>Nullable int. Null if the input is not a valid integer or is less than 1.</Returns>
+        public static bool ParseHorsePower(string input, out Int32 horsePower)
         {
             if (int.TryParse(input, out horsePower) && horsePower > 0)
             {
                 return true;
             }
-            horsePower = 0;
             return false;
         }
 
-        public static bool TryParseTorque(string input, int torque)
-        {
-            if (int.TryParse(input, out torque) && torque > 0)
-            {
-                return true;
-            }
-            torque = 0;
-            return false;
-        }
-
-        public static bool TryParseCcm(string input, int ccm)
-        {
-            if (int.TryParse(input, out ccm) && ccm > 0)
-            {
-                return true;
-            }
-            ccm = 0;
-            return false;
-        }
-
-        public static bool TryParseServiceIntervalMileage(string input, int serviceIntervalMileage)
-        {
-            if (int.TryParse(input, out serviceIntervalMileage) && serviceIntervalMileage > 0)
-            {
-                return true;
-            }
-            serviceIntervalMileage = 0;
-            return false;
-        }
-
-        public static bool TryParseServiceIntervalMonths(string input, int serviceIntervalMonths)
-        {
-            if (int.TryParse(input, out serviceIntervalMonths) && serviceIntervalMonths > 0)
-            {
-                return true;
-            }
-            serviceIntervalMonths = 0;
-            return false;
-        }
-
+        /// <summary>
+        /// Formats the engine as a string.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return $"{Name} ({Ccm} ccm, {HorsePower} hp, {Torque} Nm, {Fuel})";
         }
-
     }
 }

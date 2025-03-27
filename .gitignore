@@ -366,4 +366,4 @@ FodyWeavers.xsd
 .vscode/
 .vs/
 
-doxygen/html/
+/documentation/doxygen/html

@@ -1,9 +1,10 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
 using CarApp.Handler;
-using CarApp.Helper;
 using CarApp.Model;
 using CarApp.Type;
+
+using TirsvadCLI;
 
 namespace CarApp;
 
@@ -545,7 +546,7 @@ internal class Program
         else
         {
             Header("Kør en tur simuleret");
-            Console.WriteLine(AnsiCode.Colorize("Start motoren for at køre en tur\n", AnsiCode.Yellow));
+            Console.WriteLine(AnsiCode.Colorize("Start motoren for at køre en tur\n", AnsiCode.YELLOW));
         }
         Console.Write($"Indtast dato for turen (default '{DateTime.Now.Date:dd-MM-yyyy}': ");
         input = Console.ReadLine();
@@ -737,7 +738,7 @@ internal class Program
     /// <param name="message"></param>
     static void PrintError(string message)
     {
-        Console.WriteLine(AnsiCode.Colorize(message, AnsiCode.Red));
+        Console.WriteLine(AnsiCode.Colorize(message, AnsiCode.RED));
     }
     /// <summary>
     /// Hide the password input.
@@ -1149,13 +1150,13 @@ internal class Program
             {
                 if (item.Action == null)
                 {
-                    return $"{AnsiCode.Colorize(item.Name, AnsiCode.Green)}";
+                    return $"{AnsiCode.Colorize(item.Name, AnsiCode.GREEN)}";
                 }
                 else if (item.Role == null || item.Role.Contains(_auth.GetRole(CurrentUser)))
                 {
                     newMenuItems.Add(item);
                     validIndex.Add(x++);
-                    return AnsiCode.Colorize($"F{1 + indexValidChoice++} ", AnsiCode.BrightYellow) + item.Name;
+                    return AnsiCode.Colorize($"F{1 + indexValidChoice++} ", AnsiCode.BRIGHT_YELLOW) + item.Name;
                 }
                 else
                 {
@@ -1176,16 +1177,16 @@ internal class Program
 
             if (pageIndex > 0)
             {
-                Console.Write(AnsiCode.Colorize("F11 ", AnsiCode.Blue));
+                Console.Write(AnsiCode.Colorize("F11 ", AnsiCode.BLUE));
                 Console.Write("previous page, ");
             }
 
             if (totalPages > pageIndex + 1)
             {
-                Console.Write(AnsiCode.Colorize("F12 ", AnsiCode.Blue));
+                Console.Write(AnsiCode.Colorize("F12 ", AnsiCode.BLUE));
                 Console.WriteLine("next page, ");
             }
-            Console.Write(AnsiCode.Colorize("ESC ", AnsiCode.Blue));
+            Console.Write(AnsiCode.Colorize("ESC ", AnsiCode.BLUE));
             if (main)
                 Console.WriteLine("Afslut");
             else
