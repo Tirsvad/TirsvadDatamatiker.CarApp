@@ -33,7 +33,6 @@
     <br />
     <br />
     <a href="https://github.com/TirsvadDatamatiker/CarApp/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
-    ·
     <a href="https://github.com/TirsvadDatamatiker/CarApp/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
     </p>
 </div>
@@ -74,16 +73,6 @@ This is an example of how to list things you need to use the software and how to
 - Visual Studio 2022
     ```
     https://visualstudio.microsoft.com/
-    ```
-
-- Install Sqlite and Dapper
-
-    Go to the project folder and run the following commands
-
-    ```
-    dotnet nuget add source https://api.nuget.org/v3/index.json
-    dotnet add package Dapper
-    dotnet add package Microsoft.Data.Sqlite
     ```
 
 ### Build and Run

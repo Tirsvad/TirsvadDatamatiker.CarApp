@@ -32,7 +32,8 @@
     <ItemGroup>
         <PackageReference Include="Dapper" Version="2.1.66" />
         <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.3" />
-        <PackageReference Include="TirsvadCLI.Frame" Version="0.1.0-alpha.2" />
+        <PackageReference Include="TirsvadCLI.Frame" Version="0.1.0-alpha.4" />
+        <PackageReference Include="TirsvadCLI.TirsvadCLI.MenuPaginator" Version="0.1.0-alpha.3" />
     </ItemGroup>
 
     <ItemGroup>
