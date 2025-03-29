@@ -5,35 +5,9 @@ using CarApp.Model;
 using CarApp.Type;
 
 using TirsvadCLI;
+using TirsvadCLI.MenuPaginator;
 
 namespace CarApp;
-
-/// <summary>
-/// Menu item record struct.
-/// </summary>
-/// <param name="Name">The name of the menu item.</param>
-/// <param name="Action">The action that will be execute if choose</param>
-/// <param name="Role">If user should be able to choose this</param>
-/// The action to be executed when the menu item is selected.
-/// If the action is null, the menu item is not selectable. And is used as a header.
-/// </param>
-internal record struct MenuItem(string Name, object? Action, Role[]? Role)
-{
-    /// <summary>
-    /// Implicitly converts a MenuItem to a tuple.
-    /// </summary>
-    public static implicit operator (string, object?, Role[]?)(MenuItem value)
-    {
-        return (value.Name, value.Action, value.Role);
-    }
-    /// <summary>
-    /// Implicitly converts a tuple to a MenuItem.
-    /// </summary>
-    public static implicit operator MenuItem((string, object?, Role[]?) value)
-    {
-        return new MenuItem(value.Item1, value.Item2, value.Item3);
-    }
-}
 
 /// <summary>
 /// Handles CarApp's main program logic.
@@ -485,52 +459,7 @@ internal class Program
         _carList.Remove(selectedCar);
         _selectedCar = null;
     }
-    /// <summary>
-    /// Checks if the mileage of a car is a palindrome.
-    /// </summary>
-    /// <param name="selectedCar">The car object to check.</param>
-    static void PalinDrome(Car selectedCar)
-    {
-        Console.Clear();
-        if (IsPalindrome(selectedCar))
-        {
-            Console.WriteLine("Kilometer tallet er et palindrom");
-        }
-        else
-        {
-            Console.WriteLine("Kilometer tallet er ikke et palindrom");
-        }
-        Console.WriteLine("\nTryk på en tast for at fortsætte...");
-        Console.Write(Console.ReadKey());
 
-    }
-    /// <summary>
-    /// Calculates the cost of a trip.
-    /// </summary>
-    /// <param name="selectedCar">The car object to calculate the cost for.</param>
-    static void CalculateTripCost(Car selectedCar)
-    {
-        Console.Clear();
-        Console.WriteLine("Indtast kilometer for turen:");
-        string input = Console.ReadLine();
-        if (!int.TryParse(input, out int distance))
-        {
-            PrintError("Kilometer skal være et tal");
-            Console.WriteLine("\nTryk på en tast for at fortsætte...");
-            Console.ReadKey();
-            return;
-        }
-        double fuelNeeded = Car.CalculateFuelNeeded(selectedCar, distance);
-        decimal fuelPrice = (decimal)(_fuelPricelist.FuelPrices.Find(f => f.FuelType == selectedCar.Engine?.Fuel)?.Price ?? 0);
-        decimal tripCost = (decimal)fuelNeeded * fuelPrice;
-        if (selectedCar.IsEngineRunning)
-        {
-            selectedCar.UpdateMileAge((int)distance);
-        }
-        Console.WriteLine($"Pris for turen: {tripCost:F2} kr");
-        Console.WriteLine("\nTryk på en tast for at fortsætte...");
-        Console.ReadKey();
-    }
     /// <summary>
     /// Get user input for a new trip and add it to the car's trip list.
     /// </summary>
@@ -930,9 +859,6 @@ internal class Program
         Console.Write(Console.ReadKey());
     }
 
-    #endregion Rapport methods
-    #region Menu
-
     /// <summary>
     /// Displays the main menu and handles the user's choice.
     /// </summary>
@@ -943,14 +869,16 @@ internal class Program
         Role[] rolesLoggedIn = [Role.User, Role.Admin];
         do
         {
-            List<MenuItem> menuItems =
-            [
-                new MenuItem("Log ind", (Action)Login, [Role.Guest]),
-                new MenuItem("Log ud", (Action)Logout, rolesLoggedIn),
-                new MenuItem("Fil og database", (Action)FileMenu, rolesLoggedIn),
-                new MenuItem("Rapport", (Action)RapportMenu, null),
-                new MenuItem("Bil menu", (Action)CarMenu, rolesLoggedIn),
-            ];
+            List<MenuItem> menuItems = new List<MenuItem>();
+            if (CurrentUser == null || _auth.GetRole(CurrentUser) == Role.Guest)
+                menuItems.Add(new MenuItem("Log på", (Action)Login));
+            else if (Array.Exists(rolesLoggedIn, role => role == _auth.GetRole(CurrentUser)))
+            {
+                menuItems.Add(new MenuItem("Log af", (Action)Logout));
+                menuItems.Add(new MenuItem("Fil og database", (Action)FileMenu));
+                menuItems.Add(new MenuItem("Bil menu", (Action)CarMenu));
+            }
+            menuItems.Add(new MenuItem("Rapport", (Action)RapportMenu));
 
             Console.Clear();
             Header("Main Menu");
@@ -961,11 +889,14 @@ internal class Program
                 Console.WriteLine();
             }
 
-            MenuItem? menuItem = PaganizesMenu(menuItems, 10, main: true);
-
-            if (menuItem != null && menuItem.Value.Action is Action action)
+            MenuPaginator menu = new MenuPaginator(menuItems, 10, main: true);
+            if (menu.menuItem != null && menu.menuItem.Action is Action action)
             {
                 action();
+            }
+            else
+            {
+                return;
             }
         } while (true);
     }
@@ -979,21 +910,22 @@ internal class Program
         do
         {
             List<MenuItem> menuItems = new List<MenuItem> { };
-            menuItems.Add(new MenuItem("Vis liste af biler", (Action)ShowCarList, null));
+            menuItems.Add(new MenuItem("Vis liste af biler", (Action)ShowCarList));
             if (role == Role.Admin)
             {
-                menuItems.Add(new MenuItem("Vis ejer og deres biler", (Action)ShowCarListByOwners, null));
+                menuItems.Add(new MenuItem("Vis ejer og deres biler", (Action)ShowCarListByOwners));
             }
 
             Console.Clear();
             Header("Rapport Menu");
+            Console.WriteLine();
             if (_selectedCar != null)
             {
                 Console.WriteLine($"Bil der er valgt er en: {_selectedCar.Brand} {_selectedCar.Model} med id {_selectedCar.Id}");
+                Console.WriteLine();
             }
-            Console.WriteLine();
-            MenuItem? menuItem = PaganizesMenu(menuItems, 10);
-            if (menuItem != null && menuItem.Value.Action is Action action)
+            MenuPaginator menu = new MenuPaginator(menuItems, 10);
+            if (menu.menuItem != null && menu.menuItem.Action is Action action)
             {
                 action();
             }
@@ -1012,58 +944,56 @@ internal class Program
         Role[] rolesLoggedIn = [Role.User, Role.Admin];
         do
         {
-            List<MenuItem> menuItems = new List<MenuItem>
-            {
-                new MenuItem("Json fil", null, null),
-                new MenuItem("Gem biler", (Action)ExportJson, [Role.Admin]),
-                new MenuItem("Indlæs biler", (Action)ImportJson, null),
-                new MenuItem("Database", null, null)
-            };
+            List<MenuItem> menuItems = new List<MenuItem> { };
+            menuItems.Add(new MenuItem("Json fil", null));
+            menuItems.Add(new MenuItem("Gem biler", (Action)ExportJson));
+            menuItems.Add(new MenuItem("Indlæs biler", (Action)ImportJson));
             Console.Clear();
             Header("Fil og database Menu");
-            MenuItem? menuItem = PaganizesMenu(menuItems, 10);
-            if (menuItem == null)
-            {
-                return;
-            }
-            if (menuItem.Value.Action is Action action)
+            Console.WriteLine();
+            MenuPaginator menu = new MenuPaginator(menuItems, 10);
+            if (menu.menuItem != null && menu.menuItem.Action is Action action)
             {
                 action();
+            }
+            else
+            {
+                return;
             }
         } while (true);
     }
     /// <summary>
     /// Selects a car from the list of cars.
     /// </summary>
-    /// <returns>The selected car object.</returns>
     static void SelectCarMenu()
     {
         Role role = _auth.GetRole(CurrentUser);
         Role[] rolesLoggedIn = [Role.User, Role.Admin];
         do
         {
-            List<MenuItem> menuItems = new List<MenuItem>();
-
+            List<MenuItem> menuItems = new List<MenuItem> { };
             foreach (Car car in _carList.GetCars())
             {
-                menuItems.Add(new MenuItem($"{car.Brand} {car.Model} {car.Year}", new Action(() => { _selectedCar = car; }), null));
+                menuItems.Add(new MenuItem($"{car.Brand} {car.Model} {car.Year}", new Action(() => { _selectedCar = car; })));
             }
-
-            Header("Vælg bil");
-
-            MenuItem? menuItem = PaganizesMenu(menuItems, 10);
-
-            if (menuItem == null)
-            {
-                return;
-            }
-            if (menuItem.Value.Action is Action action)
+            Console.Clear();
+            Header("Select car");
+            Console.WriteLine();
+            MenuPaginator menu = new MenuPaginator(menuItems, 10);
+            if (menu.menuItem != null && menu.menuItem.Action is Action action)
             {
                 action();
                 return;
             }
+            else
+            {
+                return;
+            }
         } while (true);
     }
+    /// <summary>
+    /// Car menu. Handles car operations.
+    /// </summary>
     static void CarMenu()
     {
         Role role = _auth.GetRole(CurrentUser);
@@ -1071,156 +1001,43 @@ internal class Program
         do
         {
             List<MenuItem> menuItems = new List<MenuItem> { };
-            menuItems.Add(new MenuItem("Vælg bil", (Action)SelectCarMenu, rolesLoggedIn));
-            menuItems.Add(new MenuItem("Tilføj bil", new Action(() => { _selectedCar = InputAddCar(); }), new Role[] { Role.Admin }));
-            if (_selectedCar != null)
+            menuItems.Add(new MenuItem("Vælg bil", (Action)SelectCarMenu));
+            if (Array.Exists(rolesLoggedIn, role => role == _auth.GetRole(CurrentUser)))
             {
-                menuItems.Add(new MenuItem("Fjern bil", new Action(() => { RemoveCar(_selectedCar); }), [Role.Admin]));
-                if (_selectedCar.IsEngineRunning)
+                menuItems.Add(new MenuItem("Tilføj bil", new Action(() => { _selectedCar = InputAddCar(); })));
+                if (_selectedCar != null)
                 {
-                    menuItems.Add(new MenuItem("Sluk motoren", (Action)_selectedCar.ToggleEngine, rolesLoggedIn));
-                    menuItems.Add(new MenuItem("Kør en tur", new Action(() => { InputTour(_selectedCar); }), rolesLoggedIn));
+                    menuItems.Add(new MenuItem("Fjern bil", new Action(() => { RemoveCar(_selectedCar); })));
+                    if (_selectedCar.IsEngineRunning)
+                    {
+                        menuItems.Add(new MenuItem("Sluk motoren", (Action)_selectedCar.ToggleEngine));
+                        menuItems.Add(new MenuItem("Kør en tur", new Action(() => { InputTour(_selectedCar); })));
+                    }
+                    else
+                    {
+                        menuItems.Add(new MenuItem("Start motoren", (Action)_selectedCar.ToggleEngine));
+                        menuItems.Add(new MenuItem("Kør en tur (simuleret)", new Action(() => { InputTour(_selectedCar); })));
+                    }
+                    menuItems.Add(new MenuItem("Vis bil", new Action(() => { ShowCarDetail(_selectedCar); })));
+                    menuItems.Add(new MenuItem("Se alle ture", (Action)ShowCarTrips));
+                    menuItems.Add(new MenuItem("Se ture fra dato", (Action)GetTripsByDate));
                 }
-                else
-                {
-                    menuItems.Add(new MenuItem("Start motoren", (Action)_selectedCar.ToggleEngine, rolesLoggedIn));
-                    menuItems.Add(new MenuItem("Kør en tur (simuleret)", new Action(() => { InputTour(_selectedCar); }), rolesLoggedIn));
-                }
-                menuItems.Add(new MenuItem("Vis bil", new Action(() => { ShowCarDetail(_selectedCar); }), rolesLoggedIn));
-                menuItems.Add(new MenuItem("Se alle ture", (Action)ShowCarTrips, rolesLoggedIn));
-                menuItems.Add(new MenuItem("Se ture fra dato", (Action)GetTripsByDate, rolesLoggedIn));
             }
             Console.Clear();
             Header("Bil Menu");
             if (_selectedCar != null)
             {
                 Console.WriteLine($"Bil der er valgt er en: {_selectedCar.Brand} {_selectedCar.Model} med id {_selectedCar.Id}");
+                Console.WriteLine();
             }
-            Console.WriteLine();
-            MenuItem? menuItem = PaganizesMenu(menuItems, 10);
-            if (menuItem != null && menuItem.Value.Action is Action action)
+            MenuPaginator menu = new MenuPaginator(menuItems, 10);
+            if (menu.menuItem != null && menu.menuItem.Action is Action action)
             {
                 action();
             }
             else
             {
                 return;
-            }
-        } while (true);
-    }
-    /// <summary>
-    /// Paginates a list of menu items.
-    /// </summary>
-    /// <param name="menuItems"></param>
-    /// <param name="pageSize"></param>
-    /// <param name="sorting"></param>
-    /// <returns></returns>
-    static MenuItem? PaganizesMenu(List<MenuItem> menuItems, int pageSize, bool main = false)
-    {
-        string errorMessage = ""; ///> Error message to be display
-        int pageIndex = 0; ///> Index of current page
-        int x;
-        List<int> validIndex; ///> Index of Valid choice this user can make.
-        List<int> validChoice; ///> Index of Valid choice this user can make.
-        List<MenuItem> newMenuItems; ///> New menu items
-        (int Left, int Top) Position; ///> For cursor position
-        Console.CursorVisible = false;
-        int totalPages = (int)Math.Ceiling(menuItems.Count / (double)pageSize); ///> Total pages
-        Position = Console.GetCursorPosition(); ///> Get the current cursor position
-        do
-        {
-            x = 0;
-            validIndex = [];
-            validChoice = [];
-            newMenuItems = [];
-            int indexValidChoice = 0; ///> Index used for valid choice. Used for display only.
-            ClearConsoleFromPosition(Position.Left, Position.Top);
-            Console.SetCursorPosition(Position.Left, Position.Top);
-            if (errorMessage != "")
-            {
-                PrintError(errorMessage);
-                Console.WriteLine();
-                errorMessage = "";
-            }
-
-            var pagedMenuItems = menuItems
-            .Skip(pageIndex * pageSize)
-            .Take(pageSize)
-            .Select((item, index) =>
-            {
-                if (item.Action == null)
-                {
-                    return $"{AnsiCode.Colorize(item.Name, AnsiCode.GREEN)}";
-                }
-                else if (item.Role == null || item.Role.Contains(_auth.GetRole(CurrentUser)))
-                {
-                    newMenuItems.Add(item);
-                    validIndex.Add(x++);
-                    return AnsiCode.Colorize($"F{1 + indexValidChoice++} ", AnsiCode.BRIGHT_YELLOW) + item.Name;
-                }
-                else
-                {
-                    validIndex.Add(-1);
-                    indexValidChoice++;
-                    return null;
-                }
-            })
-            .Where(item => item != null)
-            .ToList();
-
-            for (int i = 0; i < pagedMenuItems.Count; i++)
-            {
-                Console.WriteLine(pagedMenuItems[i]);
-            }
-
-            Console.WriteLine();
-
-            if (pageIndex > 0)
-            {
-                Console.Write(AnsiCode.Colorize("F11 ", AnsiCode.BLUE));
-                Console.Write("previous page, ");
-            }
-
-            if (totalPages > pageIndex + 1)
-            {
-                Console.Write(AnsiCode.Colorize("F12 ", AnsiCode.BLUE));
-                Console.WriteLine("next page, ");
-            }
-            Console.Write(AnsiCode.Colorize("ESC ", AnsiCode.BLUE));
-            if (main)
-                Console.WriteLine("Afslut");
-            else
-                Console.WriteLine("Tilbage");
-            Console.WriteLine($"\nSide {pageIndex + 1} af {totalPages}");
-
-            var key = Console.ReadKey(true);
-            if (key.Key == ConsoleKey.Escape)
-            {
-                if (main)
-                    Environment.Exit(0);
-                return null;
-            }
-            else if (key.Key == ConsoleKey.F12 && pageIndex < totalPages - 1)
-            {
-                pageIndex++;
-            }
-            else if (key.Key == ConsoleKey.F11 && pageIndex > 0)
-            {
-                pageIndex--;
-            }
-            else if (key.Key >= ConsoleKey.F1 && key.Key <= ConsoleKey.F10)
-            {
-                int selectedIndex = key.Key - ConsoleKey.F1;
-                if (selectedIndex <= indexValidChoice - 1)
-                {
-                    if (validIndex[selectedIndex + (pageIndex * pageSize)] != -1)
-                        return newMenuItems[validIndex[selectedIndex + (pageIndex * pageSize)]];
-                }
-                errorMessage = "Fejl: Valget er ugyldig.";
-            }
-            else
-            {
-                errorMessage = $"Fejl: Gyldige taster er F1-F{pagedMenuItems.Count}.";
             }
         } while (true);
     }
@@ -1235,22 +1052,6 @@ internal class Program
     static void ExportJson()
     {
         JsonFileHandler.Instance.ExportData();
-    }
-
-    /// <summary>
-    /// Clears the console from a specific position and down.
-    /// </summary>
-    /// <param name="left">The left position to start clearing from.</param>
-    /// <param name="top">The top position to start clearing from.</param>
-    static void ClearConsoleFromPosition(int left, int top)
-    {
-        int currentLineCursor = top;
-        while (currentLineCursor < Console.WindowHeight)
-        {
-            Console.SetCursorPosition(left, currentLineCursor);
-            Console.Write(new string(' ', Console.WindowWidth - left));
-            currentLineCursor++;
-        }
     }
 
     /// <summary>
